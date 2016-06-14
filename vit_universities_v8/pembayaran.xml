@@ -28,7 +28,7 @@
                         <button name='draft' string='Non Aktif' class="oe_link oe_edit_only" states='confirm' type='object' groups="account.group_account_manager"/>               		                		
                 		<field name="state" widget="statusbar" nolabel="1"/>
                 	</header>
-                	<sheet>
+                	<!-- <sheet> -->
                 		<group>
                 			<group>
 			                    <field name="name"/>
@@ -46,15 +46,24 @@
                     	</group> 
                         <notebook colspan="4">
                             <page string="Daftar Pembayaran">
+                                <group>  
+                                    <field name="uang_semester" attrs="{'readonly': [('state','=','confirm')]}" required="1"/>
+                                </group> 
                                 <field view_mode="tree,form" name="detail_product_ids" nolabel="1" attrs="{'readonly': [('state','=','confirm')]}">
 					                <tree string="Daftar Pembayaran" editable="bottom">
 					                    <field name="semester_id"/>     
                                         <field name="product_ids" string="List" widget="many2many_tags"/>
+                                        <field name="date1" string="Tgl"/>
                                         <field name="angsuran1"/>
+                                        <field name="date2" string="Tgl"/>
                                         <field name="angsuran2"/>
+                                        <field name="date3" string="Tgl"/>
                                         <field name="angsuran3"/>
+                                        <field name="date4" string="Tgl"/>
                                         <field name="angsuran4"/>
+                                        <field name="date5" string="Tgl"/>
                                         <field name="angsuran5"/>
+                                        <field name="date6" string="Tgl"/>
                                         <field name="angsuran6"/>
                                         <field name="total" sum="Total"/>             
 					                </tree>
@@ -64,7 +73,7 @@
                                 </group>  -->                                 
                             </page>
                         </notebook>
-                    </sheet>    
+                    <!-- </sheet>   -->  
                 </form>
             </field>
         </record>

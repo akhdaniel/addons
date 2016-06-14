@@ -69,6 +69,7 @@ class master_pembayaran(osv.Model):
 		'total': fields.float('Total', digits_compute=dp.get_precision('Account')),
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
 		'lokasi_kampus_id' : fields.many2one('master.alamat.kampus','Lokasi Kampus'),
+		'uang_semester' : fields.float('Uang Semester'),
 
 	}
 	_defaults = {
@@ -115,12 +116,18 @@ class master_pembayaran_detail(osv.Model):
 			domain="[('type','=','service')]"),
 		#'product_ids':fields.many2one('product.template','Pembayaran Detail',required=True,domain="[('type','=','service')]"),
 		 # master price UP dan UK
-        'angsuran1'		: fields.float('Angsuran 1'),
-        'angsuran2'		: fields.float('Angsuran 2'),
-        'angsuran3'		: fields.float('Angsuran 3'),
-        'angsuran4'		: fields.float('Angsuran 4'),
-        'angsuran5'		: fields.float('Angsuran 5'),
-        'angsuran6'		: fields.float('Angsuran 6'),
+		'date1'			: fields.date('Tgl Angs 1'),
+        'angsuran1'		: fields.float('Angs 1'),
+        'date2'			: fields.date('Tgl Angs 2'),
+        'angsuran2'		: fields.float('Angs 2'),
+   		'date3'			: fields.date('Tgl Angs 3'),
+        'angsuran3'		: fields.float('Angs 3'),
+        'date4'			: fields.date('Tgl Angs 4'),
+        'angsuran4'		: fields.float('Angs 4'),
+        'date5'			: fields.date('Tgl Angs 5'),
+        'angsuran5'		: fields.float('Angs 5'),
+        'date6'			: fields.date('Tgl Angs 6'),
+        'angsuran6'		: fields.float('Angs 6'),
         'total'			: fields.float('Total'),		
 		#'total': fields.function(_sub_total,type='char',string='Sub Total', digits_compute=dp.get_precision('Account')),
 	}
