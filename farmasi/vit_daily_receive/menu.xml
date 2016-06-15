@@ -1,0 +1,75 @@
+<openerp>
+	<data>
+
+        <!-- tree view stock move-->
+		<record id="view_daily_receive" model="ir.ui.view">
+		    <field name="name">view_daily_receive</field>
+		    <field name="model">stock.move</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list daily receive" colors="grey:state=='done'; blue:state=='draft'">
+					<field name="product_id" />
+					<field name="product_uom_qty" />
+					<field name="product_uom" />
+					<field name="date" />
+		            <field name="origin"/>
+		            <field name="state"/>
+		        </tree>
+		    </field>
+		</record>
+
+        <!-- search view -->
+		<record id="search_daily_receive" model="ir.ui.view">
+		    <field name="name">search_daily_receive</field>
+		    <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_search"/>
+		    <field name="arch" type="xml">
+                <filter string="Today" position="replace">
+                    <!-- domain="[('date','&lt;=',time.strftime('%Y-%m-%d 23:59:59')),('date','&gt;=',time.strftime('%Y-%m-%d 00:00:00'))]" help="Orders processed Today or planned for Today"/-->
+                    <filter icon="terp-go-today" name="today" string="Today"
+                            domain="[('date','&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))), ('date','&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"
+                            help="Orders processed Today or planned for Today"/>
+                </filter>
+                <filter string="Today" position="after">
+                    <separator/>
+                    <filter icon="terp-go-gba" name="gba_stock" string="GBA/Stock"
+                            domain="[ ('location_dest_id','ilike','GBA / Stock') ]" />
+                    <filter icon="terp-go-gbk" name="gbk_stock" string="GBK/Stock"
+                            domain="[ ('location_dest_id','ilike','GBK / Stock') ]" />
+                    <filter icon="terp-go-goj" name="goj_stock" string="GOJ/Stock"
+                            domain="[ ('location_dest_id','ilike','GOJ / Stock') ]" />
+                    <filter icon="terp-go-rtn" name="rtn_stock" string="RTN/Stock"
+                            domain="[ ('location_dest_id','ilike','RTN / Stock') ]" />
+
+                    <filter icon="terp-go-gba" name="gba_input" string="GBA/Input"
+                            domain="[ ('location_dest_id','ilike','GBA / Input') ]" />
+                    <filter icon="terp-go-gbk" name="gbk_input" string="GBK/Input"
+                            domain="[ ('location_dest_id','ilike','GBK / Input') ]" />
+                    <filter icon="terp-go-goj" name="goj_input" string="GOJ/Input"
+                            domain="[ ('location_dest_id','ilike','GOJ / Input') ]" />
+
+                </filter>
+
+
+		    </field>
+		</record>
+
+		<record id="action_daily_receive_list" model="ir.actions.act_window">
+			<field name="name">Daily Receive</field>
+			<field name="res_model">stock.move</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_daily_receive"/>
+			<field name="search_view_id" ref="search_daily_receive"/>
+            <field name="context">{'search_default_today':1,'search_default_done':1,
+                'search_default_gba_input':1,'search_default_gba_stock':1}</field>
+		</record>
+
+		<menuitem id="vit_daily_receive"
+		 action="action_daily_receive_list"
+		 name="Daily Receive"
+         groups="stock.group_stock_user"
+		 sequence="50"
+		 parent="stock.menu_traceability"/>
+
+
+	</data>
+</openerp>
