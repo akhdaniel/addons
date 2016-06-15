@@ -6,11 +6,11 @@
             <field name="model">vit_pharmacy_manufacture.wps</field>
             <field name="arch" type="xml">
                 <tree string="WPS">
+                    <field name="product_id"/>
                     <field name="name"/>
                     <field name="mps_id"/>
                     <field name="week_on_month"/>
-                    <field name="product_id"/>
-                    <field name="categ_id"/> 
+                    <field name="categ_id"/>
                     <field name="batch"/> 
                     <field name="start_date"/>
                     <field name="end_date"/>          
@@ -79,6 +79,33 @@
             <field name="arch" type="xml">
                 <search string="Search WPS">
                     <field name="name" />        
+                    <field name="product_id" />
+                    <field name="categ_id" />
+		            <group expand="1" string="Group By...">
+
+		                <filter string="Product" name='group_by_product_id'
+		                    icon="terp-personal" domain="[]"
+		                	 context="{'group_by':'product_id'}"/>
+
+		                <filter string="Category" icon="terp-personal"
+		                    domain="[]" name='group_by_categ_id'
+		                	 context="{'group_by':'categ_id'}"/>
+
+		                <filter string="Category" icon="terp-personal"
+		                    domain="[]" name='group_by_categ_id'
+		                	 context="{'group_by':'categ_id'}"/>
+
+		                <filter string="MPS" icon="terp-personal"
+		                    domain="[]" name='group_by_mps_id'
+		                	 context="{'group_by':'mps_id'}"/>
+
+
+		                <filter string="Week" icon="terp-personal"
+		                    domain="[]" name='group_by_week_on_month'
+		                	 context="{'group_by':'week_on_month'}"/>
+
+
+		            </group>
                 </search>
             </field>
         </record>
