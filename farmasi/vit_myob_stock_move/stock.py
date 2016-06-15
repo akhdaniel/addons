@@ -30,7 +30,10 @@ class stock_move(osv.osv):
 	}
 
 	def cron_export_myob(self, cr, uid, context=None):
-		active_ids = self.search(cr, uid, [('is_myob_export','=', False),('state','=','done')], context=context)
+		active_ids = self.search(cr, uid, [
+			'|',('location_id','=','GBA/Stock'),('location_dest_id','=','GOJ/Stock'),
+			('is_myob_export','=', False),
+			('state','=','done')], context=context)
 		if active_ids:
 			self.actual_process(cr, uid, active_ids, context=context)
 		else:
@@ -75,8 +78,8 @@ class stock_move(osv.osv):
 				i = i +1
 				self.write(cr, uid, stock_move.id, {'is_myob_export':True}, context=context)
 
-				# x = time.strptime(stock_move.date_order, "%Y-%m-%d %H:%M:%S")
-				# stock_move_date = time.strftime("%d/%m/%Y", x)
+				x = time.strptime(stock_move.date, "%Y-%m-%d %H:%M:%S")
+				tgl_pengambilan = time.strftime("%d/%m/%Y", x)
 
 				kode_barang = ""
 				if stock_move.product_id.default_code:
@@ -84,7 +87,7 @@ class stock_move(osv.osv):
 
 				data = {
 					"no_batch"			: stock_move.name,
-					"tgl_pengambilan"	: stock_move.date,
+					"tgl_pengambilan"	: tgl_pengambilan,
 					"nomor_mo"			: stock_move.origin,
 					"kode_barang"		: kode_barang,
 					"lokasi"			: stock_move.location_id.name,
