@@ -1,0 +1,39 @@
+<openerp>
+	<data>
+
+        <!-- tree view mrp.production-->
+		<record id="view_wip" model="ir.ui.view">
+		    <field name="name">view_wip</field>
+		    <field name="model">mrp.production</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list wip" colors="grey:state=='done'; blue:state=='draft'">
+					<field name="product_id" />
+					<field name="product_qty" />
+					<field name="batch_number" />
+					<field name="date_planned" />
+		            <field name="workcenter_lines"/>
+		            <field name="state"/>
+		        </tree>
+		    </field>
+		</record>
+
+
+		<record id="action_wip_list" model="ir.actions.act_window">
+			<field name="name">WIP</field>
+			<field name="res_model">mrp.production</field>
+			<field name="view_mode">tree,form</field>
+			<field name="view_id" ref="view_wip"/>
+			<!--<field name="search_view_id" ref="search_wip"/>-->
+            <field name="context">{'search_default_inprogress':1}</field>
+		</record>
+
+		<menuitem id="vit_wip"
+		 action="action_wip_list"
+		 name="WIP"
+         groups="stock.group_stock_user"
+		 sequence="60"
+		 parent="stock.menu_traceability"/>
+
+
+	</data>
+</openerp>
