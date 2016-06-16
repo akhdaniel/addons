@@ -5,6 +5,7 @@ import time
 import logging
 from openerp.tools.translate import _
 from datetime import datetime
+import converter
 
 _logger = logging.getLogger(__name__)
 
@@ -270,6 +271,8 @@ class import_ls_cash(osv.osv):
 		upd = 0
 		date = False
 
+		conv = converter.converter()
+
 		partner = self.pool.get('res.partner')
 		cash = self.pool.get('reliance.partner_cash')
 		
@@ -286,23 +289,35 @@ class import_ls_cash(osv.osv):
 			if pid:
 				###### cari existing Cash record ############
 				cid = cash.search(cr, uid, [('partner_id','=', pid[0] )], context=context)
-				date = False 
+
+				###### convert date ############
 				if import_cash.date:
-					try: 
-						date = datetime.strptime(import_cash.date, "%Y-%m-%d")
-					except ValueError:
-						self.write(cr, uid, import_cash.id, {'notes':'date format error, use yyyy-mm-dd'}, context=context)
-						ex = ex+1
-						cr.commit()
+					date = conv.convert_date(cr, uid, self, import_cash, "date", "%Y-%m-%d",ex, context=context)
+					if not date:
 						continue
+
+				###### convert cash_on_hand ############
+				cash_on_hand = conv.convert_float(cr, uid, self, import_cash, "cash_on_hand", ",", ".", ex, context=context)
+				if not cash_on_hand:
+					continue
+
+				###### convert saldo_t1 ############
+				saldo_t1 = conv.convert_float(cr, uid, self, import_cash, "saldo_t1", ",", ".", ex, context=context)
+				if not saldo_t1:
+					continue
+
+				###### convert saldo_t2 ############
+				saldo_t2 = conv.convert_float(cr, uid, self, import_cash, "saldo_t2", ",", ".", ex, context=context)
+				if not saldo_t2:
+					continue
 
 				data = {
 					"partner_id"	: 	pid[0],	
 					"date"			:	date ,
-					"cash_on_hand"	:	import_cash.cash_on_hand,
+					"cash_on_hand"	:	cash_on_hand,
 					# "net_ac"		:	import_cash.net_ac,
-					"saldo_t1"		:	import_cash.saldo_t1,
-					"saldo_t2"		:	import_cash.saldo_t2,
+					"saldo_t1"		:	saldo_t1,
+					"saldo_t2"		:	saldo_t2,
 				}
 				if not cid:
 					cash.create(cr,uid,data,context=context)
