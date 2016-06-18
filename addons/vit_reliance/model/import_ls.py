@@ -298,17 +298,17 @@ class import_ls_cash(osv.osv):
 
 				###### convert cash_on_hand ############
 				cash_on_hand = conv.convert_float(cr, uid, self, import_cash, "cash_on_hand", ",", ".", ex, context=context)
-				if not cash_on_hand:
+				if cash_on_hand is False:
 					continue
 
 				###### convert saldo_t1 ############
 				saldo_t1 = conv.convert_float(cr, uid, self, import_cash, "saldo_t1", ",", ".", ex, context=context)
-				if not saldo_t1:
+				if saldo_t1 is False:
 					continue
 
 				###### convert saldo_t2 ############
 				saldo_t2 = conv.convert_float(cr, uid, self, import_cash, "saldo_t2", ",", ".", ex, context=context)
-				if not saldo_t2:
+				if saldo_t2 is False:
 					continue
 
 				data = {
