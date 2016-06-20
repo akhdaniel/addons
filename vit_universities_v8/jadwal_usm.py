@@ -21,7 +21,15 @@ class jadwal_usm(osv.Model):
 		'user_id'			: fields.many2one('res.users','User',readonly=True),
 		'calon_mhs_ids'		: fields.one2many('res.partner','jadwal_usm_id','Calon MHS', ondelete="cascade"),
 		'state'				: fields.selection([('draft','Draft'),('confirm','Confirm'),('done','Done')],'Status',readonly=True),
-		'discount'			: fields.float('Potongan(%)'),
+		'discount'			: fields.float('Potongan Gelombang (%)'),
+		'discount_tunai'	: fields.float('Potongan Tunai (%)'),
+		'discount_alumni'	: fields.float('Potongan Alumni ISTN (%)'),
+		'discount_lembaga'	: fields.float('Potongan Ulang Tahun Lembaga (%)'),
+		'discount_karyawan'	: fields.float('Potongan Karyawan(%)'),
+		'discount_ranking1'	: fields.float('Potongan Ranking 1 (%)'),
+		'discount_ranking2'	: fields.float('Potongan Ranking 2 (%)'),
+		'discount_ranking3'	: fields.float('Potongan Ranking 3 (%)'),
+		'discount_non_ranking'	: fields.float('Potongan Non Ranking (%)'),
 		'type_pendaftaran'  : fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
 	}
 

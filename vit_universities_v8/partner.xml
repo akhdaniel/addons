@@ -266,6 +266,7 @@
                                 <separator/>
                                 <group>
                                     <field name="hubungan"/>
+                                    <field name="ranking" attrs="{'invisible': [('hubungan','!=','cikini')]}"/>
                                     <field name="keluarga_alumni_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
                                     <field name="karyawan_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
                                     <field name="is_alumni" />

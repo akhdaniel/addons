@@ -347,7 +347,7 @@ class res_partner (osv.osv):
 		'is_alumni'			: fields.boolean('Alumni'),
 
 		# split invoice
-		'split_invoice' : fields.integer('Angsuran',help="jika di isi angka positif maka invoice yg digenerate dari KRS atas mahasiswa ini akan tersplit sesuai angka yang diisi"),
+		'split_invoice' : fields.integer('Angsuran',help="jika di isi angka positif maka invoice yg digenerate dari KRS atas mahasiswa ini akan tersplit sesuai angka yang diisi", size=1),
 		'alamat_id'	: fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
 
@@ -391,7 +391,7 @@ class res_partner (osv.osv):
 		'semester5'		: fields.float('Semester 5'),
 		'un'			: fields.float('UN'),
 		'hubungan' 		: fields.selection([('umum','Umum'),('ortu','Orang Tua Alumni ISTN'),('cikini','Lulusan SLTA Perguruan Cikini'),('karyawan','Karyawan Tetap (Masih Aktif) ISTN')],'Hubungan Dengan ISTN'),
-
+		'ranking'		: fields.integer('Ranking'),
 
 		}
 
@@ -650,6 +650,7 @@ class res_partner (osv.osv):
 				('fakultas_id','=',partner.fakultas_id.id),
 				('prodi_id','=',partner.prodi_id.id),
 				('state','=','confirm'),
+				('type_pendaftaran','=',partner.type_pendaftaran)
 				])
 
 			if byr_sch :
@@ -660,141 +661,152 @@ class res_partner (osv.osv):
 				byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
 				list_pembayaran = byr_brw.detail_product_ids
 				prod_id = []
+				discount = 0
 				for bayar in list_pembayaran[:1]:
 					if bayar.semester_id.id == smt_1.id :
-						#import pdb;pdb.set_trace()
+						up_uk = bayar.total
+						
 						product = self.pool.get('product.product').browse(cr,uid,bayar.product_ids[0].id)
 						coa_line = product.property_account_income.id
 						if not coa_line:
 							coa_line = product.categ_id.property_account_income_categ.id
-
 						# if not coa_line :
 						# 	raise osv.except_osv(_("Warning"),_("CoA untuk tahun akademik dan prodi ini belum di set di master uang kuliah !"))
-						if partner.split_invoice == 1 :
-						#if bayar.angsuran1 <= 0 or bayar.angsuran2 <= 0 or bayar.angsuran3 <= 0 or bayar.angsuran4 <= 0 or bayar.angsuran4 <= 0 or bayar.angsuran5 <= 0 or bayar.angsuran6 <= 0 :
-							# cari potongan USM
-							cash = bayar.total
-							pot_usm_exist = usm_obj.search(cr,uid,[('date_start','<=',partner.tgl_daftar),('date_end','>=',partner.tgl_daftar)])
-							if pot_usm_exist :
-								disc_usm = usm_obj.browse(cr,uid,pot_usm_exist[0]).discount
-								cash = bayar.total - (bayar.total *disc_usm / 100) 
-							# create 1 invoice
-							prod_id.append((0,0,{'product_id'	: bayar.product_ids[0].id,
-												 'name'			: bayar.product_ids[0].name,
-												 'price_unit'	: cash,
-												 'account_id'	: coa_line}))
-							inv = self.pool.get('account.invoice').create(cr,uid,{
-								'partner_id':partner.id,
-								'origin': 'UP dan UK '+str(partner.reg),
-								'type':'out_invoice',
-								'fakultas_id': partner.fakultas_id.id,
-								'prod_id': partner.prodi_id.id,
-								'account_id':partner.property_account_receivable.id,
-								'invoice_line': prod_id,
-								},context=context)
-						else :
-							# create invoice pertama
-							inv = self.pool.get('account.invoice').create(cr,uid,{
-								'partner_id':partner.id,
-								'origin': 'UP dan UK '+str(partner.reg)+' -1',
-								'type':'out_invoice',
-								'fakultas_id': partner.fakultas_id.id,
-								'prod_id': partner.prodi_id.id,
-								'account_id':partner.property_account_receivable.id,
-								'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
-														 'name'			: bayar.product_ids[0].name,
-														 'price_unit'	: bayar.angsuran1,
-														 'account_id'	: coa_line}))],
-								},context=context)
+						total_potongan = 0
+						#cari potongan
+						pot_usm_exist = usm_obj.search(cr,uid,[('date_start','<=',partner.tgl_daftar),('date_end','>=',partner.tgl_daftar)])
+						if pot_usm_exist :
+							pot = usm_obj.browse(cr,uid,pot_usm_exist[0])
+							disc_usm 		= pot.discount
+							disc_tunai 		= pot.discount_tunai
+							disc_alumni  	= pot.discount_alumni
+							disc_lembaga	= pot.discount_lembaga
+							disc_karyawan	= pot.discount_karyawan
+							disc_rank1		= pot.discount_ranking1
+							disc_rank2		= pot.discount_ranking2
+							disc_rank3		= pot.discount_ranking3
+							disc_non_rank	= pot.discount_non_ranking
 
-							# create invoice ke2
-							inv2 = self.pool.get('account.invoice').create(cr,uid,{
-								'partner_id':partner.id,
-								'origin': 'UP dan UK '+str(partner.reg)+' -2',
-								'type':'out_invoice',
-								'fakultas_id': partner.fakultas_id.id,
-								'prod_id': partner.prodi_id.id,
-								'account_id':partner.property_account_receivable.id,
-								'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
-														 'name'			: bayar.product_ids[0].name,
-														 'price_unit'	: bayar.angsuran2,
-														 'account_id'	: coa_line}))],
-								},context=context)									
+							discount = disc_usm+disc_lembaga
+							# jika calon merupakan alumni satu yayasan
+							if partner.hubungan == 'cikini':	
+								if partner.ranking == 1 :	
+									up 		= byr_brw.uang_semester
+									up_disc = (up*disc_rank1)/100
+									new_up 	= up-up_disc
+								elif partner.ranking == 2 :	
+									up 		= byr_brw.uang_semester
+									up_disc = (up*disc_rank2)/100
+									new_up 	= up-up_disc
+								elif partner.ranking == 3 :
+									up 		= byr_brw.uang_semester
+									up_disc = (up*disc_rank3)/100
+									new_up 	= up-up_disc
+								else : 
+									up 		= byr_brw.uang_semester
+									up_disc = (up*disc_non_rank)/100
+									new_up 	= up-up_disc			
+								up_uk = new_up
+								# diskon di 0 kan karena tidak boleh akumulasi
+								discount = 0
+							elif partner.hubungan == 'ortu' :
+								if partner.keluarga_alumni_id :
+									discount += disc_alumni
+							elif partner.hubungan == 'karyawan' :
+								if partner.karyawan_id :
+									discount += disc_karyawan	
 
-							# create invoice ke3
-							inv3 = self.pool.get('account.invoice').create(cr,uid,{
-								'partner_id':partner.id,
-								'origin': 'UP dan UK '+str(partner.reg)+' -3',
-								'type':'out_invoice',
-								'fakultas_id': partner.fakultas_id.id,
-								'prod_id': partner.prodi_id.id,
-								'account_id':partner.property_account_receivable.id,
-								'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
-														 'name'			: bayar.product_ids[0].name,
-														 'price_unit'	: bayar.angsuran3,
-														 'account_id'	: coa_line}))],
-								},context=context)	
+							if partner.split_invoice == 1 :									
+								# create 1 invoice
+								prod_id.append((0,0,{'product_id'	: bayar.product_ids[0].id,
+													 'name'			: bayar.product_ids[0].name,
+													 'price_unit'	: up_uk,
+													 'discount'		: discount,
+													 'account_id'	: coa_line}))
+								inv = self.pool.get('account.invoice').create(cr,uid,{
+									'partner_id':partner.id,
+									'origin': 'UP dan UK '+str(partner.reg),
+									'type':'out_invoice',
+									'fakultas_id': partner.fakultas_id.id,
+									'prod_id': partner.prodi_id.id,
+									'due_date':bayar.date1,
+									'account_id':partner.property_account_receivable.id,
+									'invoice_line': prod_id,
+									},context=context)
 
-							# create invoice ke4
-							inv4 = self.pool.get('account.invoice').create(cr,uid,{
-								'partner_id':partner.id,
-								'origin': 'UP dan UK '+str(partner.reg)+' -4',
-								'type':'out_invoice',
-								'fakultas_id': partner.fakultas_id.id,
-								'prod_id': partner.prodi_id.id,
-								'account_id':partner.property_account_receivable.id,
-								'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
-														 'name'			: bayar.product_ids[0].name,
-														 'price_unit'	: bayar.angsuran4,
-														 'account_id'	: coa_line}))],
-								},context=context)	
+								wf_service = netsvc.LocalService('workflow')
+								wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+								#self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)				
+								self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
 
-							# create invoice ke5
-							inv5 = self.pool.get('account.invoice').create(cr,uid,{
-								'partner_id':partner.id,
-								'origin': 'UP dan UK '+str(partner.reg)+' -5',
-								'type':'out_invoice',
-								'fakultas_id': partner.fakultas_id.id,
-								'prod_id': partner.prodi_id.id,
-								'account_id':partner.property_account_receivable.id,
-								'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
-														 'name'			: bayar.product_ids[0].name,
-														 'price_unit'	: bayar.angsuran5,
-														 'account_id'	: coa_line}))],
-								},context=context)	
+								# create notifikasi ke email
+								template_pool = self.pool.get('email.template')
+								template_id = template_pool.search(cr,uid,[('name','=ilike','Uang Pengembangan dan Uang Kuliah ISTN')])
+								if template_id:
+									self.pool.get('email.template').send_mail(cr, uid, template_id[0], inv)
 
-							# create invoice ke6
-							inv6 = self.pool.get('account.invoice').create(cr,uid,{
-								'partner_id':partner.id,
-								'origin': 'UP dan UK '+str(partner.reg)+' -6',
-								'type':'out_invoice',
-								'fakultas_id': partner.fakultas_id.id,
-								'prod_id': partner.prodi_id.id,
-								'account_id':partner.property_account_receivable.id,
-								'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
-														 'name'			: bayar.product_ids[0].name,
-														 'price_unit'	: bayar.angsuran6,
-														 'account_id'	: coa_line}))],
-								},context=context)	
+							elif partner.split_invoice > 1 :
+								cicil_up_uk = 0
+								if discount > 0 :
+									cicil_up_uk = ((up_uk*discount)/100) /partner.split_invoice
+								angske = 1
+								# create invoice (looping sesuai jumlah angsuran)
+								# import pdb;pdb.set_trace()
+								for angs in range(0,partner.split_invoice):
+									upuk = 'UP dan UK '
+									if angske == 1 :
+										price_unit = bayar.angsuran1-cicil_up_uk
+										due_date = bayar.date1
+									elif angske == 2 :
+										price_unit = bayar.angsuran2-cicil_up_uk
+										due_date = bayar.date2
+									elif angske == 3 :
+										price_unit = bayar.angsuran3-cicil_up_uk
+										due_date = bayar.date3
+									elif angske == 4 :
+										price_unit = bayar.angsuran4-cicil_up_uk
+										due_date = bayar.date4
+									elif angske == 5 :
+										price_unit = bayar.angsuran5-cicil_up_uk
+										due_date = bayar.date5
+									elif angske == 6 :
+										price_unit = bayar.angsuran6-cicil_up_uk				
+										due_date = bayar.date6
+									else :
+										break
+									inv = self.pool.get('account.invoice').create(cr,uid,{
+											'partner_id':partner.id,
+											'origin': upuk+str(partner.reg)+' - '+str(angske),
+											'type':'out_invoice',
+											'fakultas_id': partner.fakultas_id.id,
+											'prod_id': partner.prodi_id.id,
+											'account_id':partner.property_account_receivable.id,
+											'due_date' : due_date,
+											'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
+																	 'name'			: bayar.product_ids[0].name,
+																	 'price_unit'	: price_unit,
+																	 'discount'		: 0,
+																	 'account_id'	: coa_line}))],
+											},context=context)
+									if angske == 1 :
+										wf_service = netsvc.LocalService('workflow')
+										wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+										#self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)				
+										self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
 
-						#cr.commit()
-						#self.add_discount_bangunan(cr, uid, ids ,partner, [inv], context=None)
-						#import pdb;pdb.set_trace()
-						wf_service = netsvc.LocalService('workflow')
-						wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
-						#self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)				
-						self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
+										# create notifikasi ke email
+										template_pool = self.pool.get('email.template')
+										template_id = template_pool.search(cr,uid,[('name','=ilike','Uang Pengembangan dan Uang Kuliah ISTN')])
+										if template_id:
+											self.pool.get('email.template').send_mail(cr, uid, template_id[0], inv)
 
-						# create notifikasi ke email
-						template_pool = self.pool.get('email.template')
-						template_id = template_pool.search(cr,uid,[('name','=ilike','Uang Pengembangan dan Uang Kuliah ISTN')])
-						if template_id:
-							self.pool.get('email.template').send_mail(cr, uid, template_id[0], inv)
+									angske += 1
+							
 
 		return True	
 
 
-	def create_krs_smt_1_dan_2(self,cr,uid,ids,context=None):
+	def create_krs_smt_1_dan_2(self,cr,uid,ids,krs_id,context=None):
 		calon_obj = self.pool.get('res.partner.calon.mhs')
 		bea_obj = self.pool.get('beasiswa.prodi')
 		kurikulum_obj = self.pool.get('master.kurikulum')
@@ -1011,68 +1023,8 @@ class res_partner (osv.osv):
 						#import pdb;pdb.set_trace()
 						#from openerp import workflow
 						wf_service.trg_validate(self._uid, 'account.invoice', inv.id, 'invoice_open', self._cr)
-
-						# insert ke spc bni
-						# acc_obj = self.pool.get('account.invoice')
-						# acc_obj.get_params(self._cr,self._uid, context=self._context)
-						# spc = bni.spc()
-						# spc.connect(host=acc_obj.spc_hostname, user=acc_obj.spc_username, passwd=acc_obj.spc_password, db=acc_obj.spc_dbname)
-						# for inv in acc_obj.browse(self._cr,self._uid,[inv.id],context=self._context):
-						# 	mahasiswa = inv.partner_id 
-
-						# 	nomor_pembayaran = mahasiswa.reg
-
-
-						# 	today = date.today() 
-						# 	three_mon = today + relativedelta(months=3)
-
-						# 	# insert header
-						# 	data = {
-						# 		'id_record_tagihan'         : inv.number ,
-						# 		'nomor_pembayaran'          : nomor_pembayaran ,
-						# 		'nama'                      : mahasiswa.name ,
-						# 		'kode_fakultas'             : mahasiswa.fakultas_id.kode ,
-						# 		'nama_fakultas'             : mahasiswa.fakultas_id.name ,
-						# 		'kode_prodi'                : mahasiswa.prodi_id.kode ,
-						# 		'nama_prodi'                : mahasiswa.prodi_id.name ,
-						# 		'kode_periode'              : mahasiswa.tahun_ajaran_id.code , ## TODO: tambah semester
-						# 		'nama_periode'              : mahasiswa.tahun_ajaran_id.name , ## TODO: tambah semester
-						# 		'is_tagihan_aktif'          : 1 ,
-						# 		'waktu_berlaku'             : today.strftime('%Y-%m-%d'),
-						# 		'waktu_berakhir'            : three_mon.strftime('%Y-%m-%d') ,
-						# 		'strata'                    : mahasiswa.prodi_id.jenjang.name ,
-						# 		'angkatan'                  : mahasiswa.tahun_ajaran_id.name ,
-						# 		'urutan_antrian'            : 0,   ### TODO : jika ada 4 invoices, ini harus ngurut 0,1,2,3
-						# 		'total_nilai_tagihan'       : inv.amount_total ,
-						# 		'minimal_nilai_pembayaran'  : inv.amount_total ,
-						# 		'maksimal_nilai_pembayaran' : inv.amount_total  ,
-						# 		'nomor_induk'               : mahasiswa.npm,
-						# 		'pembayaran_atau_voucher'   : '',
-						# 		'voucher_nama'              : '' ,
-						# 		'voucher_nama_fakultas'     : '',
-						# 		'voucher_nama_prodi'        : '' ,
-						# 		'voucher_nama_periode'      : '' 
-						# 	}
-						# 	spc.insert_biller_tagihan( data )
-
-						# 	# insert detail
-						# 	for line in inv.invoice_line:
-						# 		data = {
-						# 			'id_record_detil_tagihan'	: line.id, 
-						# 			'id_record_tagihan'			: inv.number,
-						# 			'urutan_detil_tagihan'		: line.id, 		
-						# 			'kode_jenis_biaya'			: line.product_id.default_code, 
-						# 			'label_jenis_biaya'			: line.product_id.name, 
-						# 			'label_jenis_biaya_panjang'	: line.name,
-						# 			'nilai_tagihan'				: line.price_subtotal
-						# 		}
-						# 		spc.insert_biller_tagihan_detil(data)
-
-						# spc.close()
 						vals.update({'invoice_id':inv.id})
-						result = super(res_partner, self).write(vals)		
-
-
+						result = super(res_partner, self).write(vals)
 		
 		if inv :
 			#import pdb;pdb.set_trace()

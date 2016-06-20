@@ -70,6 +70,7 @@ class master_pembayaran(osv.Model):
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
 		'lokasi_kampus_id' : fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 		'uang_semester' : fields.float('Uang Semester'),
+		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
 
 	}
 	_defaults = {
@@ -77,6 +78,7 @@ class master_pembayaran(osv.Model):
 		'name': '/',
 		'state':'draft',
 		'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
+		'type_pendaftaran':'ganjil',
 	}
 
 	_sql_constraints = [('name_uniq', 'unique(name)','Kode template pembayaran tidak boleh sama')]

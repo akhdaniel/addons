@@ -16,31 +16,11 @@ class beasiswa_prodi(osv.Model):
 		prod_obj = self.pool.get('product.product')
 		product = prod_obj.search(cr,uid,[('name_template','ilike','Beasiswa')])
 		if product:
-
-			seq = 0
-			for x in range(0,6):
-				if seq == 0:
-					name = 'Potongan USM'
-					code = 0
-				elif seq == 1:
-					name = 'Potongan Alumni'
-					code = 1
-				elif seq == 2:
-					name = 'Potongan Ultah Lembaga'
-					code = 2
-				elif seq == 3:
-					name = 'Potongan Karyawan'
-					code = 3
-				elif seq == 4:
-					name = 'Potongan Prodi'			
-					seq = -1
-					code = 4
-				elif seq == 5:
-					name = 'Potongan Satu Yayasan'			
-					seq = -1
-					code = 5					
-				product_ids.append((0,0,{'product_id':product[0],'name':name,'sequence':seq,'code':code}))
-				seq += 1
+			name = 'Potongan Prodi'			
+			seq = -1
+			code = 4
+				
+			product_ids.append((0,0,{'product_id':product[0],'name':name,'sequence':seq,'code':code}))
 		return product_ids
 
 	_columns = {

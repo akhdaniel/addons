@@ -54,7 +54,9 @@
                     <field name="npm" invisible="1"/>
                     <field name="fakultas_id" readonly="1" attrs="{'invisible': [('fakultas_id','=',False)]}"/>
                     <field name="prodi_id" readonly="1" attrs="{'invisible': [('prodi_id','=',False)]}"/>
-                    <field name="krs_id" readonly="1" attrs="{'invisible': [('krs_id','=',False)]}"/>
+                </field>
+                <field name="move_id" position="before">
+                    <field name="krs_id" attrs="{'readonly': [('state','!=','draft')]}"/>
                 </field>
             </field>
         </record>
