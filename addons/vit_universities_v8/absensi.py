@@ -1025,4 +1025,5 @@ class master_penilaian(osv.osv):
 				raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft'))
 		return super(master_penilaian, self).unlink(cr, uid, ids, context=context)	
 
+
 master_penilaian()		

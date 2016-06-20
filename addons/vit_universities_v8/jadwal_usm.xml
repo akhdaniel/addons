@@ -13,7 +13,6 @@
                     <field name="date_end" />      
                     <field name="date" />      
                     <field name="limit" />          
-                    <field name="calon_mhs_ids" /> 
                     <field name="is_active" invisible="1"/>
                     <field name="user_id" invisible="1"/>
                     <field name="discount" />
@@ -35,8 +34,7 @@
                                 <field name="name"/>
                                 <field name="tahun_ajaran_id"/>
                                 <field name="limit" /> 
-                    		    <field name="discount" />
-                                <field name="user_id" invisible="1"/>        
+                                <field name="user_id" readonly="1"/>        
                             </group>
                 			<group>
                                 <field name="date" />      
@@ -56,14 +54,41 @@
                                         <field name="name"/>                    
                                     </tree>
                                 </field>
-                            </page>  
+                            </page>
+                            <page string="Potongan">
+                                <sheet>
+                                    <form version="7.0" string="Jenis Potongan">
+                                        <group>
+                                            <group> 
+                                                <p class="oe_grey">Potongan Umum (UP dan UK) berlaku Akumulasi</p>
+                                            </group> 
+                                            <group> 
+                                                <p class="oe_grey">Potongan khusus (hanya UP) calon mahasiswa dari SMA/SMK yayasan yang sama dan tidak berlaku akumulasi)</p>
+                                                
+                                            </group>
+                                            <group> 
+                                                <field name="discount" />
+                                                <field name="discount_tunai"/>
+                                                <field name="discount_alumni"/>
+                                                <field name="discount_lembaga"/> 
+                                                <field name="discount_karyawan"/>
+                                            </group> 
+                                            <group>
+                                                <field name="discount_ranking1"/>
+                                                <field name="discount_ranking2"/> 
+                                                <field name="discount_ranking3"/> 
+                                                <field name="discount_non_ranking"/>  
+                                            </group>
+                                        </group>               
+                                    </form>
+                                </sheet>
+                            </page>    
                         </notebook>                      
 
 	                </sheet>    
                 </form>
             </field>
         </record>
-
 
 
         <record model="ir.actions.act_window" id="jadwal_usm_list_action">

@@ -41,16 +41,16 @@
             <field name="name">Invoice</field>
             <field name="res_model">account.invoice</field>
             <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,calendar,graph</field>
             <!-- <field name="view_id" ref="vit_universities_v8.invoice_tree_mhs"/> -->
             <field name="search_id" ref="account.view_account_invoice_filter"/>
             <field name="domain">[('krs_id','=',active_id),('type','=','out_invoice')]</field>
-            <field name="context">{'default_type':'out_invoice','search_default_group_by_state':True}</field>
+            <field name="context">{'default_type':'out_invoice', 'type':'out_invoice', 'journal_type': 'sale','search_default_group_by_state':True}</field>
             <field name="help" type="html">
                 <p class="oe_view_nocontent_create">
                     ...
                 </p><p>
-                    Belum ada Invoice...
+                    Belum ada invoice untuk partner ini...
                 </p>
             </field>
         </record> 
