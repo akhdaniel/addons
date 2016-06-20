@@ -217,16 +217,17 @@
         <field name="user_signature" eval="0"/>
         <field name="body_html"><![CDATA[<p>Selamat ${object.partner_id.name or 'Calon Mahasiswa'}, pendaftaran anda sukses,</p>
         <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan Nomor Pendaftaran ${object.partner_id.reg} sebesar Rp. ${'%d'%object.amount_total}</p>
-        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
-        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
-        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
-    	</p>
     	<p>
 		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
     	</p>
         <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
 		</field>
     </record>
+<!-- <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
+    	</p> -->
+    
 
 
 <!-- email template remider tagihan pendaftaran-->
@@ -241,16 +242,17 @@
         <field name="user_signature" eval="0"/>
         <field name="body_html"><![CDATA[<p>Selamat ${object.partner_id.name or 'Calon Mahasiswa'}, pendaftaran anda sukses,</p>
         <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan Nomor Pendaftaran ${object.partner_id.reg} sebesar Rp. ${'%d'%object.amount_total}</p>
-        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
-        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
-        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
-    	</p>
     	<p>
 		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
     	</p>
         <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
 		</field>
     </record>
+<!-- <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
+    	</p> -->
+
 
 <!-- email template tagihan UP UK-->
     <record id="notif_email_up_uk" model="email.template">
@@ -264,16 +266,18 @@
         <field name="user_signature" eval="0"/>
         <field name="body_html"><![CDATA[<p>Selamat ${object.partner_id.name or 'Calon Mahasiswa'}, TPA anda berhasil,</p>
         <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan Nomor Pendaftaran ${object.partner_id.reg} sebesar Rp. ${'%d'%object.amount_total}</p>
-        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
-        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
-        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
-    	</p>
+        
     	<p>
 		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
     	</p>
         <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
 		</field>
     </record>
+<!-- <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan Nomor Pendaftaran ${object.partner_id.reg}
+    	</p>
+ -->
 
 <!-- email template tagihan UK-->
     <record id="notif_email_uk" model="email.template">
@@ -287,16 +291,17 @@
         <field name="user_signature" eval="0"/>
         <field name="body_html"><![CDATA[<p>Saudara/i ${object.partner_id.name or 'Mahasiswa'}, tagihan Uang Kuliah(UP) anda telah dibuat,</p>
         <p>Silahkan lakukan pembayaran di Bank/ATM BNI terdekat dengan NIM ${object.partner_id.npm} sebesar Rp. ${'%d'%object.amount_total}</p>
-        <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
-        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
-        dengan mencantumkan NIM ${object.partner_id.npm}
-    	</p>
     	<p>
 		Konfirmasi bukti pembayaran Non BNI dapat anda emailkan ke : pmb@istn.ac.id atau fax ke : (021) 786 6955	
     	</p>
         <p>Terima Kasih,<br/>Keuangan ISTN</p>]]>
 		</field>
     </record>
+<!-- <p>Jika pembayaran dilakukan selain Bank BNI dapat ditransfer ke Rekening BNI Cabang UI Depok
+        Dengan Nomor Rekening BNI : 019-042-0913 a/n : Yayasan Perguruan Cikini ISTN 
+        dengan mencantumkan NIM ${object.partner_id.npm}
+    	</p> -->
+
 
 <!-- email template pembayaran pendaftaran-->
     <record id="notif_email_pembayaran_pendaftaran" model="email.template">
@@ -310,7 +315,7 @@
         <field name="user_signature" eval="0"/>
         <field name="body_html"><![CDATA[<p>Terima kasih ${object.partner_id.name},</p>
         <p>Pembayaran Pendaftaran Mahasiswa Baru ISTN sebesar Rp. ${'%d'%object.amount} telah diterima
-        <br/>Silahkan klik link http://istn.ac.id:8069/tpa untuk melakukan Test Potensi Akademik (TPA) Online !</p>
+        <br/>Silahkan klik link http://istn.ac.id/tpa untuk melakukan Test Potensi Akademik (TPA) Online !</p>
         <p>Terima Kasih,<br/>Panitia Penerimaan Mahasiswa Baru ISTN</p>]]>
 		</field>
     </record>
