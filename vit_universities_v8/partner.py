@@ -806,7 +806,7 @@ class res_partner (osv.osv):
 		return True	
 
 
-	def create_krs_smt_1_dan_2(self,cr,uid,ids,krs_id,context=None):
+	def create_krs_smt_1_dan_2(self,cr,uid,ids,context=None):
 		calon_obj = self.pool.get('res.partner.calon.mhs')
 		bea_obj = self.pool.get('beasiswa.prodi')
 		kurikulum_obj = self.pool.get('master.kurikulum')
@@ -981,6 +981,11 @@ class res_partner (osv.osv):
 
 				byr_obj = self.env['master.pembayaran.pendaftaran']
 				for partner in self:
+					inv_obj = self.env['account.invoice']
+					# search dulu apa inv pendaftaran untuk partner ini pernah dibuat ?
+					inv_pendf_exist = inv_obj.search([('partner_id','=',partner.id),('origin','ilike','Pendaftaran')])
+					if inv_pendf_exist :
+						break
 					byr_sch = byr_obj.search([('tahun_ajaran_id','=',vals.get('tahun_ajaran_id')),
 						('prodi_id','=',vals.get('prodi_id')),
 						('state','=','confirm'),
@@ -995,9 +1000,6 @@ class res_partner (osv.osv):
 							])	
 
 					if byr_sch :
-						# cr = self.pool.cursor()
-						# cr.commit()
-						
 						prod_id = []
 						for bayar in byr_sch[0].detail_product_ids:
 							product = bayar.product_id
