@@ -578,66 +578,6 @@ class res_partner (osv.osv):
 
 		return True		
 
-	# def create_inv_bangunan(self,cr,uid,ids,context=None):
-	# 	byr_obj = self.pool.get('master.pembayaran.bangunan')
-	# 	for partner in self.browse(cr,uid,ids):
-	# 		discount_alumni = 0
-	# 		if partner.is_alumni :
-	# 			discount_alumni = 2 # disc alumni 2%
-	# 		disc_pemb_tunai = 0
-	# 		if partner.split_invoice == 1 :
-	# 			disc_pemb_tunai = 5 # disc pembayaran tunai 5%
-	# 		total_pot = discount_alumni + disc_pemb_tunai
-
-	# 		byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
-	# 			('fakultas_id','=',partner.fakultas_id.id),
-	# 			('prodi_id','=',partner.prodi_id.id),
-	# 			('state','=','confirm'),
-	# 			('type_mhs_id','=',partner.type_mhs_id.id),
-	# 			])
-	# 		if not byr_sch :
-	# 			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
-	# 				('fakultas_id','=',partner.fakultas_id.id),
-	# 				('prodi_id','=',partner.prodi_id.id),
-	# 				('state','=','confirm'),
-	# 				])						
-	# 		if byr_sch :
-	# 			byr_brw = byr_obj.browse(cr,uid,byr_sch[0],context=context)
-	# 			list_pembayaran = byr_brw.detail_product_ids
-	# 			prod_id = []
-	# 			for bayar in list_pembayaran:
-	# 				#import pdb;pdb.set_trace()
-	# 				product = self.pool.get('product.product').browse(cr,uid,bayar.product_id.id)
-	# 				coa_line = product.property_account_income.id
-	# 				if not coa_line:
-	# 					coa_line = product.categ_id.property_account_income_categ.id
-
-	# 				price = bayar.public_price
-	# 				if total_pot > 0 :
-	# 					price = price - (price*total_pot/100)
-						
-	# 				prod_id.append((0,0,{'product_id'	: bayar.product_id.id,
-	# 									 'name'			: bayar.product_id.name,
-	# 									 'price_unit'	: price,
-	# 									 'account_id'	: coa_line}))
-	# 			inv = self.pool.get('account.invoice').create(cr,uid,{
-	# 				'partner_id':partner.id,
-	# 				'origin': 'SPP '+str(partner.reg),
-	# 				'type':'out_invoice',
-	# 				'fakultas_id': partner.fakultas_id.id,
-	# 				'prod_id': partner.prodi_id.id,
-	# 				'account_id':partner.property_account_receivable.id,
-	# 				'invoice_line': prod_id,
-	# 				},context=context)
-
-	# 			cr.commit()
-	# 			self.add_discount_bangunan(cr, uid, ids ,partner, [inv], context=None)
-
-	# 			wf_service = netsvc.LocalService('workflow')
-	# 			wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)				
-	# 			self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
-
-	# 	return True	
 
 	def verifikasi_daftar_ulang(self,cr,uid,ids,context=None):
 		
@@ -729,7 +669,7 @@ class res_partner (osv.osv):
 									'type':'out_invoice',
 									'fakultas_id': partner.fakultas_id.id,
 									'prod_id': partner.prodi_id.id,
-									'due_date':bayar.date1,
+									'date_due':bayar.date1,
 									'account_id':partner.property_account_receivable.id,
 									'invoice_line': prod_id,
 									},context=context)
@@ -757,21 +697,27 @@ class res_partner (osv.osv):
 									if angske == 1 :
 										price_unit = bayar.angsuran1-cicil_up_uk
 										due_date = bayar.date1
+										date_invoice = False
 									elif angske == 2 :
 										price_unit = bayar.angsuran2-cicil_up_uk
 										due_date = bayar.date2
+										date_invoice = bayar.date1
 									elif angske == 3 :
 										price_unit = bayar.angsuran3-cicil_up_uk
 										due_date = bayar.date3
+										date_invoice = bayar.date2
 									elif angske == 4 :
 										price_unit = bayar.angsuran4-cicil_up_uk
 										due_date = bayar.date4
+										date_invoice = bayar.date3
 									elif angske == 5 :
 										price_unit = bayar.angsuran5-cicil_up_uk
 										due_date = bayar.date5
+										date_invoice = bayar.date4
 									elif angske == 6 :
 										price_unit = bayar.angsuran6-cicil_up_uk				
 										due_date = bayar.date6
+										date_invoice = bayar.date5
 									else :
 										break
 									inv = self.pool.get('account.invoice').create(cr,uid,{
@@ -781,7 +727,8 @@ class res_partner (osv.osv):
 											'fakultas_id': partner.fakultas_id.id,
 											'prod_id': partner.prodi_id.id,
 											'account_id':partner.property_account_receivable.id,
-											'due_date' : due_date,
+											'date_invoice' : date_invoice,
+											'date_due' : due_date,
 											'invoice_line': [((0,0,{'product_id'	: bayar.product_ids[0].id,
 																	 'name'			: bayar.product_ids[0].name,
 																	 'price_unit'	: price_unit,
@@ -1027,32 +974,7 @@ class res_partner (osv.osv):
 						wf_service.trg_validate(self._uid, 'account.invoice', inv.id, 'invoice_open', self._cr)
 						vals.update({'invoice_id':inv.id})
 						result = super(res_partner, self).write(vals)
-		
-		if inv :
-			#import pdb;pdb.set_trace()
-			locale.setlocale( locale.LC_ALL, '' )
-			inv_amount 	= locale.currency( inv.amount_total, grouping = True )
-			inv_reg 	= partner.reg
-			inv_name 	= partner.name
-			invoice_obj = inv.write({'origin': 'Pendaftaran: '+str(inv_reg)})
-
-			body_html = 'Selamat '+str(inv_name)+', pendaftaran sukses, silahkan lakukan pembayaran di Bank BNI terdekat dengan no pembayaran '+str(partner.reg)+' sebesar '+str(inv_amount)
-			
-			# create notifikasi ke email
-			template_pool = self.env['email.template']
-			template_id = template_pool.search([('name','=ilike','[PMB ISTN] Bukti Booking Nomor Pendaftaran Mahasiswa Baru')])
-			if template_id:
-				self.pool.get('email.template').send_mail(self._cr, self._uid, template_id.id, inv.id)
-			# 	body = template_id[0].body_html
-			# mail = self.env['mail.mail']
-			# notif_mail = mail.create({'subject' 		: 'Pendaftaran Mahasiswa Baru ISTN',
-			# 							'email_to' 		: partner.email,
-			# 							'recipient_ids' : [(6, 0, [partner.id])],
-			# 							'notification' 	: True,
-			# 							'body_html'		: body,
-
-			# 							})	
-			#mail.send(self._cr, self._uid, [notif_mail.id], auto_commit=False, raise_exception=False,self._context)						
+						
 		for partner in self:
 			self._fields_sync(partner, vals)
 		return result
