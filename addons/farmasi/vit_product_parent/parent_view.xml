@@ -1,0 +1,17 @@
+<openerp>
+<data>      
+
+        <record id="vit_parent_product_form_view" model="ir.ui.view">
+            <field name="name">parent_product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="default_code" position="after">
+                    <field name="parent_id"/>                               
+                </field>                 
+            </field>
+        </record>
+
+
+</data>
+</openerp> 
