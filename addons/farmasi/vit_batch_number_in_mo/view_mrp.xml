@@ -1,76 +1,103 @@
 <openerp>
-<data>      
+    <data>
 
-    <record id="vit_mrp_man_orders" model="ir.ui.view">
-        <field name="name">mrp.production</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
-        <field name="arch" type="xml">
-            <field name="date_planned" position="replace">
-                <field name="date_planned" string="Manufacturing Date"/>
-                <field name="batch_number" />
-            </field>     
-            <field name="origin" position="after">
-                <field name="sediaan_id"/>
-            </field> 
-            <field name="location_src_id" position="before">
-                <field name="allow_batch" attrs="{'invisible':[('allow_batch','=',False)]}"/>  
-            </field> 
+        <record id="vit_mrp_man_orders" model="ir.ui.view">
+            <field name="name">mrp.production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <field name="date_planned" position="replace">
+                    <field name="date_planned" string="Manufacturing Date"/>
+                    <field name="batch_number" />
+                </field>
+                <field name="origin" position="after">
+                    <field name="sediaan_id"/>
+                </field>
+                <field name="location_src_id" position="before">
+                    <field name="allow_batch" attrs="{'invisible':[('allow_batch','=',False)]}"/>
+                </field>
 
-        </field>
-    </record> 
-
-    <record id="vit_mrp_man_orders_tree" model="ir.ui.view">
-        <field name="name">mrp.production</field>
-        <field name="model">mrp.production</field>
-        <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
-        <field name="arch" type="xml">
-            <field name="date_planned" position="replace">
-                <field name="batch_number"/>
-                <field name="date_planned" string="Manufacturing Date"/>
-            </field> 
-
-        </field>
-    </record> 
-
-    <!--  WO List View -->
-    <record id="vit_mrp_production_workcenter_tree_view_inherit3" model="ir.ui.view">
-        <field name="name">mrp.production.workcenter.line</field>
-        <field name="model">mrp.production.workcenter.line</field>
-        <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_tree_view_inherit"/>
-        <field name="arch" type="xml">
-            <field name="production_id" position="after">
-                <field name="batch_number"/>
             </field>
-        </field>
-    </record>  
+        </record>
 
-    <!--  WO List filter -->
-    <record id="vit_view_mrp_production_workcenter_form_view_filter" model="ir.ui.view">
-        <field name="name">mrp.production.workcenter.line</field>
-        <field name="model">mrp.production.workcenter.line</field>
-        <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>
-        <field name="arch" type="xml">
-            <filter string="Production" position="after">
-                <filter string="Batch Number" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'batch_number'}"/>
-            </filter>
-        </field>
-    </record> 
+        <record id="vit_mrp_man_orders_tree" model="ir.ui.view">
+            <field name="name">mrp.production</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="date_planned" position="replace">
+                    <field name="batch_number"/>
+                    <field name="date_planned" string="Manufacturing Date"/>
+                </field>
+
+            </field>
+        </record>
+
+        <!--  WO List View -->
+        <record id="vit_mrp_production_workcenter_tree_view_inherit3" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.mrp_production_workcenter_tree_view_inherit"/>
+            <field name="arch" type="xml">
+                <field name="production_id" position="after">
+                    <field name="batch_number"/>
+                </field>
+            </field>
+        </record>
+
+        <!--  WO List filter -->
+        <record id="vit_view_mrp_production_workcenter_form_view_filter" model="ir.ui.view">
+            <field name="name">mrp.production.workcenter.line</field>
+            <field name="model">mrp.production.workcenter.line</field>
+            <field name="inherit_id" ref="mrp_operations.view_mrp_production_workcenter_form_view_filter"/>
+            <field name="arch" type="xml">
+                <filter string="Production" position="after">
+                    <filter string="Batch Number" icon="terp-accessories-archiver" domain="[]" context="{'group_by':'batch_number'}"/>
+                </filter>
+            </field>
+        </record>
 
 
-    <!-- view mrp routings -->
-    <record id="vit_mrp_routing_workcenter_batch_number_form_view" model="ir.ui.view">
-        <field name="name">mrp.routing.workcenter</field>
-        <field name="model">mrp.routing.workcenter</field>
-        <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
-        <field name="arch" type="xml">
-            <label for="note" position="before">
-                <group>
-                    <field name="limit_batch_number_cancel"/>
-                </group>
-            </label>     
-        </field>
-    </record>                 
+        <!-- view mrp routings -->
+        <record id="vit_mrp_routing_workcenter_batch_number_form_view" model="ir.ui.view">
+            <field name="name">mrp.routing.workcenter</field>
+            <field name="model">mrp.routing.workcenter</field>
+            <field name="inherit_id" ref="mrp.mrp_routing_workcenter_form_view"/>
+            <field name="arch" type="xml">
+                <label for="note" position="before">
+                    <group>
+                        <field name="limit_batch_number_cancel"/>
+                    </group>
+                </label>
+            </field>
+        </record>
 
-</data>
+
+        <record id="mrp_production_search_view2" model="ir.ui.view">
+            <field name="name">mrp_production_search_view2</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.view_mrp_production_filter"/>
+            <field name="arch" type="xml">
+                <field name="product_id" position="after">
+                    <field name="batch_number"/>
+                </field>
+            </field>
+        </record>
+
+
+        <!-- show actual date on Work Orders tab on MO -->
+
+
+        <record id="mrp_production_view30" model="ir.ui.view">
+            <field name="name">mrp_production_view30</field>
+            <field name="model">mrp.production</field>
+            <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr='//form/sheet/notebook/page[@string="Work Orders"]/field[@name="workcenter_lines"]/tree/field[@name="hour"]' position="after">
+                    <field name="date_start"/>
+                    <field name="date_finished"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
 </openerp>        
