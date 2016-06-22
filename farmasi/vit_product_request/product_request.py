@@ -22,6 +22,7 @@ PR_LINE_STATES =[('draft','Draft'),
 
 class product_request(osv.osv):
 	_name 		= "vit.product.request"
+	_inherit = ['mail.thread', 'ir.needaction_mixin']
 
 	def _product_request_lines(self, cr, uid, ids, field, arg, context=None):
 		results = {}
@@ -93,36 +94,59 @@ class product_request(osv.osv):
 		# if vals.get('name', '/') == '/':
 		dept = self.pool.get('hr.department').browse(cr, uid, vals['department_id'], context=context)
 		vals['name'] = self.pool.get('ir.sequence').get(cr, uid, 'vit.product.request') + '/' + dept.name or '/'
+
 		new_id = super(product_request, self).create(cr, uid, vals, context=context)
+
+		#add followers to managers
+		partner_id=dept.manager_id.user_id.partner_id.id if dept.manager_id else False
+		if partner_id:
+			self.write(cr, uid, new_id, {'message_follower_ids': [(4, partner_id)]})
+
 		return new_id
 
 	def action_draft(self,cr,uid,ids,context=None):
 		#set to "draft" state
+		body = _("PR set to draft")
+		self.send_followers(cr, uid, ids, body, context=context)
+
 		self.update_line_state(cr, uid, ids, PR_STATES[0][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[0][0]},context=context)
 	
 	def action_send_approval(self,cr,uid,ids,context=None):
+
 		#set to "pending" state
+		# post message
+		body = _("PR sent for approval")
+		self.send_followers(cr, uid, ids, body, context=context)
+
 		self.update_line_state(cr, uid, ids, PR_STATES[1][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[1][0]},context=context)
 	
 	def action_confirm(self,cr,uid,ids,context=None):
 		#set to "open" approved state
+		body = _("PR confirmed")
+		self.send_followers(cr, uid, ids, body, context=context)
 		self.update_line_state(cr, uid, ids, PR_STATES[2][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[2][0]},context=context)
 
 	def action_onprogress(self,cr,uid,ids,context=None):
 		#set to "onprogress" state
+		body = _("PR on progress")
+		self.send_followers(cr, uid, ids, body, context=context)
 		self.update_line_state(cr, uid, ids, PR_STATES[3][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[3][0]},context=context)
 	
 	def action_done(self,cr,uid,ids,context=None):
 		#set to "done" state
+		body = _("PR done")
+		self.send_followers(cr, uid, ids, body, context=context)
 		self.update_line_state(cr, uid, ids, PR_STATES[4][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[4][0]},context=context)
 	
 	def action_reject(self,cr,uid,ids,context=None):
 		#set to "reject" state
+		body = _("PR reject")
+		self.send_followers(cr, uid, ids, body, context=context)
 		self.update_line_state(cr, uid, ids, PR_STATES[5][0], context)
 		return self.write(cr,uid,ids,{'state':PR_STATES[5][0]},context=context)
 
@@ -162,7 +186,18 @@ class product_request(osv.osv):
 
 			self.write(cr, uid, prd_req.id, {'state':'onprogress'}, context=context)
 
+			body = _("PR bid created")
+			self.send_followers(cr, uid, ids, body, context=context)
+
 			return pr_id			
+
+	def send_followers(self, cr, uid, ids, body, context=None):
+		records = self._get_followers(cr, uid, ids, None, None, context=context)
+		followers = records[ids[0]]['message_follower_ids']
+		self.message_post(cr, uid, ids, body=body,
+						  subtype='mt_comment',
+						  partner_ids=followers,
+						  context=context)
 
 class product_request_line(osv.osv):
 	_name 		= "vit.product.request.line"
