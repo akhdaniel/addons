@@ -169,7 +169,7 @@
                     </div>
                     <div class="col-md-3 col-sm-4">
                         <input type="text" class="form-control" name="tanggal_lahir" id="datepicker" required="True" 
-                            t-attf-value="{{ partner.tanggal_lahir }}" placeholder="Tanggal Lahir" readonly="True"/>
+                            t-attf-value="{{ partner.tanggal_lahir }}" placeholder="Tanggal Lahir" />
                             
                     </div>
                 </div>  
@@ -549,6 +549,7 @@
                 yearRange: "1960:2060"
             });
         });
+
 
     </script>
 </template>

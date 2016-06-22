@@ -94,7 +94,7 @@ class Partner(http.Controller):
 		Survey = http.request.env['survey.survey']
 		survey = Survey.search([('title','ilike','tpa')])
 		if not survey:
-			message = "Survey not found! Please try again."
+			message = "TPA not found! Please try again later.."
 			return message
 
 
@@ -253,6 +253,11 @@ class Partner(http.Controller):
 		type_mhs				= http.request.env['master.type.mahasiswa'].browse( int(type_mhs_id) )
 		konsentrasi				= http.request.env['master.konsentrasi'].browse( int(konsentrasi_id) )
 		#tanggal_lhr 		    = self.env["res.lang"].datetime_formatter(tanggal_lahir)
+		#import pdb;pdb.set_trace()
+		jadwal_id 				= http.request.env['jadwal.usm'].search([('date_start','<=',today),('date_end','>=',today),('tahun_ajaran_id','=',int(tahun_id))])
+		print jadwal_id  
+		if not jadwal_id:
+			return "Tidak ada gelombang pendaftaran tanggal hari ini %s" % (today)
 
 		hubungan_keluargas   	= http.request.env['master.hubungan_keluarga'].search([])
 		hub_ayah				= hubungan_keluargas[0].id 
@@ -330,6 +335,7 @@ class Partner(http.Controller):
 				'agama'			: agama,
 				'tempat_lahir'	: tempat_lahir,
 				'tanggal_lahir'	: tanggal_lahir,
+				'tgl_daftar'	: today,
 				'is_company'	: False,
 				'is_mahasiswa'	: True,
 				'customer'		: True,
@@ -350,7 +356,7 @@ class Partner(http.Controller):
 			if prodi.coa_piutang_id:
 				data.update({'property_account_receivable': prodi.coa_piutang_id.id})
 
-			#import pdb;pdb.set_trace()
+			
 			# jika pindahan
 			if jenis_pendaftaran_id.name != 'Baru':
 				data.update({'asal_univ'			: asal_universitas,
@@ -494,7 +500,7 @@ class Partner(http.Controller):
 					mail = request.registry['mail.mail']
 					for notif in users_ids.users :
 						body = 'Hallo '+str(notif.partner_id.name)+', Calon Mahasiswa '+str(partner.name)+' dengan nomor pendaftaran '+str(partner.reg)+' butuh verifikasi anda silahkan cek di sistem !'
-						mail_data = {'subject' 		: 'Verifikasi Registrasi Ulang Calon Mahasiswa ISTN',
+						mail_data = {'subject' 		: 'Verifikasi Registrasi Ulang Calon Mahasiswa ISTN '+str(partner.reg),
 									'email_to' 		: notif.partner_id.email,
 									'recipient_ids' : [(6, 0, [notif.partner_id.id])],
 									'notification' 	: True,
