@@ -1,0 +1,14 @@
+<openerp>
+	<data>
+
+
+		<menuitem id="vit_mrp_realisation"
+		 action="action_mrp_realisation_list"
+		 name="MRP Realisation"
+         groups="stock.group_stock_user"
+		 sequence="110"
+		 parent="mrp.menu_mrp_manufacturing"/>
+
+
+	</data>
+</openerp>
