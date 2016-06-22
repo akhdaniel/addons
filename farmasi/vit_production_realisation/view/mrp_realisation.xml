@@ -1,0 +1,63 @@
+<openerp>
+	<data>
+
+        <!-- tree view vit.mrp_realisation-->
+		<record id="view_mrp_realisation" model="ir.ui.view">
+		    <field name="name">view_mrp_realisation</field>
+		    <field name="model">vit.mrp_realisation</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list mrp_realisation" >
+					<field name="date_start" />
+					<field name="date_end" />
+		        </tree>
+		    </field>
+		</record>
+
+        <!-- tree view vit.mrp_realisation-->
+		<record id="view_mrp_realisation_form" model="ir.ui.view">
+		    <field name="name">view_mrp_realisation_form</field>
+		    <field name="model">vit.mrp_realisation</field>
+		    <field name="arch" type="xml">
+
+                <form version="7.0" string="MRP Realisation">
+
+                    <header>
+                        <button name="action_reload" type="object" string="Reload" />
+                    </header>
+
+                    <group>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Details">
+                            <field name="detail_ids">
+                                <tree string="Details">
+                                    
+                                    <field name="product_id" />
+                                    <field name="batch_number" />
+                                    <field name="mo_id" />
+                                    <field name="tgl_penimbangan" />
+                                    <field name="tgl_produksi" />
+                                    <field name="tgl_release" />
+                                    <field name="qty_teoritis" />
+                                    <field name="qty_release" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </form>
+		    </field>
+		</record>
+
+
+		<record id="action_mrp_realisation_list" model="ir.actions.act_window">
+			<field name="name">MRP Realisation</field>
+			<field name="res_model">vit.mrp_realisation</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+    </data>
+</openerp>
