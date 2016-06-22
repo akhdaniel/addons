@@ -1,0 +1,59 @@
+<openerp>
+	<data>
+
+        <!-- tree view vit.mrp_duration-->
+		<record id="view_mrp_duration" model="ir.ui.view">
+		    <field name="name">view_mrp_duration</field>
+		    <field name="model">vit.mrp_duration</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list mrp_duration" >
+					<field name="date" />
+		        </tree>
+		    </field>
+		</record>
+
+        <!-- tree view vit.mrp_duration-->
+		<record id="view_mrp_duration_form" model="ir.ui.view">
+		    <field name="name">view_mrp_duration_form</field>
+		    <field name="model">vit.mrp_duration</field>
+		    <field name="arch" type="xml">
+
+                <form version="7.0" string="MRP Duration">
+
+                    <header>
+                        <button name="action_reload" type="object" string="Reload" />
+                    </header>
+
+                    <group>
+                        <field name="date"/>
+                    </group>
+
+                    <notebook>
+                        <page string="Details">
+                            <field name="detail_ids">
+                                <tree string="Details">
+                                    
+                                    <field name="product_id" />
+                                    <field name="mo_id" />
+                                    <field name="tgl_penimbangan" />
+                                    <field name="tgl_produksi" />
+                                    <field name="tgl_release" />
+                                    <field name="durasi" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </form>
+		    </field>
+		</record>
+
+
+		<record id="action_mrp_duration_list" model="ir.actions.act_window">
+			<field name="name">MRP Duration</field>
+			<field name="res_model">vit.mrp_duration</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+    </data>
+</openerp>
