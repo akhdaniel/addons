@@ -12,7 +12,7 @@
         2. Menu Master Advance Checklist
     """,
     'author': 'Wawan|Fb/email:rahasia2alpha@gmail.com',
-    'depends': ['stock'],
+    'depends': ['stock','vit_lucas_groups'],
     'data': ['master_parameter_checklist.xml','stock.xml'],
     'test': [],    
     'installable': True,

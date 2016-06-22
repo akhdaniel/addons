@@ -45,7 +45,8 @@
             <field name="inherit_id" ref="stock.view_move_picking_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//group/group[@string='Reserved Quants']" position="before">  
-                    <group colspan="4" string="Parameter Pemeriksaan">
+                    <group groups="vit_lucas_groups.group_qc_user,vit_lucas_groups.group_qc_supervisor,vit_lucas_groups.group_qc_manager"
+                           colspan="4" string="Parameter Pemeriksaan">
                         <notebook> 
                             <page string="Checklist" > 
                                 <field name="stock_checklist_ids" widget="one2many_list" view_mode="tree" nolabel="1">
@@ -59,7 +60,8 @@
                             </page>
                         </notebook>
                     </group>
-                    <group colspan="4" string="Tindak Lanjut Pemeriksaan" >
+                    <group groups="vit_lucas_groups.group_qc_user,vit_lucas_groups.group_qc_supervisor,vit_lucas_groups.group_qc_manager"
+                           colspan="4" string="Tindak Lanjut Pemeriksaan" >
                         <notebook> 
                             <page string="Checklist" > 
                                 <field name="stock_advance_checklist_ids" widget="one2many_list" view_mode="tree" nolabel="1">
