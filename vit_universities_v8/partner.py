@@ -658,6 +658,7 @@ class res_partner (osv.osv):
 
 							if partner.split_invoice == 1 :									
 								# create 1 invoice
+								discount += disc_tunai
 								prod_id.append((0,0,{'product_id'	: bayar.product_ids[0].id,
 													 'name'			: bayar.product_ids[0].name,
 													 'price_unit'	: up_uk,
