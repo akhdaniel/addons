@@ -150,7 +150,33 @@ class AccountReportGeneralLedgerWizard(orm.TransientModel):
 
     def _print_report(self, cursor, uid, ids, data, context=None):
         # we update form with display account value
+        # import pdb;pdb.set_trace()
         data = self.pre_print_report(cursor, uid, ids, data, context=context)
+        data['form'].update(self.read(cursor, uid, ids, ['landscape',  'initial_balance', 'amount_currency', 'sortby'])[0])
+        data['form'].update({'initial_balance': True})
+        # we comment this as we whant initial balance the same way
+        # if not data['form']['fiscalyear_id']:# GTK client problem onchange does not consider in save record
+            # data['form'].update({'initial_balance': False})
+        #import pdb;pdb.set_trace()
+        # if data['form']['landscape'] is False:
+        #     data['form'].pop('landscape')
+        # else:
+        #     context['landscape'] = data['form']['landscape']      
         return {'type': 'ir.actions.report.xml',
                 'report_name': 'account.account_report_general_ledger_webkit',
                 'datas': data}
+
+    # def _print_report(self, cr, uid, ids, data, context=None):
+    #     if context is None:
+    #         context = {}
+    #     data = self.pre_print_report(cr, uid, ids, data, context=context)
+    #     data['form'].update(self.read(cursor, uid, ids, ['landscape',  'initial_balance', 'amount_currency', 'sortby'])[0])
+    #     if not data['form']['fiscalyear_id']:# GTK client problem onchange does not consider in save record
+    #         data['form'].update({'initial_balance': False})
+
+    #     if data['form']['landscape'] is False:
+    #         data['form'].pop('landscape')
+    #     else:
+    #         context['landscape'] = data['form']['landscape']
+
+    #     return self.pool['report'].get_action(cr, uid, [], 'account.report_generalledger', data=data, context=context)                
