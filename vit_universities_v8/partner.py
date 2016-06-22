@@ -317,7 +317,7 @@ class res_partner (osv.osv):
 		'age':fields.function(_calc_age, method=True, required=True, string='Usia (Tahun)', readonly=True, type="integer"),
 		'status_pernikahan':fields.selection([('belum','Belum Menikah'),('menikah','Menikah'),('janda','Janda'),('duda','Duda')],'Status Pernikahan'),
 		'agama':fields.selection([('islam','Islam'),('kristen','Kristen'),('hindu','Hindu'),('budha','Budha'),('kepercayaan','Kepercayaan')],'Agama'),
-		'tgl_daftar':fields.date('Tanggal Daftar',readonly=True),
+		'tgl_daftar':fields.date('Tanggal Daftar',),
 
 		'is_mahasiswa' : fields.boolean('Is Mahasiswa'),
 		'nilai_beasiswa':fields.float('Rata-Rata Nilai SMA/Sederajat'),

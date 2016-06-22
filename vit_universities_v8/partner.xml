@@ -164,7 +164,7 @@
                                         <field name="konsentrasi_id" domain="[('prodi_id','=',prodi_id)]"/>
                                 	</group>
                                 	<group>
-                                        <field name="tgl_daftar" attrs="{'invisible': [('status_mahasiswa','!=','calon')]}"/>
+                                        <field name="tgl_daftar" attrs="{'invisible': [('status_mahasiswa','!=','calon')]}" readonly="1"/>
                                         <field name="type_mhs_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
                                         <field name="type_pendaftaran" attrs="{'required': [('is_mahasiswa','=',True)]}"/>  
                                         <field name="jalur_masuk" attrs="{'required': [('is_mahasiswa','=',True)]}"/>

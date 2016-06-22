@@ -25,7 +25,7 @@ class jadwal_usm(osv.Model):
 		'discount_tunai'	: fields.float('Potongan Tunai (%)'),
 		'discount_alumni'	: fields.float('Potongan Alumni ISTN (%)'),
 		'discount_lembaga'	: fields.float('Potongan Ulang Tahun Lembaga (%)'),
-		'discount_karyawan'	: fields.float('Potongan Karyawan(%)'),
+		'discount_karyawan'	: fields.float('Potongan Karyawan (%)'),
 		'discount_ranking1'	: fields.float('Potongan Ranking 1 (%)'),
 		'discount_ranking2'	: fields.float('Potongan Ranking 2 (%)'),
 		'discount_ranking3'	: fields.float('Potongan Ranking 3 (%)'),

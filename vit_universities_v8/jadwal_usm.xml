@@ -60,7 +60,7 @@
                                     <form version="7.0" string="Jenis Potongan">
                                         <group>
                                             <group> 
-                                                <p class="oe_grey">Potongan Umum (UP dan UK) berlaku Akumulasi</p>
+                                                <p class="oe_grey">Potongan Umum (UP dan UK) berlaku akumulasi</p>
                                             </group> 
                                             <group> 
                                                 <p class="oe_grey">Potongan khusus (hanya UP) calon mahasiswa dari SMA/SMK yayasan yang sama dan tidak berlaku akumulasi)</p>
