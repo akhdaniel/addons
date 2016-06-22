@@ -87,9 +87,10 @@ class mrp_realisation(osv.osv):
 		# 	print "k"
 		if sp_ids:
 			total = 0.0
-			sp = sp_obj.browse(cr, uid, sp_ids[0], context=context)
-			for move in sp.move_lines:
-				total += move.product_uom_qty
+			for sp in sp_obj.browse(cr, uid, sp_ids, context=context):
+				for move in sp.move_lines:
+					total += move.product_uom_qty
+
 			return total
 
 		return False
