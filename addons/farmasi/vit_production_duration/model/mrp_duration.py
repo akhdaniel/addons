@@ -84,4 +84,3 @@ class mrp_duration_line(osv.
 		"tgl_release"		: fields.date("Tgl. Release"),
 		"durasi"			: fields.float("Durasi"),
 	}
-
