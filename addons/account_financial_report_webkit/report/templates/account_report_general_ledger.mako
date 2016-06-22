@@ -111,7 +111,7 @@
                         ## counterpart
                         <div class="act_as_cell" style="width: 100px;">${_('Counter part')}</div>
                         ## Saldo Awal
-                        <div class="act_as_cell amount" style="width: 75px;">Saldo Awal</div>
+                        ##<div class="act_as_cell amount" style="width: 75px;">Saldo Awal</div>
                         ## debit
                         <div class="act_as_cell amount" style="width: 75px;">${_('Debit')}</div>
                         ## credit
@@ -151,11 +151,11 @@
                           ## move reference
                           ##<div class="act_as_cell"></div>
                           ## label
-                          <div class="act_as_cell">${_('Initial Balance')}</div>
+                          <div class="act_as_cell">${_('Saldo Awal')}</div>
                           ## counterpart
                           <div class="act_as_cell"></div>
                           ## Saldo Awal
-                          <div class="act_as_cell amount">0.00</div>
+                          ##<div class="act_as_cell amount">0.00</div>
                           ## debit
                           <div class="act_as_cell amount">${formatLang(init_balance[account.id].get('debit')) | amount}</div>
                           ## credit
@@ -203,7 +203,7 @@
                           ## counterpart
                           <div class="act_as_cell">${line.get('counterparts') or ''}</div>
                           ## Saldo Awal
-                          <div class="act_as_cell amount">0.00</div>
+                          ##<div class="act_as_cell amount">0.00</div>
                           ## debit
                           <div class="act_as_cell amount">${ formatLang(line.get('debit', 0.0)) | amount }</div>
                           ## credit
@@ -225,7 +225,7 @@
                         <div class="act_as_cell first_column" style="width: 375px;">${account.code} - ${account.name}</div>
                         <div class="act_as_cell" style="width: 225px;">${_("Cumulated Balance on Account")}</div>
                         ## Saldo Awal
-                        <div class="act_as_cell amount" style="width: 125px; font-size:12px;">0.00</div>
+                        ##<div class="act_as_cell amount" style="width: 125px; font-size:12px;">0.00</div>
                         ## debit
                         <div class="act_as_cell amount" style="width: 125px; font-size:12px;">${ formatLang(cumul_debit) | amount }</div>
                         ## credit
