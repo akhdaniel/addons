@@ -458,7 +458,7 @@ class mrp_production(osv.osv):
             if deleted_move_ids:
                 cr.execute('delete from stock_move where id in %s' , (tuple(deleted_move_ids),) )
 
-        super(mrp_production, self).action_assign(cr, uid, ids, context=None)
+        # super(mrp_production, self).action_assign(cr, uid, ids, context=None)
         return True 
     
     # def create(self, cr, uid, vals, context=None):
