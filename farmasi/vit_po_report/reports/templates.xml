@@ -2,164 +2,164 @@
 <openerp>
     <data>
 
-<template id="report_po_a5">
-    <t t-foreach="docs" t-as="o">
-        <t t-if="o.state == 'approved'">
-            <div class="page">
-                <div class="oe_structure"/>
-                <!-- Header -->
-                <div  class="text-center"   >
-                  <table cellpadding="4" style="font-family: Tahoma;font-size:12px;" >
-                    <tr>
-                      <th class="text-center" style="padding: 3px;">
-                              <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 40px;"/>
-                      </th>
-                      <th class="text-left" style="padding: 3px;"><h3><b><t t-esc="o.company_id.name"/></b></h3><div  class="left" >
-                            <t t-esc="o.company_id.street"/>  <t t-esc="o.company_id.street2"/>  <t t-esc="o.company_id.city"/> <t t-if="o.company_id.state_id"> <t t-esc="o.company_id.state_id.name"/></t>  <t t-esc="o.company_id.zip"/>  <t t-if="o.company_id.country_id"> <t t-esc="o.company_id.country_id.name"/></t></div></th>
-                    </tr>
-                  </table>
-                </div>
-                <!-- <div style="position: absolute;top: 60px;right:100px">
-                    <div t-field="o.partner_id" t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'/>
-                    <span><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.street2"/> <t t-esc="o.partner_id.city"/></span>
-                    <p t-if="o.partner_id.phone">phone <span><t t-esc="o.partner_id.phone"/>   fax <t t-esc="o.partner_id.fax"/></span></p>
-                    <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
-                </div> -->
-
-                
-
-
-                <!-- Sub Title -->
-                <div class="row" style="font-family: Tahoma;font-size:14px;">                        
-                    <div class="col-xs-7 text-center"><b>
-                        <h4 t-if="o.state != 'draft'"><strong>PURCHASE ORDER<!-- N° <span t-field="o.name"/> --></strong></h4>
-                        <h4 t-if="o.state == 'draft'">REQUEST FOR QUOTATION<!--  N° <span t-field="o.name"/> --></h4></b>
+    <template id="report_po_a5">
+        <t t-foreach="docs" t-as="o">
+            <t t-if="o.state == 'approved'">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <!-- Header -->
+                    <div  class="text-center"   >
+                      <table cellpadding="4" style="font-family: Tahoma;font-size:12px;" >
+                        <tr>
+                          <th class="text-center" style="padding: 3px;">
+                                  <img t-if="o.company_id.logo" t-att-src="'data:image/png;base64,%s' % o.company_id.logo" style="max-height: 40px;"/>
+                          </th>
+                          <th class="text-left" style="padding: 3px;"><h3><b><t t-esc="o.company_id.name"/></b></h3><div  class="left" >
+                                <t t-esc="o.company_id.street"/>  <t t-esc="o.company_id.street2"/>  <t t-esc="o.company_id.city"/> <t t-if="o.company_id.state_id"> <t t-esc="o.company_id.state_id.name"/></t>  <t t-esc="o.company_id.zip"/>  <t t-if="o.company_id.country_id"> <t t-esc="o.company_id.country_id.name"/></t></div></th>
+                        </tr>
+                      </table>
                     </div>
-                </div>
-                <div class="row" style="font-family: Tahoma;font-size:14px;">                        
-                    <div t-if="o.name" class="col-xs-2">
-                        <strong>No. Order</strong>
-                        <p t-field="o.name"/>
-                    </div>
-                    <div t-if="o.date_order" class="col-xs-2">
-                        <strong>Order Date:</strong>
-                        <p t-field="o.date_order"/>
-                    </div>
-                    <div t-if="o.validator" class="col-xs-3">
-                        <strong>Validated By:</strong>
-                        <p t-field="o.validator"/>
-                    </div>
-                    <div class="col-xs-5">
+                    <!-- <div style="position: absolute;top: 60px;right:100px">
                         <div t-field="o.partner_id" t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'/>
                         <span><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.street2"/> <t t-esc="o.partner_id.city"/></span>
                         <p t-if="o.partner_id.phone">phone <span><t t-esc="o.partner_id.phone"/>   fax <t t-esc="o.partner_id.fax"/></span></p>
                         <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
-                    </div>
-                </div>
-                <p/>
+                    </div> -->
 
-                <!-- Lines -->
-                <table class="table table-bordered" style="border: 1px solid #bbb;font-family: Tahoma;font-size: 14px;">
-                    <thead>
-                        <tr>
-                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Description</strong></th>
-                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Taxes</strong></th>
-                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-center"><strong>Disc(%)</strong></th>
-                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Qty</strong></th>
-                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Unit Price</strong></th>
-                            <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Net Price</strong></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr t-foreach="o.order_line" t-as="line" >
-                            <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-field="line.name"/>
-                            </td>
-                            <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-esc="line.taxes_str"/>
-                            </td>
-                            <td class="text-center" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-field="line.discount"/><span>%</span>
-                            </td>
-                            <td class="text-right" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-esc="(line.product_qty*1)"/>
-                                <span t-field="line.product_uom.name" groups="product.group_uom"/>
-                            </td>
-                            <td class="text-right" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-field="line.price_unit"/>
-                            </td>
-                            <td class="text-right"  style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
-                                <span t-field="o.currency_id.symbol"/> <span t-field="line.price_subtotal" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
 
-                <!-- Keterangan -->
-                <div t-if="o.notes2" class="row" style="font-family: Tahoma;font-size: 14px;">
-                    <div class="col-xs-6">
-                        <strong>Terms &amp; Condition:</strong>
-                        <span t-field="o.notes2"/>
-                    </div>
-                </div>
-                <div class="row" style="font-family: Tahoma;font-size: 14px;">
-                        <div class="col-xs-3">
-                            <strong>Date Req. : </strong>
-                            <span t-field="o.order_line[0].date_planned"/>
+
+
+                    <!-- Sub Title -->
+                    <div class="row" style="font-family: Tahoma;font-size:14px;">
+                        <div class="col-xs-7 text-center"><b>
+                            <h4 t-if="o.state != 'draft'"><strong>PURCHASE ORDER<!-- N° <span t-field="o.name"/> --></strong></h4>
+                            <h4 t-if="o.state == 'draft'">REQUEST FOR QUOTATION<!--  N° <span t-field="o.name"/> --></h4></b>
                         </div>
-                        <div t-if="o.partner_ref" class="col-xs-4">
-                            <strong>Supplier Ref. :</strong>
-                            <span t-field="o.partner_ref"/>
+                    </div>
+                    <div class="row" style="font-family: Tahoma;font-size:14px;">
+                        <div t-if="o.name" class="col-xs-2">
+                            <strong>No. Order</strong>
+                            <p t-field="o.name"/>
                         </div>
+                        <div t-if="o.date_order" class="col-xs-2">
+                            <strong>Order Date:</strong>
+                            <p t-field="o.date_order"/>
+                        </div>
+                        <div t-if="o.validator" class="col-xs-3">
+                            <strong>Validated By:</strong>
+                            <p t-field="o.validator"/>
+                        </div>
+                        <div class="col-xs-5">
+                            <div t-field="o.partner_id" t-field-options='{"widget": "contact", "fields": ["name"], "no_marker": true}'/>
+                            <span><t t-esc="o.partner_id.street"/> <t t-esc="o.partner_id.street2"/> <t t-esc="o.partner_id.city"/></span>
+                            <p t-if="o.partner_id.phone">phone <span><t t-esc="o.partner_id.phone"/>   fax <t t-esc="o.partner_id.fax"/></span></p>
+                            <p t-if="o.partner_id.vat">VAT: <span t-field="o.partner_id.vat"/></p>
+                        </div>
+                    </div>
+                    <p/>
+
+                    <!-- Lines -->
+                    <table class="table table-bordered" style="border: 1px solid #bbb;font-family: Tahoma;font-size: 14px;">
+                        <thead>
+                            <tr>
+                                <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;width:40%"><strong>Description</strong></th>
+                                <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Taxes</strong></th>
+                                <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-center"><strong>Disc(%)</strong></th>
+                                <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Qty</strong></th>
+                                <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right"><strong>Unit Price</strong></th>
+                                <th style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;width:20%" class="text-right"><strong>Net Price</strong></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.order_line" t-as="line" >
+                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
+                                    <span t-field="line.name"/>
+                                </td>
+                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
+                                    <span t-esc="line.taxes_str"/>
+                                </td>
+                                <td class="text-center" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
+                                    <span t-field="line.discount"/><span>%</span>
+                                </td>
+                                <td class="text-right" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
+                                    <span t-esc="(line.product_qty*1)"/>
+                                    <span t-field="line.product_uom.name" groups="product.group_uom"/>
+                                </td>
+                                <td class="text-right" style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
+                                    <span t-field="line.price_unit"/>
+                                </td>
+                                <td class="text-right"  style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">
+                                    <span t-field="o.currency_id.symbol"/> <span t-field="line.price_subtotal" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <!-- Keterangan -->
+                    <div t-if="o.notes2" class="row" style="font-family: Tahoma;font-size: 14px;">
+                        <div class="col-xs-6">
+                            <strong>Terms &amp; Condition:</strong>
+                            <span t-field="o.notes2"/>
+                        </div>
+                    </div>
+                    <div class="row" style="font-family: Tahoma;font-size: 14px;">
+                            <div class="col-xs-3">
+                                <strong>Date Req. : </strong>
+                                <span t-field="o.order_line[0].date_planned"/>
+                            </div>
+                            <div t-if="o.partner_ref" class="col-xs-4">
+                                <strong>Supplier Ref. :</strong>
+                                <span t-field="o.partner_ref"/>
+                            </div>
+                    </div>
+
+
+                    <!-- Total -->
+                    <div class="row" style="font-family: Tahoma;font-size: 14px;">
+                        <div class="col-xs-7">
+                            <table class='table'  style="border: 0;font-family: Tahoma;font-size: 14px;">
+                              <tr>
+                                <th class="text-center" height="60" scope="col" style="border-top: 0;">
+                                    <p>Supplier, </p>
+                                </th>
+
+                                <th class="text-center" scope="col" style="border-top: 0;"><p>Hormat Kami,</p>
+                                </th>
+                              </tr>
+                              <tr><td class="text-center" style="border-top: 0;">( .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . )</td><td class="text-center" style="border-top: 0;">( .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . )</td></tr>
+                            </table>
+                        </div>
+                        <div class="col-xs-5">
+                            <table class="table"  style="font-family: Tahoma;font-size: 14px;">
+                                <tr class="border-black" >
+                                    <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Total Without Taxes</strong></td>
+                                    <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right">
+                                        <span t-field="o.currency_id.symbol"/> <span t-field="o.amount_untaxed"/>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">Taxes</td>
+                                    <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right">
+                                        <span t-field="o.currency_id.symbol"/> <span t-field="o.amount_tax"/>
+                                    </td>
+                                </tr>
+                                <tr class="border-black" >
+                                    <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Total</strong></td>
+                                    <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right">
+                                        <span t-field="o.currency_id.symbol"/> <span t-field="o.amount_total"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
                 </div>
-
-
-                <!-- Total -->
-                <div class="row" style="font-family: Tahoma;font-size: 14px;">
-                    <div class="col-xs-7">
-                        <table class='table'  style="border: 0;font-family: Tahoma;font-size: 14px;">
-                          <tr>
-                            <th class="text-center" height="60" scope="col" style="border-top: 0;">
-                                <p>Supplier, </p>
-                            </th>
-                            
-                            <th class="text-center" scope="col" style="border-top: 0;"><p>Hormat Kami,</p>
-                            </th>
-                          </tr>
-                          <tr><td class="text-center" style="border-top: 0;">( .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . )</td><td class="text-center" style="border-top: 0;">( .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  . )</td></tr>
-                        </table>
-                    </div>
-                    <div class="col-xs-5">
-                        <table class="table"  style="font-family: Tahoma;font-size: 14px;">
-                            <tr class="border-black" >
-                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Total Without Taxes</strong></td>
-                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right">
-                                    <span t-field="o.currency_id.symbol"/> <span t-field="o.amount_untaxed"/>
-                                </td>
-                            </tr>
-                            <tr >
-                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;">Taxes</td>
-                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right">
-                                    <span t-field="o.currency_id.symbol"/> <span t-field="o.amount_tax"/>
-                                </td>
-                            </tr>
-                            <tr class="border-black" >
-                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;"><strong>Total</strong></td>
-                                <td style="padding: 3px; line-height: 1.16; border: 1px solid #bbb;" class="text-right">
-                                    <span t-field="o.currency_id.symbol"/> <span t-field="o.amount_total"/>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>            
-                
-            </div>
+            </t>
+            <t t-if="o.state != 'approved'">
+                <div class="page"><p>Print only available for approved Purchase Order</p></div>
+            </t>
         </t>
-        <t t-if="o.state != 'approved'">
-            <div class="page"><p>Print only available for approved Purchase Order</p></div>
-        </t>
-    </t>
-</template>
+    </template>
 
     <report 
         id="a5_report_po"
