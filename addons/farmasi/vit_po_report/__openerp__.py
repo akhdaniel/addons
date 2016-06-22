@@ -15,7 +15,7 @@
     'category': 'purchase',
     'version': '0.1',
 
-    'depends': ['purchase','web','base'],
+    'depends': ['purchase','web','base',"vit_purchase_revision"],
 
     'data': [
         'purchase.xml',
