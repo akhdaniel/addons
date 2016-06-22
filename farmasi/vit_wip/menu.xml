@@ -34,6 +34,13 @@
 		 sequence="60"
 		 parent="stock.menu_traceability"/>
 
+		<menuitem id="vit_mrp_vit"
+		 action="action_wip_list"
+		 name="WIP"
+         groups="mrp.group_mrp_manager,mrp.group_mrp_user"
+		 sequence="100"
+		 parent="mrp.menu_mrp_manufacturing"/>
+
 
 	</data>
 </openerp>
