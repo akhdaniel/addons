@@ -1,2 +1,3 @@
 "id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
-"course_manager","course_manager","model_academic_course","group_manager",1,1,1,1
+access_vit_mrp_realisation,access_vit_mrp_realisation,model_vit_mrp_realisation,,1,0,0,0
+access_vit_mrp_realisation_line,access_vit_mrp_realisation_line,model_vit_mrp_realisation_line,,1,0,0,0
