@@ -7,7 +7,8 @@
 		    <field name="model">vit.mrp_duration</field>
 		    <field name="arch" type="xml">
 		    	<tree string="list mrp_duration" >
-					<field name="date" />
+					<field name="date_start" />
+					<field name="date_end" />
 		        </tree>
 		    </field>
 		</record>
@@ -25,7 +26,8 @@
                     </header>
 
                     <group>
-                        <field name="date"/>
+                        <field name="date_start"/>
+                        <field name="date_end"/>
                     </group>
 
                     <notebook>
@@ -34,6 +36,7 @@
                                 <tree string="Details">
                                     
                                     <field name="product_id" />
+                                    <field name="batch_number" />
                                     <field name="mo_id" />
                                     <field name="tgl_penimbangan" />
                                     <field name="tgl_produksi" />
