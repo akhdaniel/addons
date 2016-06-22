@@ -192,7 +192,7 @@ class product_request_line(osv.osv):
 		product = product_product.browse(cr, uid, product_id, context=context)
 		product_uom_po_id = product.uom_po_id.id
 		res['value'].update({'product_uom_id': product_uom_po_id, 
-			'name': product.name ,
+			'name': "%s/%s" % (product.name, product.description_purchase ),
 			'product_qty_avail': product.virtual_available
 			})
 		return res 
