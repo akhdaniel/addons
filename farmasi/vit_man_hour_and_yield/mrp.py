@@ -99,6 +99,21 @@ class mrp_production_workcenter_line(osv.osv):
 
     }
 
+    def action_done(self, cr, uid, ids, context=None):
+        super(mrp_production_workcenter_line, self).action_done(cr, uid, ids, context=context)
+        wo = self.browse(cr, uid, ids[0], context=context)
+
+        #find next wo in sequence
+        wo_ids = self.search(cr, uid, [('production_id','=', wo.production_id.id),
+                ('sequence','>', wo.sequence)], limit=1, order='sequence,id', context=context)
+        if wo_ids:
+			self.write(cr,uid,wo_ids, {'input_qty':wo.output_qty}, context=context)
+
+        return True
+
+
+
+
 
 class mrp_routing_workcenter(osv.osv):
 
