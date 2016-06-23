@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Print for PO",
+    'name': "Print for PO and Discount",
 
     'summary': """
         Print PO""",
 
     'description': """
-        Print PO in A5 Paper size
+        * Print PO in A5 Paper size.
+        * Add discount on PO Line
     """,
 
     'author': "aiksuwandra@gmail.com",
