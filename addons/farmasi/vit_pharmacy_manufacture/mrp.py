@@ -30,4 +30,7 @@ class mrp_production(osv.osv):
         	),
 	}
 
- 
+
+	_defaults = {
+		'date_planned': lambda *a: time.strftime("%Y-%m-%d 00:00:00")
+	}
