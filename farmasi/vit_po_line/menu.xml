@@ -24,7 +24,7 @@
 	            		<field name="state" position="after">
 		            		<field name="discount" string="Disc (%)"/> 
 		            		<field name="taxes_id" />
-		            		<field name="price_subtotal" />
+		            		<field name="price_subtotal" groups="account.group_account_invoice,purchase.group_purchase_user"/>
 		            		<field name="total_qty_received"/>
 		            		<field name="date_last_received"/>
 		            		<field name="outstanding_qty"/>
@@ -106,6 +106,12 @@
 		 name="PO Lines"
 		 sequence="20"
 		 parent="account.menu_finance_payables"/>
+
+		<menuitem id="menu_wh_po_lines_list"
+		 action="action_po_lines_list"
+		 name="PO Lines" groups="stock.group_stock_user"
+		 sequence="20"
+		 parent="stock.menu_traceability"/>
 
 
 	</data>
