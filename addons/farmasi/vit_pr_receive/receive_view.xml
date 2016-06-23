@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+    	<record id="action_pr_receive" model="ir.actions.act_window">
+            <field name="name">Receive</field>
+            <field name="res_model">stock.picking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form,calendar</field>
+            <field name="domain"></field>
+            <field name="context">{
+                    'contact_display': 'partner_address',
+                    'search_default_available': 1,}</field>
+            <field name="search_view_id" ref="stock.view_picking_internal_search"/>
+       </record>
+
+      <record model="ir.ui.view" id="view_vit_picking">
+        <field name="name">picking.form.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+          <field name="partner_id" position="after">
+            <field name="department_id"/>
+          </field>                
+        </field>
+      </record>
+
+       <menuitem action="action_pr_receive" id="menu_request_sub" parent="vit_product_request.menu_request_sub"/>
+
+    </data>
+</openerp>

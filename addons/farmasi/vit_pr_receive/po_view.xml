@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<record model="ir.ui.view" id="view_vit_po">
+	        <field name="name">purchase.order.form.inherit</field>
+	        <field name="model">purchase.order</field>
+	        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+	        <field name="arch" type="xml">
+	          <field name="picking_type_id" position="after">
+	            	<field name="department_id"/>
+	          </field>                
+	        </field>
+	    </record>
+    </data>
+</openerp>
