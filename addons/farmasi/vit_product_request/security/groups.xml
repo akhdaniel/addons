@@ -188,6 +188,180 @@
 	    </record>		
 
 
+        	    <!--Stock Picking-->
+
+	    <!-- qa manager , supervisor, user hanya bisa lihat receive utk Dept nya-->
+		<record model="ir.rule" id="picking_only_qa">
+	        <field name="name">Stock Picking Only for QA Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_qa_manager')),(4, ref('vit_lucas_groups.group_qa_user')),(4, ref('vit_lucas_groups.group_qa_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','QA')]</field>
+	    </record>
+
+	    <!-- treasury manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_treasury">
+	        <field name="name">Stock Picking Only for Treasury Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_treasury_manager')),(4, ref('vit_lucas_groups.group_treasury_user')),(4, ref('vit_lucas_groups.group_treasury_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Treasury')]</field>
+	    </record>
+
+	    <!-- accounting manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_accounting">
+	        <field name="name">Stock Picking Only for Accounting Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_accounting_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Accounting')]</field>
+	    </record>
+
+		<!-- purchasing manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="stock_only_purchasing">
+	        <field name="name">Stock Picking Only for Purchasing Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <!-- <field name="groups" eval="[(4, ref('vit_lucas_groups.group_purchasing_manager')),(4, ref('vit_lucas_groups.group_purchasing_user')),(4, ref('vit_lucas_groups.group_purchasing_supervisor'))]"/> -->
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_purchasing_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Purchasing')]</field>
+	    </record>
+
+		<!-- qc manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_qc">
+	        <field name="name">Stock Picking Only for QC Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_qc_manager')),(4, ref('vit_lucas_groups.group_qc_user')),(4, ref('vit_lucas_groups.group_qc_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','QC')]</field>
+	    </record>
+
+		<!-- rnd manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_rnd">
+	        <field name="name">Stock Picking Only for RND Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_rnd_manager')),(4, ref('vit_lucas_groups.group_rnd_user')),(4, ref('vit_lucas_groups.group_rnd_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','RND')]</field>
+	    </record>
+
+
+		<!-- ppic manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_ppic">
+	        <field name="name">Stock Picking Only for PPIC Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_ppic_manager')),(4, ref('vit_lucas_groups.group_ppic_user')),(4, ref('vit_lucas_groups.group_ppic_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','PPIC')]</field>
+	    </record>
+
+		<!-- production manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_production">
+	        <field name="name">Stock Picking Only for Production Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <!-- <field name="groups" eval="[(4, ref('vit_lucas_groups.group_production_manager')),(4, ref('vit_lucas_groups.group_production_user')),(4, ref('vit_lucas_groups.group_production_supervisor'))]"/> -->
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_production_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Production')]</field>
+	    </record>
+
+		<!-- it manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_it">
+	        <field name="name">Stock Picking Only for IT Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_it_manager')),(4, ref('vit_lucas_groups.group_it_user')),(4, ref('vit_lucas_groups.group_it_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','IT')]</field>
+	    </record>
+
+		<!-- ga manager , supervisor, user hanya bisa lihat PickingPicking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_ga">
+	        <field name="name">Stock Picking Only for GA Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_ga_manager')),(4, ref('vit_lucas_groups.group_ga_user')),(4, ref('vit_lucas_groups.group_ga_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','GA')]</field>
+	    </record>
+
+		<!-- engineering manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_engineering">
+	        <field name="name">Stock Picking Only for Engineering Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_engineering_manager')),(4, ref('vit_lucas_groups.group_engineering_user')),(4, ref('vit_lucas_groups.group_engineering_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Engineering')]</field>
+	    </record>
+
+		<!-- warehouse_b_jadi manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_warehouse_b_jadi">
+	        <field name="name">Stock Picking Only for Warehouse Barang Jadi Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_warehouse_b_jadi_manager')),(4, ref('vit_lucas_groups.group_warehouse_b_jadi_user')),(4, ref('vit_lucas_groups.group_warehouse_b_jadi_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Warehouse B. Jadi')]</field>
+	    </record>
+
+		<!-- warehouse_b_kemas manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_warehouse_b_kemas">
+	        <field name="name">Stock Picking Only for Warehouse Bahan Kemas Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_warehouse_b_kemas_manager')),(4, ref('vit_lucas_groups.group_warehouse_b_kemas_user')),(4, ref('vit_lucas_groups.group_warehouse_b_kemas_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Warehouse B. Kemas')]</field>
+	    </record>
+
+		<!-- warehouse_b_baku manager , supervisor, user hanya bisa lihat Picking utk Dept nya -->
+		<record model="ir.rule" id="picking_only_warehouse_b_baku">
+	        <field name="name">Stock Picking Only for Warehouse Bahan Baku Dept users</field>
+	        <field name="model_id" ref="stock.model_stock_picking"/>
+	        <field name="groups" eval="[(4, ref('vit_lucas_groups.group_warehouse_b_baku_manager')),(4, ref('vit_lucas_groups.group_warehouse_b_baku_user')),(4, ref('vit_lucas_groups.group_warehouse_b_baku_supervisor'))]"/>
+	        <field name="perm_read" eval="1"/>
+	        <field name="perm_write" eval="1"/>
+	        <field name="perm_create" eval="1"/>
+	        <field name="perm_unlink" eval="1"/>
+	        <field name="domain_force">[('department_id','ilike','Warehouse B. Baku')]</field>
+	    </record>
+
+
 
 
 	    <!-- pr line -->
