@@ -135,6 +135,8 @@ class forecast_product(osv.osv):
                     # i = i + 1
                     sediaan_id = sediaan.index 
                     i = sediaan.index
+                    if i == 11:
+                        print "dsf"
                     if product_sediaan_id == sediaan.id:
                         print m, i, detail.product_id.name, detail.product_id.categ_id.sediaan_id.name 
                         self.fill_mps_line(cr, uid, ids, i, m, sediaan_id, mps_obj, detail )

@@ -87,7 +87,7 @@ class mps(osv.osv):
 
 		'mps_detail_ids11':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Tablet (Makloon)',
 			readonly=True,
-			domain=[('sediaan_id','=','Tablet Makloon')],
+			domain=[('sediaan_id','=','Tablet (Makloon)')],
             states={'draft':[('readonly',False)]} ),
 
 		'mps_detail_ids12':fields.one2many('vit_pharmacy_manufacture.mps_detail','mps_id','Forecast Details Tablet Hisap/ Kunyah (Makloon)',
