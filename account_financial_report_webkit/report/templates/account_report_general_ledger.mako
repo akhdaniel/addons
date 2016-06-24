@@ -171,6 +171,7 @@
 
                         </div>
                       %endif
+
                       %for line in ledger_lines[account.id]:
                         <%
                         cumul_debit += line.get('debit') or 0.0
@@ -225,13 +226,13 @@
                         <div class="act_as_cell first_column" style="width: 375px;">${account.code} - ${account.name}</div>
                         <div class="act_as_cell" style="width: 225px;">${_("Cumulated Balance on Account")}</div>
                         ## Saldo Awal
-                        ##<div class="act_as_cell amount" style="width: 125px; font-size:12px;">0.00</div>
+                        ##<div class="act_as_cell amount" style="width: 75px; font-size:12px;">0.00</div>
                         ## debit
-                        <div class="act_as_cell amount" style="font-weight:bold;">${ formatLang(cumul_debit) | amount }</div>
+                        <div class="act_as_cell amount" style="width: 60px;">${ formatLang(cumul_debit) | amount }</div>
                         ## credit
-                        <div class="act_as_cell amount" style="font-weight:bold; ">${ formatLang(cumul_credit) | amount }</div>
+                        <div class="act_as_cell amount" style="width: 85px;">${ formatLang(cumul_credit) | amount }</div>
                         ## balance cumulated
-                        <div class="act_as_cell amount" style="font-weight:bold; ">${ formatLang(cumul_balance) | amount }</div>
+                        <div class="act_as_cell amount" style="width: 80px; ">${ formatLang(cumul_balance) | amount }</div>
                         %if amount_currency(data):
                             %if account.currency_id:
                                 ## currency balance
