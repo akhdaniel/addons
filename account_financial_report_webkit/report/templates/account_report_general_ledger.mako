@@ -101,7 +101,7 @@
                         ## journal
                         <div class="act_as_cell" style="width: 70px;">${_('Jenis Journal')}</div>
                         ## account code
-                        <div class="act_as_cell" style="width: 65px;">${_('Account')}</div>
+                        <!--div class="act_as_cell" style="width: 65px;">${_('Account')}</div-->
                         ## partner
                         ##<div class="act_as_cell" style="width: 140px;">${_('Partner')}</div>
                         ## move reference
@@ -145,7 +145,7 @@
                           ## journal
                           <div class="act_as_cell"></div>
                           ## account code
-                          <div class="act_as_cell"></div>
+                          <!--div class="act_as_cell"></div-->
                           ## partner
                           ##<div class="act_as_cell"></div>
                           ## move reference
@@ -193,7 +193,7 @@
                           ## journal
                           <div class="act_as_cell">${line.get('jcode') or ''}</div>
                           ## account code
-                          <div class="act_as_cell">${account.code}</div>
+                          <!--div class="act_as_cell">${account.code}</div-->
                           ## partner
                           ##<div class="act_as_cell overflow_ellipsis">${line.get('partner_name') or ''}</div>
                           ## move reference
@@ -227,11 +227,11 @@
                         ## Saldo Awal
                         ##<div class="act_as_cell amount" style="width: 125px; font-size:12px;">0.00</div>
                         ## debit
-                        <div class="act_as_cell amount" style="width: 125px; font-size:12px;">${ formatLang(cumul_debit) | amount }</div>
+                        <div class="act_as_cell amount" style="font-weight:bold;">${ formatLang(cumul_debit) | amount }</div>
                         ## credit
-                        <div class="act_as_cell amount" style="width: 125px; font-size:12px; ">${ formatLang(cumul_credit) | amount }</div>
+                        <div class="act_as_cell amount" style="font-weight:bold; ">${ formatLang(cumul_credit) | amount }</div>
                         ## balance cumulated
-                        <div class="act_as_cell amount" style="width: 125px; padding-right: 1px; font-size:12px; ">${ formatLang(cumul_balance) | amount }</div>
+                        <div class="act_as_cell amount" style="font-weight:bold; ">${ formatLang(cumul_balance) | amount }</div>
                         %if amount_currency(data):
                             %if account.currency_id:
                                 ## currency balance
