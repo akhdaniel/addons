@@ -138,7 +138,8 @@ class import_ftp_health(osv.osv):
 		}
 		self.create(cr, uid, data, context=context )
 		cr.commit()
-		
+		_logger.warning('import_health_ftp: insert_health_polis done')
+
 		return 
 
 	###########################################################
@@ -188,6 +189,7 @@ class import_ftp_health(osv.osv):
 		self.create(cr, uid, data, context=context )
 
 		cr.commit()
+		_logger.warning('import_health_ftp: insert_health_peserta done')
 
 		return 
 
@@ -241,6 +243,7 @@ class import_ftp_health(osv.osv):
 		}
 		self.create(cr, uid, data, context=context )
 		cr.commit()
+		_logger.warning('import_health_ftp: insert_health_limit done')
 
 		return 
 
