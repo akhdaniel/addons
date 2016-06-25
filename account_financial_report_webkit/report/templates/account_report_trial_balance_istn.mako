@@ -208,13 +208,15 @@
                         ## opening balance
                         ## debit
                         <div class="act_as_cell amount">
-                            %if init_balance_accounts[current_account.id] >0:
+                            %if init_balance_accounts[current_account.id] >=0:
                                 ${formatLang(init_balance_accounts[current_account.id]) | amount}
                                 %if current_account.level == 1:
                                     <%
                                         init_bal_debit += float(init_balance_accounts[current_account.id])
                                     %>
-                                %endif    
+                                %endif
+                            %else:
+                                ${formatLang(0.0) | amount}
                             %endif
                         </div>
                         ## credit
@@ -226,6 +228,8 @@
                                         init_bal_credit += float(-1*init_balance_accounts[current_account.id])
                                     %>
                                 %endif
+                            %else:
+                                ${formatLang(0.0) | amount}
                             %endif
                         </div>
 
@@ -247,13 +251,15 @@
                         ## balance laba/rugi debit
                         <div class="act_as_cell amount">
                             %if current_account.user_type.report_type in ['income','expense']:
-                                %if balance_accounts[current_account.id] > 0.0:
+                                %if balance_accounts[current_account.id] >= 0.0:
                                     ${formatLang(balance_accounts[current_account.id]) | amount}
                                     %if current_account.level == 1:
                                         <%
                                             labarugi_debit += float(balance_accounts[current_account.id])
                                         %>
                                     %endif
+                                %else:
+                                    ${formatLang(0.0) | amount}
                                 %endif
                             %endif
                         </div>
@@ -268,6 +274,8 @@
                                             labarugi_credit += float(-1 * balance_accounts[current_account.id])
                                         %>
                                     %endif
+                                %else:
+                                    ${formatLang(0.0) | amount}
                                 %endif
                             %endif
                         </div>
@@ -275,13 +283,15 @@
                         ## balance neraca debit
                         <div class="act_as_cell amount">
                             %if current_account.user_type.report_type in ['asset','liability']:
-                                %if balance_accounts[current_account.id] > 0.0:
+                                %if balance_accounts[current_account.id] >= 0.0:
                                     ${formatLang(balance_accounts[current_account.id]) | amount}
                                     %if current_account.level == 1:
                                         <%
                                             neraca_debit += float(balance_accounts[current_account.id])
                                         %>
-                                    %endif    
+                                    %endif
+                                %else:
+                                    ${formatLang(0.0) | amount}
                                 %endif
                             %endif
                         </div>
@@ -295,7 +305,9 @@
                                         <%
                                             neraca_credit += float(-1 * balance_accounts[current_account.id])
                                         %>
-                                    %endif    
+                                    %endif
+                                %else:
+                                    ${formatLang(0.0) | amount}
                                 %endif
                             %endif
                         </div>
@@ -308,8 +320,8 @@
                     ## code
                     <div class="act_as_cell" style="width: 20px;"> </div>
                     
-                    ## account name
-                    <div class="act_as_cell style="padding-left: ${level * 5}px;"" style="width: 70px;">${_('Jumlah ')}</div>
+                    ## account name padding-left: ${level * 5}px;
+                    <div class="act_as_cell" style="width: 70px;">${_('Jumlah ')}</div>
 
                     ## initial balance
                     <div class="act_as_cell amount" style="width: 35px;">${formatLang(init_bal_debit) | amount }</div>

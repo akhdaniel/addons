@@ -266,7 +266,7 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
         account_ids = self.get_all_accounts(
             new_ids, only_type=filter_report_type, context=ctx)
 
-        # get details for each account, total of debit / credit / balance
+        # INI: get details for each account, total of debit / credit / balance
         accounts_by_ids = self._get_account_details(
             account_ids, target_move, fiscalyear, main_filter, start, stop,
             initial_balance_mode)
@@ -292,6 +292,8 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
         balance_accounts = dict.fromkeys(account_ids, False)
 
         for account in objects:
+            if account.id == 578:
+                print "os"
             if account.type == 'consolidation':
                 to_display_accounts.update(
                     dict([(a.id, False) for a in account.child_consol_ids]))
@@ -325,11 +327,12 @@ class CommonBalanceReportHeaderWebkit(CommonReportHeaderWebkit):
             # if we have an amount in the main column
             # we set it as a property to let the data in the report if someone
             # want to use it in a custom report
-            display_account = display_account\
-                or any((debit_accounts[account.id],
-                        credit_accounts[account.id],
-                        balance_accounts[account.id],
-                        init_balance_accounts[account.id]))
+            # display_account = display_account\
+            #     or any((debit_accounts[account.id],
+            #             credit_accounts[account.id],
+            #             balance_accounts[account.id],
+            #             init_balance_accounts[account.id]))
+            display_account = True
             to_display_accounts.update(
                 {account.id: display_account and
                  to_display_accounts[account.id]})
