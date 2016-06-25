@@ -100,7 +100,7 @@ class import_ftp_health(osv.osv):
 		cron_id = cron_obj.search(cr, uid, 
 			[('name','=', "Auto Import Health Polis Partner")], context=context)
 		if not cron_id:
-			raise osv.except_osv(_('error'),_("no cron job") ) 
+			raise osv.except_osv(_('error'),_("no cron job Auto Import Health Polis Partner") ) 
 
 		fields_map = [
 			"policyno"		,
@@ -154,7 +154,7 @@ class import_ftp_health(osv.osv):
 		cron_id = cron_obj.search(cr, uid, 
 			[('name','=', "Auto Import Health Peserta Partner")], context=context)
 		if not cron_id:
-			raise osv.except_osv(_('error'),_("no cron job") ) 
+			raise osv.except_osv(_('error'),_("no cron job Auto Import Health Peserta Partner") ) 
 
 		fields_map = [
 			"policyno"		,
@@ -206,9 +206,9 @@ class import_ftp_health(osv.osv):
 
 		cron_obj = self.pool.get('ir.cron') 
 		cron_id = cron_obj.search(cr, uid, 
-			[('name','=', "Auto Import Health Peserta Limit")], context=context)
+			[('name','=', "Auto Import Health Partner Limit")], context=context)
 		if not cron_id:
-			raise osv.except_osv(_('error'),_("no cron job") ) 
+			raise osv.except_osv(_('error'),_("no cron job Auto Import Health Partner Limit") ) 
 
 
 
