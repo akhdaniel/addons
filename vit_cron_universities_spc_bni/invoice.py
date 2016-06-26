@@ -26,7 +26,7 @@ class spc2(object):
 
     def select_biller_tagihan(self, data):
         with self.connection.cursor() as cursor:
-            sql = "select id_record_tagihan from biller_tagihan where id_record_tagihan = %s"
+            sql = "select id_record_tagihan from tagihan where id_record_tagihan = %s"
             hsl = cursor.execute(sql, (data,))
         #self.connection.commit()
         return hsl
