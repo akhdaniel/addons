@@ -180,8 +180,8 @@
                 %>
                 %for current_account in objects:
                     <%
-                    if not to_display_accounts[current_account.id]:
-                        continue
+                    ##if not to_display_accounts[current_account.id]:
+                        ##continue
 
                     comparisons = comparisons_accounts[current_account.id]
 
