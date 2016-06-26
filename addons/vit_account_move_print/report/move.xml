@@ -1,0 +1,13 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data> 
+        <report 
+        id="move1" 
+        string="Journal" 
+        model="account.move" 
+        name="move1" 
+        rml="vit_account_move_print/report/move1.rml" 
+        auto="False" 
+        header="False"/>      
+    </data> 
+</openerp>
