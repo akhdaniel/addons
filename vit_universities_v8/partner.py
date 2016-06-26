@@ -85,8 +85,9 @@ class res_partner (osv.osv):
 								'account_id':self.pool.get('res.partner').browse(cr,uid,partner).property_account_receivable.id,
 								'invoice_line': prod_id,
 								},context=context)
-							wf_service = netsvc.LocalService('workflow')
-							wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)						
+							#wf_service = netsvc.LocalService('workflow')
+							from openerp import workflow
+							workflow.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)						
 							self.write(cr,uid,partner,{'invoice_id':inv})
 
 
@@ -569,8 +570,9 @@ class res_partner (osv.osv):
 					},context=context)
 
 				
-				wf_service = netsvc.LocalService('workflow')
-				wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+				#wf_service = netsvc.LocalService('workflow')
+				from openerp import workflow
+				workflow.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
 				self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)			
 				self.write(cr,uid,partner.id,{'invoice_id':inv})
 				
@@ -675,8 +677,9 @@ class res_partner (osv.osv):
 									'invoice_line': prod_id,
 									},context=context)
 
-								wf_service = netsvc.LocalService('workflow')
-								wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+								#wf_service = netsvc.LocalService('workflow')
+								from openerp import workflow
+								workflow.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
 								#self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)				
 								self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
 
@@ -737,8 +740,9 @@ class res_partner (osv.osv):
 																	 'account_id'	: coa_line}))],
 											},context=context)
 									if angske == 1 :
-										wf_service = netsvc.LocalService('workflow')
-										wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+										#wf_service = netsvc.LocalService('workflow')
+										from openerp import workflow
+										workflow.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
 										#self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)				
 										self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
 
@@ -969,10 +973,10 @@ class res_partner (osv.osv):
 							'invoice_line': prod_id,
 							})
 						#self._cr.commit()
-						wf_service = netsvc.LocalService('workflow')
+						#wf_service = netsvc.LocalService('workflow')
 						#import pdb;pdb.set_trace()
-						#from openerp import workflow
-						wf_service.trg_validate(self._uid, 'account.invoice', inv.id, 'invoice_open', self._cr)
+						from openerp import workflow
+						workflow.trg_validate(self._uid, 'account.invoice', inv.id, 'invoice_open', self._cr)
 						vals.update({'invoice_id':inv.id})
 						result = super(res_partner, self).write(vals)
 						
