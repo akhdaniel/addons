@@ -546,7 +546,7 @@
         $(function(){
             $("#datepicker").datepicker({
                 changeYear:true,
-                yearRange: "1940:2060"
+                yearRange: "1940:2040"
             });
         });
 
