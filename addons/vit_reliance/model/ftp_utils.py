@@ -94,6 +94,7 @@ class ftp_utils(object):
 
 					data.update({"source": csv_file})
 					dest_obj.create(cr, uid, data, context=context)
+					#_logger.warning("insert %s" %(i));
 
 					if i == last_row + rows_per_batch:
 						last_row = last_row + rows_per_batch
