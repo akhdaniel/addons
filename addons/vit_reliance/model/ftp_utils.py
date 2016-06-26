@@ -58,6 +58,8 @@ class ftp_utils(object):
 		paused = False
 		i = 0
 		row=[]
+		last_row = 0 #what is the last CSV rows commited
+		rows_per_batch=1000 # how many csv rows to commit
 
 		try:
 			#pause cron, exception if failed to pause
@@ -79,6 +81,11 @@ class ftp_utils(object):
 						i = i+1
 						continue
 
+					# start processing at last_row
+					if i < last_row:
+						i = i+1
+						continue
+
 					data = {}
 					r = 0
 					for field in fields_map:
@@ -87,6 +94,11 @@ class ftp_utils(object):
 
 					data.update({"source": csv_file})
 					dest_obj.create(cr, uid, data, context=context)
+
+					if i == last_row + rows_per_batch:
+						last_row = last_row + rows_per_batch
+						_logger.warning("commiting %s records and updating last_row to %s" , i, last_row)
+						cr.commit()
 
 					i = i +1
 
