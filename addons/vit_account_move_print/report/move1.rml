@@ -154,7 +154,7 @@
           <para style="terp_tblheader_General_Centre">Period</para>
         </td>
         <td>
-          <para style="terp_tblheader_General_Centre">To Review</para>
+          <para style="terp_tblheader_General_Centre">Notes</para>
         </td>
       </tr>
     </blockTable>
@@ -170,7 +170,7 @@
           <para style="terp_default_Centre_8">[[ (o.period_id.name) or '' ]]</para>
         </td>
         <td>
-          <para style="terp_default_Centre_8">[[ (o.to_check) or '' ]]</para>
+          <para style="terp_default_Centre_8">[[ (o.narration) or '' ]]</para>
         </td>
       </tr>
     </blockTable>
