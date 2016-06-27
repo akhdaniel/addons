@@ -58,7 +58,7 @@ class ftp_utils(object):
 		paused = False
 		i = 0
 		row=[]
-		last_row = 0 #what is the last CSV rows commited
+		last_row = 20000 #what is the last CSV rows commited
 		rows_per_batch=1000 # how many csv rows to commit
 
 		try:
