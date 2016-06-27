@@ -103,7 +103,6 @@ class ftp_utils(object):
 
 					i = i +1
 
-			self.resume_cron(cr,uid,cron_id,cron_obj,context=context)
 			return i
 
 		except IOError as e:
@@ -113,8 +112,6 @@ class ftp_utils(object):
 				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
 				'input_file' : csv_file,
 			}
-			if paused:
-				self.resume_cron(cr,uid,cron_id,cron_obj,context=context)
 			return data
 
 		except Exception as e:
@@ -124,9 +121,10 @@ class ftp_utils(object):
 				'date_end' 	: time.strftime('%Y-%m-%d %H:%M:%S'),
 				'input_file' : csv_file,
 			}
+			return data
+		finally:
 			if paused:
-				self.resume_cron(cr,uid,cron_id,cron_obj,context=context)
-			return data 
+				self.resume_cron(cr, uid, cron_id, cron_obj, context=context)
 
 	###########################################################
 	# try to pause the cron job
