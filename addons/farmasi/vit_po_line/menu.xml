@@ -6,33 +6,41 @@
 		    <field name="model">purchase.order.line</field>
 		    <field name="inherit_id" ref="purchase.purchase_order_line_tree"/>
 		    <field name="arch" type="xml">
-	            		<field name="order_id" position="before">
-				            <field name="bid_no"/>
-				            <field name="ordering_date"/>
-				            <field name="bid_src"/>
-				            <field name="bid_src_date"/>
-				            <field name="pr_date"/>
-				            <field name="pr_date_appr"/>
-				            <field name="pr_approver"/>
-						</field>
-	            		<field name="product_id" position="before">
-				            <field name="product_categ_id"/>
-						</field>
-	            		<field name="order_id" position="after">
-				            <field name="date_order"/>
-						</field>
-	            		<field name="state" position="after">
-		            		<field name="discount" string="Disc (%)"/> 
-		            		<field name="taxes_id" />
-		            		<field name="price_subtotal" groups="account.group_account_invoice,purchase.group_purchase_user"/>
-		            		<field name="total_qty_received"/>
-		            		<field name="date_last_received"/>
-		            		<field name="outstanding_qty"/>
-		            		<field name="notes2"/>
-		            		<field name="invo_id"/>
-		            		<field name="invo_date"/>
-		            		<field name="invo_user_id"/>
-		            		<field name="state"/>
+                    <field name="order_id" position="before">
+                        <field name="bid_no"/>
+                        <field name="ordering_date"/>
+                        <field name="bid_src"/>
+                        <field name="bid_src_date"/>
+                        <field name="pr_date"/>
+                        <field name="pr_date_appr"/>
+                        <field name="pr_approver"/>
+                    </field>
+                    <field name="product_id" position="before">
+                        <field name="product_categ_id"/>
+                    </field>
+                    <field name="order_id" position="after">
+                        <field name="date_order"/>
+                    </field>
+
+                    <field name="price_subtotal" position="replace">
+                        <field name="price_subtotal" groups="purchase.group_purchase_user"/>
+                    </field>
+
+                    <field name="price_unit" position="replace">
+                        <field name="price_unit" groups="purchase.group_purchase_user"/>
+                    </field>
+
+                    <field name="state" position="after">
+                        <field name="discount" string="Disc (%)" groups="purchase.group_purchase_user"/>
+                        <field name="taxes_id" groups="purchase.group_purchase_user"/>
+                        <field name="total_qty_received"/>
+                        <field name="date_last_received"/>
+                        <field name="outstanding_qty"/>
+                        <field name="notes2"/>
+                        <field name="invo_id" groups="purchase.group_purchase_user"/>
+                        <field name="invo_date" groups="purchase.group_purchase_user"/>
+                        <field name="invo_user_id" groups="purchase.group_purchase_user"/>
+                        <field name="state"/>
 		        	</field>
 		    </field>
 		</record>
