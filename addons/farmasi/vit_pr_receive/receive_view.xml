@@ -26,6 +26,17 @@
         </field>
       </record>
 
+      <record model="ir.ui.view" id="view_vit_picking_tree">
+        <field name="name">picking.tree.inherit</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.vpicktree"/>
+        <field name="arch" type="xml">
+          <field name="partner_id" position="after">
+            <field name="department_id"/>
+          </field>                
+        </field>
+      </record>
+
        <menuitem action="action_pr_receive" id="menu_request_sub" parent="vit_product_request.menu_request_sub"/>
 
     </data>
