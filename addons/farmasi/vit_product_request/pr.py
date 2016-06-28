@@ -72,3 +72,12 @@ class purchase_requisition(osv.osv):
 	_defaults = {
 		'approved_date': lambda *a: time.strftime('%Y-%m-%d'),
 		}
+
+	def _prepare_purchase_order(self, cr, uid, requisition, supplier, context=None):
+		department_id = False
+		res = super(purchase_requisition, self)._prepare_purchase_order(cr, uid, requisition, supplier, context=context)
+		b = self.pool.get('vit.product.request').search(cr, uid, [('name','=', requisition.origin)])
+		pr = self.pool.get('vit.product.request').browse(cr, uid, b)
+		department_id = pr[0].department_id.id
+		res.update({'department_id': department_id})
+		return res 
