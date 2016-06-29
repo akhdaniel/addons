@@ -10,6 +10,7 @@
 		        </field>
 		        <field name="virtual_available" position="after">
 		        	<field name="uom_id"/>
+		        	<field name="detail_available"/>
 		        </field>
 		    </field>
 		</record>

@@ -30,30 +30,15 @@ class product_template(osv.osv):
             total_qty = 0.00
 
             results[product.id] = 0.0
-            return 
-
             #ambil 6 digit pertama, search dulu product yang sama
-            if not product.default_code:
-                raise osv.except_osv("Error", "No Internal Code: [id=%d, name=%s, default_code=%s, is_header=%s]" % (product.id, product.name, product.default_code, product.is_header))
-            
-            product_ref = product.default_code[:6]
-
-            # cari detail produk yang is_header = false dan kode produknya 6 digit pertama sama
-            same_product = self.pool.get('product.product').search(cr,uid,
-                [('default_code','ilike',str(product_ref+'%')),('is_header','=',False)])
-
-            # print("product_ref",product_ref, "same_product",same_product)
-
-            for prod in self.browse(cr, uid, same_product, context=context):
-                print "   produk ", prod.id, " ", prod.default_code, " ", prod.virtual_available
-                if not prod:
-                    raise osv.except_osv(_('Error'),_("no product %s") % (prod.name) ) 
-                total_qty = total_qty  + prod.virtual_available
+            a = self.pool.get('product.template').search(cr, uid, [('parent_id','=', product.id)])
+            for b in self.browse(cr, uid, a):
+                total_qty = total_qty + b.virtual_available 
             # print "total ", total_qty
             results[product.id] = total_qty
 
-        return results    
-
+        return results
+        
     _columns = {
         'detail_available' : fields.function(get_detail_total_avail, type='float', string="Detail Available"),
     }
