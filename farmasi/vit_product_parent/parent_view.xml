@@ -12,6 +12,17 @@
             </field>
         </record>
 
+        <record id="vit_parent_product_tmp_form_view" model="ir.ui.view">
+            <field name="name">parent_product</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <field name="default_code" position="after">
+                    <field name="parent_id"/>                               
+                </field>                 
+            </field>
+        </record>
+
 
 </data>
 </openerp> 
