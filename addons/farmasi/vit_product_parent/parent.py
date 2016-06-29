@@ -15,6 +15,14 @@ _logger = logging.getLogger(__name__)
 class parent_template(osv.osv):
 	_inherit = 'product.template'
 
+
+	# def init(self, cr, context=None):
+	# 	cr.execute("update product_template pp set \
+	# 				parent_id=(select id from product_template where \
+	#               	name=substr(pp.name,1,position(',' in pp.name )-1) limit 1) \
+	#               	where  position(',' in pp.name )>0")
+
+
 	_columns = {
 				'parent_id':fields.many2one('product.template', 'Parent Product')
 	}

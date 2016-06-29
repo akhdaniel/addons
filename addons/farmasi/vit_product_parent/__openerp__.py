@@ -14,7 +14,9 @@
     'url': 'http://www.vitraining.com/',
     'data': [ 
         'parent_view.xml',
+        "update.sql"
     ],
+
     'installable': True,
     'auto_install': False,
 }
