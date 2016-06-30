@@ -586,7 +586,7 @@ class res_partner (osv.osv):
 		byr_obj = self.pool.get('master.pembayaran')
 		usm_obj = self.pool.get('jadwal.usm')
 		smt_obj = self.pool.get('master.semester')
-
+		
 		for partner in self.browse(cr,uid,ids):
 			byr_sch = byr_obj.search(cr,uid,[('tahun_ajaran_id','=',partner.tahun_ajaran_id.id),
 				('fakultas_id','=',partner.fakultas_id.id),
@@ -657,6 +657,44 @@ class res_partner (osv.osv):
 							elif partner.hubungan == 'karyawan' :
 								if partner.karyawan_id :
 									discount += disc_karyawan	
+
+							####################################################################
+							# tambah logic special price (ignore semua potongan)
+							####################################################################
+							if byr_brw.is_special_price :
+								discount = 0
+								up_uk = byr_brw.uang_semester
+								prod_id.append((0,0,{'product_id'	: bayar.product_ids[0].id,
+													 'name'			: bayar.product_ids[0].name,
+													 'price_unit'	: up_uk,
+													 'discount'		: discount,
+													 'account_id'	: coa_line}))
+								inv = self.pool.get('account.invoice').create(cr,uid,{
+									'partner_id':partner.id,
+									'origin': 'UP dan UK '+str(partner.reg),
+									'type':'out_invoice',
+									'fakultas_id': partner.fakultas_id.id,
+									'prod_id': partner.prodi_id.id,
+									'date_due':bayar.date1,
+									'account_id':partner.property_account_receivable.id,
+									'invoice_line': prod_id,
+									},context=context)
+
+								#wf_service = netsvc.LocalService('workflow')
+								from openerp import workflow
+								workflow.trg_validate(uid, 'account.invoice', inv, 'invoice_open', cr)
+								#self.pool.get('account.invoice').invoice_validate(cr, uid, [inv], context=context)				
+								self.write(cr,uid,partner.id,{'invoice_bangunan_id':inv})
+
+								# create notifikasi ke email
+								template_pool = self.pool.get('email.template')
+								template_id = template_pool.search(cr,uid,[('name','=ilike','Uang Pengembangan dan Uang Kuliah ISTN')])
+								if template_id:
+									self.pool.get('email.template').send_mail(cr, uid, template_id[0], inv)
+									
+								break
+							##################################################################################
+							##################################################################################		
 
 							if partner.split_invoice == 1 :									
 								# create 1 invoice

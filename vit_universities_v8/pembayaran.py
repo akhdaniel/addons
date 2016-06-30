@@ -70,8 +70,14 @@ class master_pembayaran(osv.Model):
 		'type_mhs_id'	: fields.many2one('master.type.mahasiswa','Type Mahasiswa'),
 		'lokasi_kampus_id' : fields.many2one('master.alamat.kampus','Lokasi Kampus'),
 		'uang_semester' : fields.float('Uang Semester'),
+		'special_price' : fields.selection([('limited','Limited'),('unlimited','Unlimited')],string='Special Price ?',help="Limited = Uang kuliah berhenti dibayar jika total pembayaran kuliah sudah mencapai batas tertentu (Max Pembayaran), '\
+											Unlimited = Uang kuliah harus terus dibayar kalau mahasiswa belum lulus"),
+		'max_pembayaran' : fields.float('Max Pembayaran'),
+		'is_special_price' : fields.boolean('Special Price ?',help="True jika uang kuliah dan uang semester flat perbulan"),
 		'type_pendaftaran': fields.selection([('ganjil','Ganjil'),('genap','Genap'),('pendek','Pendek')],'Type Pendaftaran'),
-
+		'is_urutan'	: fields.boolean('Special Sequence'),
+		'urutan_ids':fields.one2many('master.urutan.pembayaran','pembayaran_id',string='Urutan'),
+		'biaya_lainnya_ids':fields.one2many('master.biaya.lainnya','pembayaran_id',string='Biaya Lainnya'),
 	}
 	_defaults = {
 		'type':'flat',
@@ -282,3 +288,30 @@ class master_pembayaran_bangunan_detail(osv.Model):
 		'product_id':fields.many2one('product.product','Pembayaran Detail',required=True,domain="[('type','=','service')]"),
 		'public_price': fields.float('Harga', digits_compute=dp.get_precision('Account')),
 	}	
+
+
+class master_urutan_pembayaran(osv.osv):
+	_name = "master.urutan.pembayaran"
+
+
+	_columns ={
+		'pembayaran_id' 	: fields.many2one('master.pembayaran','Pembayaran ID'),
+		'urutan_awal' 		: fields.integer('Urutan Awal'),
+		'urutan_akhir' 		: fields.integer('Urutan Akhir'),
+		'harga'				: fields.float('Harga', digits_compute=dp.get_precision('Account')),
+	}
+
+
+class master_biaya_lainnya(osv.osv):
+	_name = "master.biaya.lainnya"
+
+	_columns ={
+		'pembayaran_id' 	: fields.many2one('master.pembayaran','Pembayaran ID'),
+		'pola_bayar' 		: fields.selection([('bulan2','Bulan ke 2'),
+												('praktek','Jika di KRS ada MK Praktek'),
+												('seminar','Jika di KRS ada MK Seminar'),
+												('ta','Jika di KRS ada MK Tugas Akhir atau sejenis'),
+												('kemahasiswaan','Tiap semester 1 kali')],string='Pola Bayar'),
+		'product_id'		: fields.many2one('product.product','Product',required=True,domain="[('type','=','service')]"),
+		'harga'				: fields.float('Harga', digits_compute=dp.get_precision('Account')),
+	}
