@@ -192,6 +192,7 @@ class master_matakuliah (osv.Model):
 		'dosen_id': fields.many2one('hr.employee','Dosen Pengampu', domain=[('is_dosen','=',True)]),
 		'jenjang_id': fields.many2one('master.jenjang','Jejang'),
 		'praktikum': fields.boolean('Praktikum'),
+		'seminar': fields.boolean('Seminar'),
 		'penilaian100persen': fields.boolean('Penilaian 100 % di UAS'),
 	}
 

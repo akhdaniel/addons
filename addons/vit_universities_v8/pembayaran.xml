@@ -43,7 +43,10 @@
 			                 	<field name="prodi_id" attrs="{'readonly': [('state','=','confirm')]}" domain="[('fakultas_id','=',fakultas_id),('is_internal','=',True)]"/>
                                 <field name="type_mhs_id" attrs="{'readonly': [('state','=','confirm')]}"/>
                                 <field name="sks_plus" attrs="{'readonly': [('state','=','confirm')],'invisible': [('type','!=','flat')]}"/>
-			                </group>    
+			                </group> 
+                            <group>
+                                <field name="is_special_price" attrs="{'readonly': [('state','=','confirm')]}"/>
+                             </group>   
                     	</group> 
                         <notebook colspan="4">
                             <page string="Daftar Pembayaran">
@@ -73,6 +76,39 @@
                                     <field name="total"/>
                                 </group>  -->                                 
                             </page>
+                            <page string="Special Price" attrs="{'invisible': [('is_special_price','=',False)],'readonly': [('state','=','confirm')]}">
+                                <sheet>
+                                    <group>
+                                        <group>  
+                                            <field name="special_price"/>
+                                            <field name="is_urutan"/>
+                                        </group> 
+                                        <group>  
+                                            <field name="max_pembayaran" attrs="{'invisible': [('special_price','!=','limited')]}" required="1"/>
+                                        </group>
+                                    </group> 
+                                    <group string="Spesial Urutan Pembayaran" attrs="{'invisible': [('is_urutan','=',False)]}">
+                                        <field view_mode="tree,form" name="urutan_ids" nolabel="1" >
+                                            <tree editable="bottom">
+                                                <field name="pembayaran_id" invisible="1"/>     
+                                                <field name="urutan_awal"/>
+                                                <field name="urutan_akhir"/>
+                                                <field name="harga"/>         
+                                            </tree>
+                                        </field>
+                                    </group>
+                                    <group string="Biaya Lainnya" attrs="{'invisible': [('is_urutan','=',False)]}">
+                                        <field view_mode="tree,form" name="biaya_lainnya_ids" nolabel="1">
+                                            <tree editable="bottom">
+                                                <field name="pembayaran_id" invisible="1"/>     
+                                                <field name="product_id"/>
+                                                <field name="pola_bayar"/>
+                                                <field name="harga"/>         
+                                            </tree>
+                                        </field>
+                                    </group>      
+                                </sheet>                                                        
+                            </page>                            
                         </notebook>
                     <!-- </sheet>   -->  
                 </form>

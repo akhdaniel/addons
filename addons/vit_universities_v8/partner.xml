@@ -31,14 +31,14 @@
                     <field name="function" attrs="{'invisible': [('is_mahasiswa','=',True)]}"/>
                 </field>   
 
-             	<field name="phone" position="before">
+                <field name="phone" position="before">
                     <field name="id_card" attrs="{'invisible': [('is_mahasiswa','=',False)]}"/>
                 </field>   
 
-             	<field name="fax" position="replace">
+                <field name="fax" position="replace">
                     <field name="fax" attrs="{'invisible': [('is_mahasiswa','=',True)]}"/>
                 </field>
-             	<page string="Internal Notes" position="replace">
+                <page string="Internal Notes" position="replace">
                     <page string="Internal Notes" attrs="{'invisible': [('is_mahasiswa','=',True)]}"/>
                 </page>
                 <field name="street2" position="replace">
@@ -47,42 +47,35 @@
                 <field name="title" position="after">
                     <field name="yudisium_id" widget="selection"/>
                 </field>                              
-            	<field name="parent_id" position="after">
+                <field name="parent_id" position="after">
                     <group>
-                        <field name="jenis_pendaftaran_id" widget="selection"
-                            attrs="{'invisible': [('is_mahasiswa','=',False)], 
-                            'required': [('is_mahasiswa','=',True)]}"/>
-                        <field name="status_mahasiswa" 
-                            attrs="{'invisible': [('is_mahasiswa','=',False)]}"/>
+                        <field name="jenis_pendaftaran_id" widget="selection" attrs="{'invisible': [('is_mahasiswa','=',False)],                              'required': [('is_mahasiswa','=',True)]}"/>
+                        <field name="status_mahasiswa" attrs="{'invisible': [('is_mahasiswa','=',False)]}"/>
 
                         <field name="is_mahasiswa" invisible="1"/>
                     </group>
-            	</field>
+                </field>
 
                 <field name="parent_id" position="replace">
                     <field name="parent_id" invisible="1"/>
                     <field name="marketing_id" placeholder="Marketing..."/>
                 </field>
                 <div class="oe_edit_only" position="replace">
-                	<div class="oe_edit_only" attrs="{'invisible': [('is_mahasiswa','=',True)]}">
+                    <div class="oe_edit_only" attrs="{'invisible': [('is_mahasiswa','=',True)]}">
                         <label for="name"/> (
                         <field name="is_company" on_change="onchange_type(is_company)" class="oe_inline"/> <label for="is_company" string="Is a University?"/>)
                     </div>    
                 </div>
-            	<field name='name' position="replace">
-            		<field name="reg" style="width: 100%%" attrs="{'invisible': ['|',('status_mahasiswa','in',('Mahasiswa','alumni','cuti')),('is_mahasiswa','=',False)]}"/>
-            		<field name="npm" style="width: 100%%" attrs="{'invisible': ['|',('status_mahasiswa','not in',('Mahasiswa','alumni','cuti')),('is_mahasiswa','=',False)]}"/>
-            		<h3>
-            			<div>
-            				<field name="name" placeholder="Nama" style="width: 100%%" />
-            				<!-- <field name="nama_tengah" placeholder="Nama Tengah" style="width: 30%%"/>  -->
-            				<!-- <field name="nama_belakang" placeholder="Nama Belakang" style="width: 34%%"/> -->
-            			</div>
-            		</h3>
-                </field>   
-
-                <field name="property_account_position" position="before">
-                    <field name="split_invoice" placeholder="split invoice.." groups="account.group_account_manager" attrs="{'required': [('is_mahasiswa','=',True)],'invisible': [('is_mahasiswa','=',False)]}"/>
+                <field name="name" position="replace">
+                    <field name="reg" style="width: 100%" attrs="{'invisible': ['|',('status_mahasiswa','in',('Mahasiswa','alumni','cuti')),('is_mahasiswa','=',False)]}"/>
+                    <field name="npm" style="width: 100%" attrs="{'invisible': ['|',('status_mahasiswa','not in',('Mahasiswa','alumni','cuti')),('is_mahasiswa','=',False)]}"/>
+                    <h3>
+                        <div>
+                            <field name="name" placeholder="Nama" style="width: 100%"/>
+                            <!-- <field name="nama_tengah" placeholder="Nama Tengah" style="width: 30%"/>  -->
+                            <!-- <field name="nama_belakang" placeholder="Nama Belakang" style="width: 34%"/> -->
+                        </div>
+                    </h3>
                 </field>    
 
                 <label for="street" string="Address" position="before">
@@ -123,7 +116,7 @@
                                             <field name="invoice_bangunan_id" class="oe_inline"/> 
                                             <label for="create_inv_bangunan"/>
                                             <!-- <button name="create_inv_bangunan" class="oe_link" type='object' groups="vit_universities_v8.group_univ_pmb_baak" string="Create Invoice Bangunan" attrs="{'invisible': ['|',('invoice_bangunan_id','!=',False),('invoice_state','!=','paid')]}"/> -->
-                                            <button name="verifikasi_daftar_ulang" class="oe_link" type='object' groups="vit_universities_v8.group_univ_pmb_baak" string="Validasi Registrasi Ulang" attrs="{'invisible': ['|','|',('status_mahasiswa','!=','calon'),('invoice_state','!=','paid'),('invoice_bangunan_id','!=',False)]}"/>
+                                            <button name="verifikasi_daftar_ulang" class="oe_link" type="object" groups="vit_universities_v8.group_univ_pmb_baak" string="Validasi Registrasi Ulang" attrs="{'invisible': ['|','|',('status_mahasiswa','!=','calon'),('invoice_state','!=','paid'),('invoice_bangunan_id','!=',False)]}"/>
                                         </div>                                        
                                         <field name="tgl_ujian" attrs="{'readonly': [('status_mahasiswa','!=','calon')]}"/>
                                         <field name="nilai_ujian_asli"/>
@@ -142,63 +135,63 @@
                                    </group>                                
                                 <separator string="Informasi Pribadi"/>
                                 <group col="4" colspan="4">
-                                	<group>
-                                		<field name="tempat_lahir"/>
-                                		<field name="tanggal_lahir" options="{'datepicker':{'yearRange': 'c-100:c+0'}}"/>
-                                		<field name="age"/>	
-                                	</group>
-                                	<group>
-                                		<field name="jenis_kelamin"/>
-                                		<field name="status_pernikahan"/>
-                                		<field name="agama"/>	
-                                	</group>
+                                    <group>
+                                        <field name="tempat_lahir"/>
+                                        <field name="tanggal_lahir" options="{'datepicker':{'yearRange': 'c-100:c+0'}}"/>
+                                        <field name="age"/> 
+                                    </group>
+                                    <group>
+                                        <field name="jenis_kelamin"/>
+                                        <field name="status_pernikahan"/>
+                                        <field name="agama"/>   
+                                    </group>
                                 </group>
 
                                 <separator string="Informasi Calon Mahasiswa" attrs="{'invisible': [('status_mahasiswa','in',('Mahasiswa','alumni','cuti'))]}"/>
                                 <separator string="Informasi Mahasiswa" attrs="{'invisible': [('status_mahasiswa','=','calon')]}"/>
                                 <group col="4" colspan="4">
-                                	<group>
+                                    <group>
                                         <field name="tahun_ajaran_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
-                                		<field name="fakultas_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
-                                		<field name="prodi_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>	
+                                        <field name="fakultas_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
+                                        <field name="prodi_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>  
                                         <field name="konsentrasi_id" domain="[('prodi_id','=',prodi_id)]"/>
-                                	</group>
-                                	<group>
-                                        <field name="tgl_daftar" attrs="{'invisible': [('status_mahasiswa','!=','calon')]}" readonly="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="tgl_daftar" readonly="1"/>
                                         <field name="type_mhs_id" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
                                         <field name="type_pendaftaran" attrs="{'required': [('is_mahasiswa','=',True)]}"/>  
                                         <field name="jalur_masuk" attrs="{'required': [('is_mahasiswa','=',True)]}"/>
                                         <field name="kelas_id"/>                                        
-                                	</group>                                        
+                                    </group>                                        
                                 </group>  
                                 <group>
                                     <field name="is_beasiswa" attrs="{'invisible': [('is_beasiswa','=',False)]}"/>  
-                                </group>                     	                                     
+                                </group>                                                             
                             </sheet>
                         </form>
                     </page>
                     <page string="Pendidikan dan Keluarga" name="riwayat_pendidikan" attrs="{'invisible': [('status_mahasiswa','=',False)]}">
                         <sheet>
                             <separator string="Riwayat Pendidikan"/>
-                                <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1" >
-                        	        <tree string="Daftar Riwayat Pendidikan">
-        			                    <field name="nama_sekolah"/>
+                                <field view_mode="tree" name="riwayat_pendidikan_ids" nolabel="1">
+                                    <tree string="Daftar Riwayat Pendidikan">
+                                        <field name="nama_sekolah"/>
                                         <field name="alamat" invisible="1"/>
                                         <field name="website" invisible="1"/>
-        			                    <field name="tingkat"/>
+                                        <field name="tingkat"/>
                                         <field name="jurusan"/>
                                         <field name="tahun_masuk" invisible="1"/>
                                         <field name="tahun_lulus" invisible="1"/>
                                         <field name="nilai_akhir"/>
                                         <field name="satu_yayasan" invisible="1"/>
                                         <field name="ranking" attrs="{'invisible': [('satu_yayasan','=',False)]}"/>
-        			                </tree>
+                                    </tree>
                                     <form string="Daftar Riwayat Pendidikan">
                                         <group>
                                             <group>
                                                 <field name="nama_sekolah"/>
-                                                <field name="alamat" />
-                                                <field name="website" />
+                                                <field name="alamat"/>
+                                                <field name="website"/>
                                             </group>
                                             <group>
                                                 <field name="tingkat"/>
@@ -206,20 +199,20 @@
                                                 <field name="tahun_masuk"/>
                                                 <field name="tahun_lulus"/>
                                                 <field name="nilai_akhir"/>
-                                                <field name="satu_yayasan" />
+                                                <field name="satu_yayasan"/>
                                                 <field name="ranking" attrs="{'invisible': [('satu_yayasan','=',False)]}"/>
                                                 <field name="nim"/>
                                             </group> 
                                         </group>       
                                     </form>                                    
-        		                </field>
+                                </field>
 
                                 <separator string="Jalur Prestasi"/>
                                 <group>
                                     <group>
                                         <field name="semester1"/>
-                                        <field name="semester2" />
-                                        <field name="semester3" />
+                                        <field name="semester2"/>
+                                        <field name="semester3"/>
                                     </group>
                                     <group>
                                         <field name="semester4"/>
@@ -228,20 +221,20 @@
                                     </group> 
                                 </group>  
 
-                        		<separator string="Riwayat Keluarga"/>
+                                <separator string="Riwayat Keluarga"/>
                                 <field view_mode="tree" name="biodata_keluarga_ids" nolabel="1">
-                        			<tree string="Daftar Anggota Keluarga">
-        			                    <field name="nama"/>
-        			                    <field name="jenis_kelamin" invisible="1"/>
-        			                    <field name="tempat_lahir" invisible="1"/>
-        			                    <field name="tanggal_lahir" invisible="1"/>
-        			                    <field name="hubungan_keluarga_id"/>
+                                    <tree string="Daftar Anggota Keluarga">
+                                        <field name="nama"/>
+                                        <field name="jenis_kelamin" invisible="1"/>
+                                        <field name="tempat_lahir" invisible="1"/>
+                                        <field name="tanggal_lahir" invisible="1"/>
+                                        <field name="hubungan_keluarga_id"/>
                                         <field name="keadaan"/>
                                         <field name="jenjang_id" widget="selection"/>
-        			                    <field name="pekerjaan"/>
-        			                    <field name="alamat"/>
+                                        <field name="pekerjaan"/>
+                                        <field name="alamat"/>
                                         <field name="telepon"/>
-        			                </tree>
+                                    </tree>
                                     <form string="Daftar Anggota Keluarga">
                                         <group>
                                             <group>
@@ -261,7 +254,7 @@
                                             </group>
                                         </group>
                                     </form>                                    
-        			            </field>  
+                                </field>  
 
                                 <separator/>
                                 <group>
@@ -269,11 +262,11 @@
                                     <field name="ranking" attrs="{'invisible': [('hubungan','!=','cikini')]}"/>
                                     <field name="keluarga_alumni_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
                                     <field name="karyawan_id" groups="vit_universities_v8.group_univ_pmb_baak"/>
-                                    <field name="is_alumni" />
+                                    <field name="is_alumni"/>
                                 </group>
                             </sheet>
 
-		            </page> 
+                    </page> 
 
                     <page string="Pelanggaran" name="pelanggaran" attrs="{'invisible': ['|',('status_mahasiswa','not in',('Mahasiswa','alumni')),('is_mahasiswa','=',False)]}">
                         <field view_mode="tree" name="pelanggaran_ids" nolabel="1">
@@ -285,16 +278,15 @@
                         </field>
                     </page>
 
-                    <page string="Pindahan" name="pindahan" 
-                        attrs="{'invisible': [('jenis_pendaftaran_id','in',(1,False))]}">
+                    <page string="Pindahan" name="pindahan" attrs="{'invisible': [('jenis_pendaftaran_id','in',(1,False))]}">
                         <button string="Konversi" type="object" name="action_konversi" class="oe_highlight" attrs="{'invisible':[('status_mahasiswa','!=','calon')]}" groups="vit_universities_v8.group_univ_pmb_baak"/>
                         <group>
                             <group>
-                                <field name='asal_univ'/>
+                                <field name="asal_univ"/>
                                 <field name="asal_univ_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}" string="-"/>
-                                <field name='asal_fakultas'/>     
+                                <field name="asal_fakultas"/>     
                                 <field name="asal_fakultas_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}" string="-"/>
-                                 <field name='asal_prodi'/>
+                                 <field name="asal_prodi"/>
                                 <field name="asal_prodi_id" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}" string="-"/>    
                                 <field name="semester_id" string="Semester Mulai" widget="required" attrs="{'required': [('jenis_pendaftaran_id','!=',1),('is_company','=',False)]}"/> 
                             </group>
@@ -317,6 +309,12 @@
                             </tree>
                         </field>
                     </page>
+
+                    <page string="Angsuran"  groups="account.group_account_user">
+                        <group>
+                            <field name="split_invoice" placeholder="split invoice.." groups="account.group_account_manager" attrs="{'required': [('is_mahasiswa','=',True)],'invisible': [('is_mahasiswa','=',False)]}"/>
+                        </group>
+                    </page>
                     
                     <page string="Informasi Kelulusan" attrs="{'invisible': ['|',('status_mahasiswa','not in',('Mahasiswa','alumni')),('is_mahasiswa','=',False)]}">
                         <form string="Informasi Kelulusan" version="7.0">
@@ -336,8 +334,8 @@
                                             <label for="tgl_lulus" string="Tanggal Lulus" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
                                             <div>
                                                 <field name="tgl_lulus" class="oe_inline" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
-                                                <label for="%(act_res_partner_view_transkrip)d" string="Cek total matakuliah yang telah ditempuh :" attrs="{'invisible': [('siap_sidang','=',True)]}"/>
-                                                <button name="%(act_res_partner_view_transkrip)d" help='Cek total matakuliah yang telah di tempuh' class="oe_link oe_edit_only" type='action' icon="gtk-find" groups="vit_universities_v8.group_univ_staff_baak"/> 
+                                                <label for="967" string="Cek total matakuliah yang telah ditempuh :" attrs="{'invisible': [('siap_sidang','=',True)]}"/>
+                                                <button name="967" help="Cek total matakuliah yang telah di tempuh" class="oe_link oe_edit_only" type="action" icon="gtk-find" groups="vit_universities_v8.group_univ_staff_baak"/> 
                                             </div>  
                                                 <field name="siap_sidang" invisible="1"/>
                                                 <field name="wisuda" attrs="{'invisible': [('siap_sidang','!=',True)],'readonly': [('credit','!=',0.00)]}"/> 
@@ -351,7 +349,7 @@
                                             <field name="is_import" invisible="1"/>
                                            <field name="nilai_sidang_huruf" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 
                                            <field name="nilai_sidang_angka" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>
-                                           <field name="jml_praktikum" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>/>
+                                           <field name="jml_praktikum" attrs="{'invisible': [('siap_sidang','!=',True)]}"/>/&gt;
                                         </group>      
                                         <group>
                                            <field name="jml_nilai_d" attrs="{'invisible': [('siap_sidang','!=',True)]}"/> 

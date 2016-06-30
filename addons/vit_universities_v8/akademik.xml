@@ -827,14 +827,15 @@
                                 <field name="kode"/>
                                 <field name="kode_dikti"/>
                                 <field name="nama"/>
-                                <field name="praktikum"/>
+                                <field name="prodi_id" attrs="{'invisible': [('jenis','!=','mk_khusus')],'required': [('jenis','=','mk_khusus')]}"/>
                                 <field name="dosen_id"/>
                             </group>
                             <group>
                                 <field name="sks"/>
                                 <field name="jenis"/>
                                 <field name="jenjang_id"/>
-                                <field name="prodi_id" attrs="{'invisible': [('jenis','!=','mk_khusus')],'required': [('jenis','=','mk_khusus')]}"/>
+                                <field name="praktikum"/>
+                                <field name="seminar"/>
                                 <field name="penilaian100persen"/>
                             </group>
                         </group>    
