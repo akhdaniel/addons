@@ -737,27 +737,27 @@ class res_partner (osv.osv):
 								for angs in range(0,partner.split_invoice):
 									upuk = 'UP dan UK '
 									if angske == 1 :
-										price_unit = bayar.angsuran1-cicil_up_uk
+										price_unit = round(bayar.angsuran1-cicil_up_uk,0)
 										due_date = bayar.date1
 										date_invoice = False
 									elif angske == 2 :
-										price_unit = bayar.angsuran2-cicil_up_uk
+										price_unit = round(bayar.angsuran2-cicil_up_uk,0)
 										due_date = bayar.date2
 										date_invoice = bayar.date1
 									elif angske == 3 :
-										price_unit = bayar.angsuran3-cicil_up_uk
+										price_unit = round(bayar.angsuran3-cicil_up_uk,0)
 										due_date = bayar.date3
 										date_invoice = bayar.date2
 									elif angske == 4 :
-										price_unit = bayar.angsuran4-cicil_up_uk
+										price_unit = round(bayar.angsuran4-cicil_up_uk,0)
 										due_date = bayar.date4
 										date_invoice = bayar.date3
 									elif angske == 5 :
-										price_unit = bayar.angsuran5-cicil_up_uk
+										price_unit = round(bayar.angsuran5-cicil_up_uk,0)
 										due_date = bayar.date5
 										date_invoice = bayar.date4
 									elif angske == 6 :
-										price_unit = bayar.angsuran6-cicil_up_uk				
+										price_unit = round(bayar.angsuran6-cicil_up_uk,0)		
 										due_date = bayar.date6
 										date_invoice = bayar.date5
 									else :
