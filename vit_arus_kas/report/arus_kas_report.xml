@@ -1,0 +1,16 @@
+<?xml version="1.0"?> 
+<openerp> 
+    <data>
+        
+        <report 
+        id="arus_kas" 
+        string="Arus Kas" 
+        model="vit.arus.kas" 
+        name="vit.arus.kas" 
+        rml="vit_arus_kas/report/customer_card.rml" 
+        menu="False"
+        auto="False" 
+        header="False"/>
+                     
+    </data> 
+</openerp>

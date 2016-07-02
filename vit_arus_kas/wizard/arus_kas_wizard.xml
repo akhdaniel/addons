@@ -1,0 +1,62 @@
+ <openerp>
+    <data>>
+
+        <!-- wizard form-->
+        <record id="view_arus_kas_wizard_form" model="ir.ui.view">
+            <field name="name">Run Arus Kas</field>
+            <field name="model">arus.kas.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Cash Flow Report" version="7.0">
+                    <sheet>
+                        <group>
+                            <group string="Select CoA">
+                                <field name="account_id" domain="[('type','not in',('view','closed'))]"/>            
+                            </group>                            
+                            <group string="Select Period">
+                                <field name="period_start_id"/>       
+                                <field name="period_end_id"/>       
+                            </group>                          
+                        </group>
+<!--                         <group>
+                            <group>         
+                            </group>                            
+                            <group string="Fill Starting Balance (Optional)">
+                                <field name="starting_balance"/>             
+                            </group>                            
+                        </group>  -->                       
+                    </sheet>
+                    <footer>
+                        <button type="special" 
+                             special="cancel" 
+                             string="Cancel" 
+                             icon="gtk-cancel"/>
+                        
+                        <button type="object" 
+                             name="fill_table"
+                             string="Ok" 
+                             icon="gtk-ok"
+                             />             
+                    </footer>
+                </form>
+            </field>
+        </record>
+    
+        <act_window name="Arus Kas"            
+            res_model="arus.kas.wizard"
+            view_mode="form"
+            target="new"
+            context="{}"
+            id="action_vit_arus_kas_report"/>
+    
+        <menuitem
+            id="menu_arus_kas"
+            name="Arus Kas"
+            parent="account.final_accounting_reports"
+            action="action_vit_arus_kas_report"
+            groups="account.group_account_manager,account.group_account_user"
+            sequence="50"/>
+            
+
+
+    </data>
+</openerp>        
