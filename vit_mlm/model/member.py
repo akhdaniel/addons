@@ -8,8 +8,8 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-MEMBER_STATES =[('draft','Draft'),('open','Sedang Verifikasi'), ('reject','Ditolak'),
-                 ('aktif','Aktif'),('nonaktif','Non Aktif')]
+MEMBER_STATES =[('draft','Draft'),('open','Verify'), ('reject','Rejected'),
+                 ('aktif','Active'),('nonaktif','Non Active')]
 BONUS_SPONSOR_CODE   = 1
 BONUS_PASANGAN_CODE  = 2
 BONUS_LEVEL_CODE     = 3
@@ -207,9 +207,9 @@ class member(osv.osv):
         'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
 
         ### paket join
-        'paket_id'			: fields.many2one('mlm.paket', 'Join Paket', required=True, domain="[('is_submember','=',False)]",readonly=True,states={'draft':[('readonly',False)]}),
+        'paket_id'			: fields.many2one('mlm.paket', 'Join Package', required=True, domain="[('is_submember','=',False)]",readonly=True,states={'draft':[('readonly',False)]}),
         'paket_harga'		: fields.related('paket_id', 'price' ,
-            type="float", relation="mlm.paket", string="Harga Paket",readonly=True),
+            type="float", relation="mlm.paket", string="Package Price",readonly=True),
         'paket_cashback'		: fields.float("Cashback Join",readonly=True,store=True),
 
         ## paket barang
@@ -222,13 +222,13 @@ class member(osv.osv):
         'total_bonus_sponsor' 		: fields.function(_total_bonus_sponsor, string="Total Bonus Sponsor"),
         'total_bonus_pasangan' 		: fields.function(_total_bonus_pasangan, string="Total Bonus Pairing"),
         'total_bonus_level' 		: fields.function(_total_bonus_level, string="Total Bonus Level"),
-        'total_bonus_belanja' 		: fields.function(_total_bonus_belanja, string="Total Bonus Belanja"),
+        'total_bonus_belanja' 		: fields.function(_total_bonus_belanja, string="Total Bonus Order"),
         # trasfered
         'total_bonus_transfered' 				: fields.function(_total_bonus_transfered, string="Total Bonus"),
         'total_bonus_sponsor_transfered' 		: fields.function(_total_bonus_sponsor_transfered, string="Total Bonus Sponsor"),
         'total_bonus_pasangan_transfered' 		: fields.function(_total_bonus_pasangan_transfered, string="Total Bonus Pairing"),
         'total_bonus_level_transfered' 			: fields.function(_total_bonus_level_transfered, string="Total Bonus Level"),
-        'total_bonus_belanja_transfered' 		: fields.function(_total_bonus_belanja_transfered, string="Total Bonus Belanja"),
+        'total_bonus_belanja_transfered' 		: fields.function(_total_bonus_belanja_transfered, string="Total Bonus Order"),
 
         'bbm'				: fields.char("BBM Pin"),
         'signature'			: fields.binary('Signature'),
@@ -979,7 +979,7 @@ class member(osv.osv):
         sponsor 		= self.browse(cr, uid, new_member.sponsor_id.id, context=context)
         amount 			= hak_usaha * bonus_sponsor
         member_bonus.addSponsor(cr, uid, new_member.id, sponsor.id,
-            amount, '%d x Bonus Sponsor Paket %s' % (hak_usaha, paket.name), context=context)
+            amount, '%d x Bonus Sponsor Package %s' % (hak_usaha, paket.name), context=context)
 
         #######################################################################
         # hitung bonus level utk masing2 titik
@@ -1118,13 +1118,13 @@ class member(osv.osv):
         if partner.cek_state != 'update':
             paket_so = partner.paket_id.id
             if isi_paket != jml_paket:
-                raise osv.except_osv(_('Warning'),_("Jumlah paket produk tidak sesuai dengan join paket %s" % (partner.paket_id.name)))
+                raise osv.except_osv(_('Warning'),_("Product Package is not match with Join Package %s" % (partner.paket_id.name)))
             ##############################################################
             # cek apakah sudah buat SO sebelumnya untuk aktifkan memmber
             ##############################################################
             sale_order_exist 	= sale_order_obj.search(cr,uid,[('partner_id','=',ids[0]),('paket_id','=',partner.paket_id.id)])
             if sale_order_exist :
-                raise osv.except_osv(_('Error!'), _('Sale Order member %s paket %s sudah ada !') % (partner.name,partner.paket_id.name))
+                raise osv.except_osv(_('Error!'), _('Sale Order member %s package %s exists !') % (partner.name,partner.paket_id.name))
 
         ####################################################
         # jika create SO untuk Upgrade
@@ -1132,7 +1132,7 @@ class member(osv.osv):
         elif partner.cek_state == 'update':
 
             ####################################################
-            # hitung jumlah paket yang seharusnya diisi
+            # hitung jumlah package yang seharusnya diisi
             ####################################################
             new_code 		= str(int(partner.paket_id.code) + 1)
             paket_obj 		= self.pool.get('mlm.paket')
@@ -1145,15 +1145,15 @@ class member(osv.osv):
             paket_so  		= paket_browse.id
 
             if isi_paket != paket_to_add :
-                raise osv.except_osv(_('Warning!'),_("Jumlah paket produk tidak sesuai dengan upgrade \
-                    paket %s ke paket %s (harus %d paket product) !" % (partner.paket_id.name,paket_browse.name,paket_to_add)))
+                raise osv.except_osv(_('Warning!'),_("Jumlah package produk tidak sesuai dengan upgrade \
+                    package %s ke package %s (harus %d package product) !" % (partner.paket_id.name,paket_browse.name,paket_to_add)))
 
             ##############################################################
             # cek apakah sudah buat SO sebelumnya untuk aktifkan memmber
             ##############################################################
             sale_order_exist 	= sale_order_obj.search(cr,uid,[('partner_id','=',ids[0]),('paket_id','=',new_paket_id)])
             if sale_order_exist :
-                raise osv.except_osv(_('Error!'), _('Sale Order member %s paket upgrade %s sudah ada !') % (partner.name,paket_browse.name))
+                raise osv.except_osv(_('Error!'), _('Sale Order member %s package upgrade %s sudah ada !') % (partner.name,paket_browse.name))
 
         #################################################################
         # create sale_order
@@ -1166,14 +1166,14 @@ class member(osv.osv):
             'order_line' 			: lines,
             'order_policy'			: 'prepaid', # agar invoice di buat otomatis sebelum barang di transfer
             'origin'				: 'Product Package Member: %s' % (partner.name),
-            'paket_id'				:  paket_so #insert paket id di SO
+            'paket_id'				:  paket_so #insert package id di SO
         }
 
         sale_order_id = sale_order_obj.create(cr, uid, data, context=context)
 
         # cr.commit()
         # raise osv.except_osv( '' , '')
-        return {'warning': {'title': _('OK!'),'message': _('Sale Order telah dibuat !.')}}
+        return {'warning': {'title': _('OK!'),'message': _('Sale Order created !.')}}
 
 
     def _cari_data_bds_ltree_level(self, cr, uid, path_ltree, start_lv, context=None):
@@ -1200,7 +1200,7 @@ class member(osv.osv):
         paket  = upline.paket_id
 
         if not paket.is_upgradable:
-            raise osv.except_osv(_('Error!'), _('Paket %s tidak bisa diupgrade!') % (paket.name))
+            raise osv.except_osv(_('Error!'), _('Package %s tidak bisa diupgrade!') % (paket.name))
 
         ####################################################
         # paket yg akan diisikan ke member yg diupdate
@@ -1229,11 +1229,11 @@ class member(osv.osv):
             if inv_number == False :
                 inv_number = ''
             if inv_state != 'paid' :
-                raise osv.except_osv(_('Error!'), _('Invoice %s untuk upgrade paket %s member ini belum paid !') % (inv_number,paket_browse.name))
+                raise osv.except_osv(_('Error!'), _('Invoice %s untuk upgrade package %s member ini belum paid !') % (inv_number,paket_browse.name))
 
         ####################################################
-        # cek paket yang akan di upgrade
-        # apakah jml paket detailnya sesuai dengan sisa
+        # cek package yang akan di upgrade
+        # apakah jml package detailnya sesuai dengan sisa
         # hak usaha (hak usaha baru - hak usaha lama)
         ####################################################
         titik = 0
@@ -1242,7 +1242,7 @@ class member(osv.osv):
 
         if member_to_add != 0.0 :
             if titik != member_to_add:
-                raise osv.except_osv(_('Error!'), _('Upgrade ke Paket %s harus beli %d paket lagi !')
+                raise osv.except_osv(_('Error!'), _('Upgrade ke Package %s harus beli %d package lagi !')
                                                     % (paket_browse.name,member_to_add))
 
         if member_to_add == 0:
@@ -1436,8 +1436,8 @@ class member(osv.osv):
         # hanya data yang berstatus draft saja yg bisa di hapus
         for rec in self.browse(cr, uid, ids, context=context):
             if rec.state != 'draft':
-                raise osv.except_osv(_('Error!'), _('Data yang dapat dihapus hanya yang berstatus draft !'))
-        return super(res_partner, self).unlink(cr, uid, ids, context=context)
+                raise osv.except_osv(_('Error!'), _('Only Draft Member can be deleted !'))
+        return super(member, self).unlink(cr, uid, ids, context=context)
 
 
 class mlm_history_join(osv.osv):
@@ -1452,7 +1452,7 @@ class mlm_history_join(osv.osv):
 
     _columns ={
         'member_id'		: fields.many2one('res.partner','Member_id'),
-        'paket_id'		: fields.many2one('mlm.paket','Paket'),
+        'paket_id'		: fields.many2one('mlm.paket','Package'),
         'date'			: fields.date('Date'),
         }
 
