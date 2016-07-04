@@ -1,6 +1,6 @@
 {
     'version': '0.2',
-    'name': 'Aplikasi MLM',
+    'name': 'MLM Application for Odoo',
     'depends': ['website', 'sale', 'base','account','product', 'hr', 'report','account_accountant','stock'],
     'author'  :'vitraining.com',
     'category': 'Website',

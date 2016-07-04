@@ -8,7 +8,7 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-MEMBER_STATES =[('draft','Draft'),('open','Verify'), ('reject','Rejected'),
+MEMBER_STATES =[('draft','Draft'),('open','Verification'), ('reject','Rejected'),
                  ('aktif','Active'),('nonaktif','Non Active')]
 BONUS_SPONSOR_CODE   = 1
 BONUS_PASANGAN_CODE  = 2
