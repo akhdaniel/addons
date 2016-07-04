@@ -5,7 +5,8 @@
     'author'  :'vitraining.com',
     'category': 'Website',
     'data': [
-      'menu/menu_configuration.xml',   
+        # 'data/init.sql',
+      'menu/menu_configuration.xml',
 
       'data/mlm_plan.xml',   
       'data/ir_sequence.xml',   
@@ -37,7 +38,7 @@
     'description': """
 Description
 ==================
-Aplikasi untuk system MLM lengkap
+Full MLM Application
 
 Model
 ====================
