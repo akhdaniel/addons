@@ -785,35 +785,35 @@
             <section class="mt16 mb16">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-4 text-center">
+                        <div id="mlm_new_member" class="col-md-4 text-center">
                         	<span class="fa fa-user fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/mlm/member/create/">Add Member</a>
                             </h4>
                           <p>Add new member.</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div id="mlm_list_member" class="col-md-4 text-center">
                         	<span class="fa fa-users fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/mlm/member/list">Members</a>
                             </h4>
                           <p>Member list.</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div id="mlm_stockist_member" class="col-md-4 text-center">
                         	<span class="fa fa-suitcase fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/mlm/member/stockist">Stockist</a>
                             </h4>
                           <p>Stokist member.</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div id="mlm_shop" class="col-md-4 text-center">
                         	<span class="fa fa-shopping-cart fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/shop">Shop</a>
                             </h4>
                           <p>Products and sales.</p>
                         </div>
-                        <div class="col-md-4 text-center">
+                        <div id="mlm_blog" class="col-md-4 text-center">
                         	<span class="fa fa-pencil-square fa-5x"/>
                             <h4 class="mt16">
                                 <a t-attf-href="/blog">Blog</a>
