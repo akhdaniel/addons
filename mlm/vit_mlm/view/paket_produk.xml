@@ -1,0 +1,86 @@
+<openerp>
+	<data>
+		<record id="view_paket_produk_tree" model="ir.ui.view">
+		    <field name="name">mlm_paket_produk_tree</field>
+		    <field name="model">mlm.paket_produk</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list paket_produk" >
+		            <field name="name"/>
+		            <field name="description"/>
+		            <field name="harga"/>
+		        </tree>    
+		    </field>
+		</record>
+
+        <record id="view_paket_produk_form" model="ir.ui.view">
+            <field name="name">mlm_paket_produk_form</field>
+            <field name="model">mlm.paket_produk</field>
+            <field name="arch" type="xml">
+            	<form string="paket produk form" version="7.0">
+            		<!-- header>
+						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
+						 	 states="draft" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	 states="open" />
+            			<field name="state" widget="statusbar" />
+            		</header-->
+            		<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="Product Package Name" />
+							<h1>
+								<field name="name" />
+							</h1>
+						</div>
+						
+		            	<group>
+			                <field name="description"/>       
+			                <field name="harga"/>
+			                <!-- <field name="discount"/>   -->     
+			            </group>
+
+			            <notebook>
+			            	<page string="Lines">
+					            <field name="paket_produk_detail_ids">
+					            	<tree string="Lines" editable="bottom">
+						                <field name="product_id" on_change="onchange_product_id(product_id)"/>       
+						                <field name="qty"/>       
+						                <field name="uom_id"/>
+						                <field name="harga"/>   
+						            </tree>
+						        </field>
+						    </page>
+						</notebook>
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+        <record id="view_member_paket_produk_tree" model="ir.ui.view">
+		    <field name="name">mlm_member_paket_produk_tree</field>
+		    <field name="model">mlm.member_paket_produk</field>
+		    <field name="arch" type="xml">
+		    	<tree string="Product Package Pendaftaran" editable='bottom'>
+                    <field name='paket_produk_id'/>
+                    <field name='qty'/>
+                    <field name='member_id' invisible='1' />      
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_member_paket_produk_form" model="ir.ui.view">
+            <field name="name">mlm_paket_produk_pendaftaran_form</field>
+            <field name="model">mlm.member_paket_produk</field>
+            <field name="arch" type="xml">
+            	<form string="paket produk pendaftaran form" version="7.0">
+            		<group style="width : 600px;">
+	                    <field name='paket_produk_id'/>
+	                    <field name='qty'/>
+	                    <field name='member_id' invisible='1' /> 
+	                </group>
+                </form>
+            </field>
+        </record>
+
+	</data>
+</openerp>

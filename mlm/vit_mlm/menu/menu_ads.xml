@@ -1,0 +1,27 @@
+<openerp>
+	<data>
+
+
+		<!-- action_ads_android -->
+		<record id="action_ads" model="ir.actions.act_window">
+			<field name="name">List Iklan</field>
+			<field name="res_model">mlm.ads</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!--  menu_mlm_member -->
+		<menuitem id="menu_ads"
+			 name="Advertising"
+			 sequence="50"
+			 parent="menu_mlm_top"/>
+		<!-- menu_ads_android -->
+		<menuitem id="menu_ads_android"
+			 action="action_ads"
+			 name="List Advertising"
+			 sequence="10"
+			 parent="menu_ads"/>
+
+
+	</data>
+</openerp>

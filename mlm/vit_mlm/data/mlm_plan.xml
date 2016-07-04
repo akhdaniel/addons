@@ -1,0 +1,59 @@
+<openerp>
+	<data>
+		<!-- mlm_plan -->
+
+		<record id="mlm_plan1" model="mlm.mlm_plan">
+			<field name="code">1</field>
+			<field name="name">Binary Plan MLM</field>
+			<field name="max_downline">2</field>
+			<field name="bonus_sponsor">120000</field>
+			<field name="max_bonus_sponsor_level">0</field>
+			<field name="bonus_sponsor_percent_decrease">0</field>
+			<field name="bonus_level">100000</field>
+			<field name="max_bonus_level_level">4</field>
+			<field name="bonus_level_percent_decrease">0</field>
+			<field name="full_level" eval="False"/>
+			<field name="bonus_pasangan">80000</field>
+			<field name="max_bonus_pasangan_level">4</field>
+			<field name="bonus_pasangan_percent_decrease">0</field>
+		</record>
+		
+		<record id="mlm_plan2" model="mlm.mlm_plan">
+			<field name="code">2</field>
+			<field name="name">Matrix Plan MLM </field>
+		</record>
+		<record id="mlm_plan3" model="mlm.mlm_plan">
+			<field name="code">3</field>
+			<field name="name">Australian Binary plan / Tri-Binary</field>
+		</record>
+		<record id="mlm_plan4" model="mlm.mlm_plan">
+			<field name="code">4</field>
+			<field name="name">Forced Matrix Plan Software</field>
+		</record>
+		<record id="mlm_plan5" model="mlm.mlm_plan">
+			<field name="code">5</field>
+			<field name="name">Step Plan MLM Software</field>
+		</record>
+		<record id="mlm_plan6" model="mlm.mlm_plan">
+			<field name="code">6</field>
+			<field name="name">Board Plan MLM Software</field>
+		</record>
+		<record id="mlm_plan7" model="mlm.mlm_plan">
+			<field name="code">7</field>
+			<field name="name">Unilevel Plan Software</field>
+		</record>
+		<record id="mlm_plan8" model="mlm.mlm_plan">
+			<field name="code">8</field>
+			<field name="name">Generation Plan MLM Software</field>
+		</record>
+		<record id="mlm_plan9" model="mlm.mlm_plan">
+			<field name="code">9</field>
+			<field name="name">Stair step Plan MLM Software</field>
+		</record>
+		<record id="mlm_plan10" model="mlm.mlm_plan">
+			<field name="code">10</field>
+			<field name="name">Breakaway Plan MLM Software</field>
+		</record>
+
+	</data>
+</openerp>

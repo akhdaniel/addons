@@ -1,0 +1,39 @@
+<openerp>
+	<data>
+
+
+		<!-- action list bonus produksi -->
+		<record id="action_bonus_produksi" model="ir.actions.act_window">
+			<field name="name">List Bonus Production</field>
+			<field name="res_model">mlm.member_bonus</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[('amount','&lt;&gt;',0)]</field>
+			<field name="context">{'search_default_produksi': 1,'search_default_not_transfered':1, 'search_default_group_by_member':1,}</field>
+		</record>
+
+
+		<!-- Bonus Production  -->
+		<menuitem id="vit_mlm.menu_bonus_produksi"
+			 action="action_bonus_produksi"
+			 name="Bonus Production"
+			 sequence="70"
+			 parent="vit_mlm.menu_bonus"/>
+
+		<!-- search member_bonus_produksi -->
+		<record id="view_member_bonus_filter_produksi" model="ir.ui.view">
+		    <field name="name">member_bonus.filter</field>
+		    <field name="model">mlm.member_bonus</field>
+		    <field name="inherit_id" ref="vit_mlm.view_member_bonus_filter"/>
+		    <field name="arch" type="xml">
+
+		        <filter icon="terp-mail-message-new" string="Bonus Point Belanja" name="point" domain="[('bonus_id','=','Point Belanja')]" position="after">
+			        <filter icon="terp-mail-message-new" 
+		            string="Bonus Production" 
+		            name="produksi" domain="[('bonus_id','=','Production')]"/>	     
+		        </filter>       	                                      
+		
+		    </field>
+		</record>
+
+	</data>
+</openerp>

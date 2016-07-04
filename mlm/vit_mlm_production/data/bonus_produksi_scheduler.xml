@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<openerp>
+    <data>
+        <record model="ir.cron" id="bonus_produksi_cron">
+            <field name="name">Bonus Production Monthly</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <!-- <field name="nextcall"></field> -->
+            <field name="doall" eval="False"/>
+            <field name="model" eval="'res.partner'"/>
+            <field name="function" eval="'cron_bonus_produksi'"/>
+            <field name="args" eval="'()'" />
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,95 @@
+<openerp>
+	<data>
+
+
+		<!-- action list transfer_transfer_bonus -->
+		<record id="action_transfer_bonus_sponsor_today" model="ir.actions.act_window">
+			<field name="name">List Transfer Bonus Sponsor Today</field>
+			<field name="res_model">mlm.transfer_bonus</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_sponsor': 1,'search_default_not_transfered':1, 'search_default_group_by_member':1,}</field>
+		</record>
+
+
+		<!-- action list action_transfer_bonus_pasangan -->
+		<record id="action_transfer_bonus_pasangan" model="ir.actions.act_window">
+			<field name="name">List Transfer Bonus Pairing</field>
+			<field name="res_model">mlm.transfer_bonus</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_pasangan': 1,'search_default_not_transfered':1, 
+			'search_default_group_by_member':1}</field>
+		</record>
+
+		<!-- action list action_transfer_bonus_level -->
+		<record id="action_transfer_bonus_level" model="ir.actions.act_window">
+			<field name="name">List Transfer Bonus Level</field>
+			<field name="res_model">mlm.transfer_bonus</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_level': 1,'search_default_not_transfered':1,
+			'search_default_group_by_member':1}</field>
+		</record>
+
+		<!-- action list action_transfer_bonus_development -->
+		<record id="action_transfer_bonus_development" model="ir.actions.act_window">
+			<field name="name">List Transfer Bonus Development</field>
+			<field name="res_model">mlm.transfer_bonus</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_development': 1,'search_default_not_transfered':1,
+				'search_default_group_by_member':1}</field>
+		</record>
+
+		<!-- action list action_transfer_bonus_leadership -->
+		<record id="action_transfer_bonus_leadership" model="ir.actions.act_window">
+			<field name="name">List Transfer Bonus Leadership</field>
+			<field name="res_model">mlm.transfer_bonus</field>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_leadership': 1,'search_default_not_transfered':1,
+				'search_default_group_by_member':1}</field>
+		</record>
+
+
+
+
+		<!--  menu_mlm_member -->
+		<menuitem id="menu_transfer_bonus"
+			 name="Transfer Bonus"
+			 sequence="30"
+			 parent="menu_mlm_top"/>
+
+		<!-- transfer_transfer_bonus sponsor today -->
+		<menuitem id="menu_transfer_bonus_sponsor_today"
+			 action="action_transfer_bonus_sponsor_today"
+			 name="Transfer Bonus Sponsor Today"
+			 sequence="30"
+			 parent="menu_transfer_bonus"/>
+
+		<!-- transfer_transfer_bonus pasangan weekly -->
+		<menuitem id="menu_transfer_bonus_pasangan"
+			 action="action_transfer_bonus_pasangan"
+			 name="Transfer Bonus Pairing"
+			 sequence="40"
+			 parent="menu_transfer_bonus"/>
+
+		<!-- transfer_transfer_bonus level weekly -->
+		<menuitem id="menu_transfer_bonus_level"
+			 action="action_transfer_bonus_level"
+			 name="Transfer Bonus Level"
+			 sequence="50"
+			 parent="menu_transfer_bonus"/>
+
+		<!-- Transfer Bonus Development  -->
+		<menuitem id="menu_transfer_bonus_development"
+			 action="action_transfer_bonus_development"
+			 name="Transfer Bonus Development"
+			 sequence="60"
+			 parent="menu_transfer_bonus"/>
+
+		<!-- Transfer Bonus Leadership  -->
+		<menuitem id="menu_transfer_bonus_leadership"
+			 action="action_transfer_bonus_leadership"
+			 name="Transfer Bonus Leadership"
+			 sequence="60"
+			 parent="menu_transfer_bonus"/>
+
+	</data>
+</openerp>

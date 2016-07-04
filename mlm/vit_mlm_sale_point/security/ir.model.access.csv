@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+"access_master_reward_group_sale_manager","access_master_reward_group_sale_manager","model_vit_sale_reward_master_reward","base.group_sale_manager",1,1,1,1
+"access_partner_reward_group_sale_manager","access_partner_reward_group_sale_manager","model_vit_sale_reward_master_reward","base.group_sale_manager",1,1,1,1
+"access_master_reward_group_sale_manager","access_master_reward_group_sale_salesman","model_vit_sale_reward_master_reward","base.group_sale_salesman",1,1,1,0
+"access_partner_reward_group_sale_manager","access_partner_reward_group_sale_salesman","model_vit_sale_reward_partner_reward","base.group_sale_salesman",1,1,1,0
+"access_master_reward_group_group_sale_salesman_all_leads","access_master_reward_group_group_sale_salesman_all_leads","model_vit_sale_reward_partner_reward","base.group_sale_salesman_all_leads",1,1,1,0
+"access_partner_reward_group_group_sale_salesman_all_leads","access_partner_reward_group_group_sale_salesman_all_leads","model_vit_sale_reward_partner_reward","base.group_sale_salesman_all_leads",1,1,1,0

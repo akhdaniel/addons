@@ -1,0 +1,12 @@
+<openerp>
+	<data>
+
+		
+		<!-- bonus -->
+		<record id="bonus7" model="mlm.bonus">
+			<field name="code">7</field>
+			<field name="name">Production</field>
+		</record>
+
+	</data>
+</openerp>

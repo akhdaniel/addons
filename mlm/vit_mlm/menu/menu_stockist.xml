@@ -1,0 +1,30 @@
+<openerp>
+	<data>
+
+
+		<!-- action_stockist_android -->
+		<record id="action_stockist" model="ir.actions.act_window">
+			<field name="name">List Stockist</field>
+			<field name="res_model">stock.warehouse</field>
+            <field name="view_id" ref="view_stockist_tree"/>
+			<field name="view_mode">tree,form</field>
+			<field name="context">{'search_default_group_by_state_id':1, 'search_default_group_by_city':1}</field>			
+		</record>
+
+
+		<!--  menu_mlm_member -->
+		<menuitem id="menu_stockist"
+			 name="Stockist"
+			 sequence="40"
+			 parent="menu_mlm_top"/>
+
+		<!--  menu_list_stockist -->
+		<menuitem id="menu_list_stockist"
+			 action="action_stockist"
+			 name="List Stockist"
+			 sequence="10"
+			 parent="menu_stockist"/>
+
+
+	</data>
+</openerp>

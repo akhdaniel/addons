@@ -1,0 +1,99 @@
+<openerp>
+	<data>
+		<record id="view_member_bonus_tree" model="ir.ui.view">
+		    <field name="name">mlm_member_bonus_tree</field>
+		    <field name="model">mlm.member_bonus</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list member_bonus" delete="false" colors="grey:is_transfered==True">
+					<field name='member_id'/>
+					<field name='new_member_id'/>
+					<field name='amount'/>
+					<field name='trans_date'/>
+					<field name='bonus_id'	/>
+					<field name='description'/>		            
+					<field name='is_transfered'/>
+		        </tree>    
+		    </field>
+		</record>
+
+
+		<!-- ini definisi search member_bonus -->
+		<record id="view_member_bonus_filter" model="ir.ui.view">
+		    <field name="name">member_bonus.filter</field>
+		    <field name="model">mlm.member_bonus</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Bonus">
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Belong to Member" 
+		            	name="not_null" domain="[('member_id','!=',False)]"/>
+
+					<separator/>
+					
+		            <filter icon="terp-mail-message-new" 
+		                string="Bonus Sponsor" 
+		            	name="sponsor" domain="[('bonus_id','=','Sponsor')]"/>
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Bonus Level" 
+		            	name="level" domain="['&amp;',('bonus_id','=','Level'),('amount','&lt;&gt;','0')]"/>
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Bonus Pairing" 
+		            	name="pasangan" domain="[('bonus_id','=','Pairing')]"/>
+		            
+		            <filter icon="terp-mail-message-new" 
+		                string="Bonus Development" 
+		            	name="development" domain="[('bonus_id','=','Development')]"/>
+		            
+		            <filter icon="terp-mail-message-new" 
+		                string="Bonus Leadership" 
+		            	name="leadership" domain="[('bonus_id','=','Leadership')]"/>
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Bonus Point Belanja" 
+		            	name="point" domain="[('bonus_id','=','Point Belanja')]"/>
+
+		            <separator/>
+
+		            <filter icon="terp-mail-message-new" 
+		                string="Transfered" 
+		            	name="transfered" domain="[('is_transfered','=',True)]"/>
+		            <filter icon="terp-mail-message-new" 
+		                string="Not Transfered" 
+		            	name="not_transfered" domain="[('is_transfered','=',False)]"/>
+
+		            <separator/>
+		            
+		            <field name="member_id"/>
+		            <field name="new_member_id"/>
+		            
+		            <group expand="1" string="Group By...">
+
+		                <filter string="Bonus" icon="terp-personal" 
+		                    domain="[]" name="group_by_bonus"
+		                	context="{'group_by':'bonus_id'}"/>
+
+		                <filter string="Member" icon="terp-personal" 
+		                    domain="[]" name="group_by_member"
+		                	context="{'group_by':'member_id'}"/>
+
+		                <filter string="Trans. Date" 
+		                    icon="terp-personal" domain="[]" 
+		                    name="group_by_trans_date" 
+		                	context="{'group_by':'trans_date'}"/>
+
+		                <filter string="Is Transfered" 
+		                    icon="terp-personal" domain="[]" 
+		                    name="group_by_is_transfered" 
+		                	context="{'group_by':'is_transfered'}"/>
+		            </group>                                        
+		
+		        </search>
+		    </field>
+		</record>
+
+
+
+	</data>
+</openerp>

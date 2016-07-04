@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+		<!-- paket -->
+		<record id="paket_dummy" model="mlm.paket">
+			<field name="code">X</field>
+			<field name="name">Invitation</field>
+			<field name="price"></field>
+			<field name="harga">0</field>
+			<field name="cashback"></field>
+			<field name="hak_usaha">1</field>
+			<field name="description">Invitation Package</field>
+			<field name="is_upgradable" eval="False" />
+			<field name="is_submember" eval="True" />
+		</record>
+	</data>
+</openerp>

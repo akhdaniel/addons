@@ -1,0 +1,71 @@
+<openerp>
+	<data>
+		<!-- action list mlm_plan -->
+		<record id="action_mlm_plan_list" model="ir.actions.act_window">
+			<field name="name">List MLM Plan</field>
+			<field name="res_model">mlm.mlm_plan</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- action list bonus -->
+		<record id="action_bonus_type_list" model="ir.actions.act_window">
+			<field name="name">List Bonus Type</field>
+			<field name="res_model">mlm.bonus</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		<!-- action list paket -->
+		<record id="action_paket_type_list" model="ir.actions.act_window">
+			<field name="name">List Joining Package</field>
+			<field name="res_model">mlm.paket</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<!-- action list paket_produk -->
+		<record id="action_paket_produk_list" model="ir.actions.act_window">
+			<field name="name">List Product Package</field>
+			<field name="res_model">mlm.paket_produk</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<menuitem id="menu_mlm_top"
+			 name="MLM"
+			 sequence="10"
+		/>
+
+		<!--  menu_mlm_master -->
+		<menuitem id="menu_mlm_master"
+			 name="Configuration"
+			 sequence="210"
+			 parent="menu_mlm_top"/>
+
+		<!-- menu_mlm_plan -->
+		<menuitem id="menu_mlm_plan"
+			 action="action_mlm_plan_list"
+			 name="MLM Plan"
+			 sequence="10"
+			 parent="menu_mlm_master"/>
+
+		<!-- menu_bonus -->
+		<menuitem id="menu_bonus_type"
+			 action="action_bonus_type_list"
+			 name="Bonus Type"
+			 sequence="20"
+			 parent="menu_mlm_master"/>
+
+
+		<!-- menu_paket -->
+		<menuitem id="menu_paket"
+			 action="action_paket_type_list"
+			 name="Joining Package"
+			 sequence="30"
+			 parent="menu_mlm_master"/>
+
+		<!-- menu_paket_produk -->
+		<menuitem id="menu_paket_produk"
+			 action="action_paket_produk_list"
+			 name="Product Package"
+			 sequence="40"
+			 parent="menu_mlm_master"/>
+
+	</data>
+</openerp>
