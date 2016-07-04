@@ -1,0 +1,109 @@
+<openerp>
+	<data>
+        <record id="view_master_reward_form" model="ir.ui.view">
+            <field name="name">master_reward_form</field>
+            <field name="model">vit_sale_reward.master_reward</field>
+            <field name="arch" type="xml">
+            	<form string="master reward form" version="7.0">
+            		<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="Master Reward Point Name" />
+							<h1>
+								<field name="name" />
+							</h1>
+						</div>
+			            <group>
+			            	<group string="Reward Setting">
+				                <field name="so_total"/>       
+				                <field name="point"/>       
+				                <field name="amount"/>  
+				                <field name="multiple"/>       
+				            </group>
+
+				            <group string="Accounting">
+				                <field name="journal_id"/>       
+				                <field name="debit_account_id"/>       
+				                <field name="credit_account_id"/>       
+				            </group>
+				            
+				            <group string="Validation">
+				                <field name="date_from"/>       
+				                <field name="date_to"/>       
+				                <field name="is_active"/>       
+				            </group>
+				        </group>
+
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+
+        <record id="view_master_reward_tree" model="ir.ui.view">
+            <field name="name">vit_sale_reward_master_reward_tree</field>
+            <field name="model">vit_sale_reward.master_reward</field>
+            <field name="arch" type="xml">
+            	<tree string="list master reward" colors="grey:is_active==False">
+                    <field name="name"/>
+	                <field name="so_total"/>       
+	                <field name="point"/>       
+	                <field name="amount"/>       
+	                <field name="debit_account_id"/>       
+	                <field name="credit_account_id"/>  	                
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="is_active"/>
+                </tree>    
+            </field>
+        </record>
+
+        <record id="view_partner_reward_tree" model="ir.ui.view">
+            <field name="name">vit_sale_reward_partner_reward_tree</field>
+            <field name="model">vit_sale_reward.partner_reward</field>
+            <field name="arch" type="xml">
+            	<tree string="list partner reward" colors="green:type=='in'; red:type=='out'">
+                    <field name="partner_id"/>
+	                <field name="point"/>       
+	                <field name="type"/>       
+	                <field name="date"/>       
+	                <field name="source"/>  	                
+                </tree>    
+            </field>
+        </record>
+
+
+		<!-- ini definisi search partner_reward -->
+		<record id="view_partner_reward_filter" model="ir.ui.view">
+		    <field name="name">partner_reward_filter</field>
+		    <field name="model">vit_sale_reward.partner_reward</field>
+		    <field name="arch" type="xml">
+		        <search string="Search Partner Reward">
+
+		            <!--filter icon="terp-mail-message-new" 
+		                string="Non zero duration" 
+		            	 name="nonzero" domain="[('duration','>',0)]"/-->
+		            <separator/>
+		            
+		            <field name="partner_id"/>
+		            <field name="source"/>
+		            <field name="type"/>
+		            
+		            <group expand="1" string="Group By...">
+		                <filter string="Partner" icon="terp-personal" 
+		                    domain="[]" 
+		                	 context="{'group_by':'partner_id'}"/>
+		                <filter string="Source Document" 
+		                    icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'source'}"/>
+		                <filter string="Transaction Type" 
+		                    icon="terp-personal" domain="[]" 
+		                	 context="{'group_by':'type'}"/>
+
+		            </group>                                        
+
+		        </search>
+		    </field>
+		</record>
+	</data>
+</openerp>

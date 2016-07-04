@@ -1,0 +1,15 @@
+<openerp>
+<data>
+	<record id="view_broadcast_tree" model="ir.ui.view">
+	    <field name="name">mlm_broadcast_tree</field>
+	    <field name="model">mlm.broadcast</field>
+	    <field name="arch" type="xml">
+	    	<tree string="list broadcast">
+				<field name='channel' />
+				<field name='scheduled_date' />
+				<field name='message' />
+	        </tree>    
+	    </field>
+	</record>
+</data>
+</openerp>

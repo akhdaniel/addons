@@ -1,0 +1,54 @@
+<openerp>
+	<data>
+		<record id="view_paket_tree" model="ir.ui.view">
+		    <field name="name">mlm_paket_tree</field>
+		    <field name="model">mlm.paket</field>
+		    <field name="arch" type="xml">
+		    	<tree string="list paket" >
+		            <field name="code"/>
+		            <field name="name"/>
+		            <field name="price"/>
+		            <field name="hak_usaha"/>
+		            <field name="description"/>
+		            <field name="is_upgradable"/>
+		        </tree>    
+		    </field>
+		</record>
+
+		<record id="view_paket_form" model="ir.ui.view">
+		    <field name="name">mlm_paket_form</field>
+		    <field name="model">mlm.paket</field>
+		    <field name="arch" type="xml">
+		    	<form string="Paket" version="7.0">
+		    		<sheet>
+			    		<group>
+				    		<group>
+					            <field name="code"/>
+					            <field name="name"/>
+					            <field name="description"/>
+					        </group>
+				    		<group>
+					            <field name="hak_usaha"/>
+					            <label for="paket_product_id" string="Paket Ref"/>
+	                            <div>
+	                                <group>
+	                                    <field name="paket_product_id" on_change="onchange_paket_product_id(paket_product_id)" class="oe_inline" nolabel="1"/>
+	                                    <field name="harga" class="oe_inline" nolabel="1"/>
+	                                </group>
+	                            </div>						               
+					            <field name="cashback"/>
+					            <field name="price"/>
+					        </group>
+					     </group>
+					        <group string="Settings">
+					            <field name="is_affiliate"/>
+					            <field name="is_upgradable"/>
+					            <field name="is_submember"/>
+					        </group>				        	
+					</sheet>
+		        </form>    
+		    </field>
+		</record>
+
+	</data>
+</openerp>

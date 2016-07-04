@@ -1,0 +1,17 @@
+<openerp>
+    <data>
+
+        <template id="mlm_homepage2" name="MLM Homepage" inherit_id="vit_mlm_website.mlm_homepage">
+            <xpath expr="//div[@id='mlm_stockist_member']" position="replace">
+                <div id="mlm_stockist_member" style="display:none"></div>
+            </xpath>
+            <xpath expr="//div[@id='mlm_shop']" position="replace">
+                <div id="mlm_shop" style="display:none"></div>
+            </xpath>
+            <xpath expr="//div[@id='mlm_blog']" position="replace">
+                <div id="mlm_blog" style="display:none"></div>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>

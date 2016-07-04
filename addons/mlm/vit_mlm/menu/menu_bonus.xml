@@ -1,0 +1,97 @@
+<openerp>
+	<data>
+
+
+		<!-- action list bonus -->
+		<record id="action_bonus_sponsor_today" model="ir.actions.act_window">
+			<field name="name">List Bonus Sponsor Today</field>
+			<field name="res_model">mlm.member_bonus</field>
+			<field name="view_mode">tree</field>
+			<field name="context">{'search_default_sponsor': 1,'search_default_not_transfered':1, 'search_default_not_null': 1,'search_default_group_by_member':1,}</field>
+		</record>
+
+
+		<!-- action list action_bonus_pasangan -->
+		<record id="action_bonus_pasangan" model="ir.actions.act_window">
+			<field name="name">List Bonus Pairing</field>
+			<field name="res_model">mlm.member_bonus</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('amount','&lt;&gt;',0)]</field>
+			<field name="context">{'search_default_pasangan': 1,'search_default_not_transfered':1, 
+			'search_default_group_by_member':1}</field>
+		</record>
+
+		<!-- action list action_bonus_level -->
+		<record id="action_bonus_level" model="ir.actions.act_window">
+			<field name="name">List Bonus Level</field>
+			<field name="res_model">mlm.member_bonus</field>
+			<field name="view_mode">tree</field>
+			<field name="domain">[('amount','&lt;&gt;',0)]</field>
+			<field name="context">{'search_default_level': 1,'search_default_not_transfered':1,
+			'search_default_group_by_member':1}</field>
+		</record>
+
+		<!-- action list action_bonus_development -->
+		<record id="action_bonus_development" model="ir.actions.act_window">
+			<field name="name">List Bonus Development</field>
+			<field name="res_model">mlm.member_bonus</field>
+			<field name="view_mode">tree</field>
+			<field name="context">{'search_default_development': 1,'search_default_not_transfered':1,
+				'search_default_group_by_member':1}</field>
+		</record>
+
+		<!-- action list action_bonus_leadership -->
+		<record id="action_bonus_leadership" model="ir.actions.act_window">
+			<field name="name">List Bonus Leadership</field>
+			<field name="res_model">mlm.member_bonus</field>
+			<field name="view_mode">tree</field>
+			<field name="context">{'search_default_leadership': 1,'search_default_not_transfered':1,
+				'search_default_group_by_member':1}</field>
+		</record>
+
+
+
+
+		<!--  menu_mlm_member -->
+		<menuitem id="menu_bonus"
+			 name="Bonus"
+			 sequence="20"
+			 parent="menu_mlm_top"/>
+
+		<!-- bonus sponsor today -->
+		<menuitem id="menu_bonus_sponsor_today"
+			 action="action_bonus_sponsor_today"
+			 name="Bonus Sponsor Today"
+			 sequence="30"
+			 parent="menu_bonus"/>
+
+		<!-- bonus pasangan weekly -->
+		<menuitem id="menu_bonus_pasangan"
+			 action="action_bonus_pasangan"
+			 name="Bonus Pairing"
+			 sequence="40"
+			 parent="menu_bonus"/>
+
+		<!-- bonus level weekly -->
+		<menuitem id="menu_bonus_level"
+			 action="action_bonus_level"
+			 name="Bonus Level"
+			 sequence="50"
+			 parent="menu_bonus"/>
+
+		<!-- Bonus Development  -->
+		<menuitem id="menu_bonus_development"
+			 action="action_bonus_development"
+			 name="Bonus Development"
+			 sequence="60"
+			 parent="menu_bonus"/>
+
+		<!-- Bonus Leadership  -->
+		<menuitem id="menu_bonus_leadership"
+			 action="action_bonus_leadership"
+			 name="Bonus Leadership"
+			 sequence="60"
+			 parent="menu_bonus"/>
+
+	</data>
+</openerp>

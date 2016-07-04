@@ -1,0 +1,35 @@
+<openerp>
+	<data>
+
+        <record id="view_mlm_plan_form_bonus_produksi" model="ir.ui.view">
+            <field name="name">mlm_mlm_plan_form</field>
+            <field name="model">mlm.mlm_plan</field>
+            <field name="inherit_id" ref="vit_mlm.view_mlm_plan_form"/>
+            <field name="arch" type="xml">
+	            <group string="Bonus Pairing" position="after">
+	            	<group string="Bonus Production">
+	                <field name="bonus_produksi"/>       
+	                <field name="max_bonus_produksi_level"/>
+	                <field name="bonus_produksi_percent_decrease"/>
+	                </group>      
+	            </group>
+            </field>
+        </record>
+
+       <record id="view_member_form_bonus_produksi" model="ir.ui.view">
+            <field name="name">bonus_produksi</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="vit_mlm.view_member_form"/>
+            <field name="arch" type="xml">
+				 <xpath expr="//form/sheet/notebook/page[@string='Bonus']/group/group[@string='Untransfered']/field[@name='total_bonus_belanja']" position="after">
+                    <field name="total_bonus_produksi" widget="monetary"/>
+                </xpath>
+
+                <xpath expr="//form/sheet/notebook/page[@string='Bonus']/group/group[@string='Transfered']/field[@name='total_bonus_belanja_transfered']" position="after">
+                    <field name="total_bonus_produksi_transfered" widget="monetary"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

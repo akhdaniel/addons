@@ -1,0 +1,57 @@
+<openerp>
+	<data>
+		<!-- paket -->
+		<record id="paket1" model="mlm.paket">
+			<field name="code">1</field>
+			<field name="name">Silver</field>
+			<field name="price">950000</field>
+			<field name="harga">950000</field>
+			<field name="cashback">0</field>
+			<field name="hak_usaha">1</field>
+			<field name="description">1 Hak Usaha</field>
+			<field name="is_upgradable" eval="True" />
+		</record>
+		<record id="paket2" model="mlm.paket">
+			<field name="code">2</field>
+			<field name="name">Gold</field>
+			<field name="price">2850000</field>
+			<field name="harga">2850000</field>
+			<field name="cashback">200000</field>
+			<field name="hak_usaha">3</field>
+			<field name="description">3 Hak Usaha</field>
+			<field name="is_upgradable" eval="True" />
+		</record>
+		<record id="paket3" model="mlm.paket">
+			<field name="code">3</field>
+			<field name="name">Platinum</field>
+			<field name="price">6650000</field>
+			<field name="harga">6650000</field>
+			<field name="cashback">880000</field>
+			<field name="hak_usaha">7</field>
+			<field name="description">7 Hak Usaha</field>
+			<field name="is_upgradable" eval="False" />
+		</record>
+		<record id="paket4" model="mlm.paket">
+			<field name="code">0</field>
+			<field name="name">Affiliate Member</field>
+			<field name="price">950000</field>
+			<field name="cashback">0</field>
+			<field name="harga">950000</field>
+			<field name="hak_usaha">1</field>
+			<field name="is_affiliate" eval="True" />
+			<field name="description">Affiliate Member</field>
+			<field name="is_upgradable" eval="True" />
+		</record>
+		<record id="paket5" model="mlm.paket">
+			<field name="code">99</field>
+			<field name="name">Sub-member</field>
+			<field name="price"></field>
+			<field name="harga">0</field>
+			<field name="cashback"></field>
+			<field name="hak_usaha">1</field>
+			<field name="description">Sub-member</field>
+			<field name="is_upgradable" eval="False" />
+			<field name="is_submember" eval="True" />
+		</record>
+	</data>
+</openerp>

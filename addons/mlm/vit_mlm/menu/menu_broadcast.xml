@@ -1,0 +1,40 @@
+<openerp>
+	<data>
+
+
+		<!-- action_broadcast_android -->
+		<record id="action_broadcast_android" model="ir.actions.act_window">
+			<field name="name">List Android Broadcast</field>
+			<field name="res_model">mlm.broadcast</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+		<!-- action_broadcast_sms -->
+		<record id="action_broadcast_sms" model="ir.actions.act_window">
+			<field name="name">List SMS Broadcast</field>
+			<field name="res_model">mlm.broadcast</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+
+
+		<!--  menu_mlm_member -->
+		<menuitem id="menu_broadcast"
+			 name="Broadcast"
+			 sequence="40"
+			 parent="menu_mlm_top"/>
+		<!-- menu_broadcast_android -->
+		<menuitem id="menu_broadcast_android"
+			 action="action_broadcast_android"
+			 name="Android Users"
+			 sequence="10"
+			 parent="menu_broadcast"/>
+		<!-- menu_broadcast_sms -->
+		<menuitem id="menu_broadcast_sms"
+			 action="action_broadcast_sms"
+			 name="SMS Users"
+			 sequence="20"
+			 parent="menu_broadcast"/>
+
+
+	</data>
+</openerp>

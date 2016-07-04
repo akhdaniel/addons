@@ -1,0 +1,72 @@
+<openerp>
+	<data>
+        <record id="view_mlm_plan_form" model="ir.ui.view">
+            <field name="name">mlm_mlm_plan_form</field>
+            <field name="model">mlm.mlm_plan</field>
+            <field name="arch" type="xml">
+            	<form string="mlm_plan form" version="7.0">
+            		<!--header>
+						<button string="Confirm" type="object" name="action_confirm" class="oe_highlight"
+						 	 states="draft" />
+						<button string="Cancel" type="object" name="action_draft"
+						 	 states="open" />
+            			<field name="state" widget="statusbar" />
+            		</header-->
+            		<sheet>
+						<div class="oe_title">
+							<label for="name" class="oe_edit_only" 
+								 string="MLM Plan Name" />
+							<h1>
+								<field name="name" />
+							</h1>
+						</div>
+			            <group>
+			            	<group colspan="4">
+				                <field name="code"/>       
+				                <field name="max_downline"/>     			            	
+				            </group>
+
+			            	<group string="Bonus Sponsor">
+				                <field name="bonus_sponsor"/>       
+				                <field name="max_bonus_sponsor_level"/>       
+				                <field name="bonus_sponsor_percent_decrease"/>       
+				            </group>
+				            
+				            <group string="Bonus Level">
+				                <field name="bonus_level"/>       
+				                <field name="max_bonus_level_level"/>     
+				                <field name="bonus_level_percent_decrease"/>       
+				                <field name="full_level"/>       
+				            </group>
+
+				            <group string="Bonus Pairing">
+				                <field name="bonus_pasangan"/>       
+				                <field name="max_bonus_pasangan_level"/>     
+				                <field name="bonus_pasangan_percent_decrease"/>       
+				            </group>
+
+				        </group>
+
+					</sheet>
+			    </form>
+            </field>
+        </record>
+
+        <record id="view_mlm_plan_tree" model="ir.ui.view">
+            <field name="name">mlm_mlm_plan_tree</field>
+            <field name="model">mlm.mlm_plan</field>
+            <field name="arch" type="xml">
+            	<tree string="list mlm_plan" >
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="max_downline"/>
+
+                    <field name="bonus_sponsor"/>
+                    <field name="bonus_level"/>
+                    <field name="bonus_pasangan"/>
+                    
+                </tree>    
+            </field>
+        </record>
+    </data>
+</openerp>

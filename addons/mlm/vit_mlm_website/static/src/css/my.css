@@ -1,0 +1,34 @@
+h1 {
+    color: #215487;
+}
+span {
+}
+@brand-primary: #1abc9c;
+@color-blue: #3498db;
+@color-green: #2ecc71;
+
+.bg-blue { background: @color-blue; }
+.bg-green { background: @color-green; }
+
+.h2 { color: white; }
+
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 3px;
+  cursor: pointer;
+}
+
+.node text { font: 12px sans-serif; 
+  cursor: pointer;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 2px;
+}
+
+
+

@@ -1,0 +1,58 @@
+<openerp>
+	<data>
+		<!-- action tree member -->
+		<record id="action_member_tree" model="ir.actions.act_window">
+			<field name="name">Member Tree</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_mode">tree</field>
+            <field name="view_type">tree</field> <!-- supaya jadi tree -->
+            <field name="view_id" ref="view_member_tree"/>
+            <field name="domain">[('child_ids','&lt;&gt;',False)]</field>            
+		</record>
+
+		<!-- action list bonus -->
+		<record id="action_member_list_today" model="ir.actions.act_window">
+			<field name="name">List Member Today</field>
+			<field name="res_model">res.partner</field>
+			<field name="view_mode">tree,form</field>
+            <field name="view_id" ref="view_member_today"/>
+            <field name="domain">[('state','=','draft'),('category_id','=','Members')]</field>            
+		</record>
+
+		<!--  menu_mlm_member -->
+		<menuitem id="menu_membership"
+			 name="Membership"
+			 sequence="10"
+			 parent="menu_mlm_top"/>
+
+
+		<!-- menu_mlm_member -->
+		<menuitem id="menu_member_list_today"
+			 action="action_member_list_today"
+			 name="Member List Today"
+			 sequence="10"
+			 parent="menu_membership"/>
+
+		<!-- menu_mlm_member -->
+		<menuitem id="menu_member_list"
+			 action="base.action_partner_customer_form"
+			 name="Member List All"
+			 sequence="20"
+			 parent="menu_membership"/>
+
+		<!-- menu_mlm_member -->
+		<menuitem id="menu_member_tree"
+			 action="action_member_tree"
+			 name="Member Tree"
+			 sequence="30"
+			 parent="menu_membership"/>
+
+		<!-- menu_mlm_bonus -->
+		<!--menuitem id="menu_member_bonus"
+			 action="action_member_bonus_list"
+			 name="Member Bonus"
+			 sequence="30"
+			 parent="menu_membership"/-->
+
+	</data>
+</openerp>

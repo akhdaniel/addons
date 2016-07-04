@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<!-- UP -->
+		<record id="seq_type_member" model="ir.sequence.type">
+			<field name="name">Member Type</field>
+			<field name="code">mlm.member</field>
+		</record>	
+		
+		<record id="seq_member" model="ir.sequence">
+			<field name="name">Member</field>
+			<field name="code">mlm.member</field>
+			<field name="prefix"></field>
+			<field name="padding">3</field>
+			<field name="next_number_actual">1</field>
+			<field name="number_increment">1</field>
+			<field name="implementation">standard</field>
+		</record>	
+		
+	</data>
+</openerp>
