@@ -8,9 +8,9 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-MEMBER_STATES = [('draft', 'Guest'), ('open', 'Verification'), ('reject', 'Rejected'),
+MEMBER_STATES = [('draft', 'Draft'), ('open', 'Verification'), ('reject', 'Rejected'),
                  ('aktif', 'Active'), ('nonaktif', 'Non Active'),
-                 ('invited','Invitation Sent'), ('pre','Pre-registration')]
+                 ('invited','Guest'), ('pre','Pre-registration')]
 
 class member(osv.osv):
     _name = "res.partner"
