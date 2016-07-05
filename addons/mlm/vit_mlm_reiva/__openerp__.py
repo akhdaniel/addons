@@ -19,6 +19,7 @@ Manage
 	"data": [
 		'view/pages.xml',
 		'view/member.xml',
+		'view/menu.xml',
 	],
 	"installable": True,
 	"auto_install": False,

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+		<!-- menu_mlm_member -->
+		<menuitem id="vit_mlm.menu_member_list_today"
+			 action="vit_mlm.action_member_list_today"
+			 name="Pre-Registration Today"
+			 sequence="10"
+			 parent="vit_mlm.menu_membership"/>
+
+		<!-- menu_mlm_member -->
+		<menuitem id="vit_mlm.menu_member_list"
+			 action="base.action_partner_customer_form"
+			 name="Pre-Registration All"
+			 sequence="20"
+			 parent="vit_mlm.menu_membership"/>
+    </data>
+</openerp>
