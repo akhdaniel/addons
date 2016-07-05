@@ -27,7 +27,7 @@ class member(osv.osv):
         return pid
 
     def _get_default_paket(self, cr, uid, context=None):
-        return False 
+
         pid = self.pool.get('mlm.paket').search(cr, uid, [('code','=','X')], context=context)
         if not pid:
             raise osv.except_osv(_('error'),_("No Package with Code X") )
