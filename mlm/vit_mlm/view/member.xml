@@ -38,6 +38,7 @@
                     <field name="bank_branch" />
                     <field name="id_number" />
                     <field name="signature" class="oe_avatar" widget="image" />
+                    <field name="lang" />
                 </field>
 <!-- 
                 <field name="date" position="after">
