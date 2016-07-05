@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <!-- Default follow up message -->
+        <record id="email_template_invitation" model="email.template">
+            <field name="name">Invitation Email to join REIVA</field>
+            <field name="email_from">${(user.email or '')|safe}</field>
+            <field name="subject">Invitation Email to join REIVA</field>
+            <field name="email_to">${object.email|safe}</field>
+            <field name="lang">${object.lang}</field>
+            <field name="model_id" ref="base.model_res_partner"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html"><![CDATA[
+<div style="font-family: 'Lucica Grande', Ubuntu, Arial, Verdana, sans-serif; font-size: 12px; color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); ">
+
+    <p>Dear ${object.name},</p>
+    <p>
+    Invitation Email to join REIVA. bla-bla
+    </p>
+    <p>
+    In a few momment you will receive an email for login and resetting your password.
+    </p>
+<br/>
+Best Regards,
+<br/>
+<br/>
+${user.name}
+<br/>
+<br/>
+
+<br/>
+</div>
+            ]]></field>
+        </record>
+
+    </data>
+</openerp>
