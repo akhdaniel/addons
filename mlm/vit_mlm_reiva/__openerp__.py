@@ -20,7 +20,9 @@ Manage
 		'view/pages.xml',
 		'view/member.xml',
 		'view/menu.xml',
+		'data/paket.xml',
 	],
 	"installable": True,
 	"auto_install": False,
+	"application": True,
 }
