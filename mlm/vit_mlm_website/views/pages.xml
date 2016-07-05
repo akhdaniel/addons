@@ -324,7 +324,7 @@
 		}
 	</script>
 
-	<div t-attf-class="form-group #{error and 'name' in error and 'has-error' or ''}">
+	<div t-attf-class="form-group #{error and 'name' in error and 'has-error' or ''}" id="form_group_name">
 		<label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="name" 
@@ -334,7 +334,7 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_parent_id">
 		<label class="col-md-3 col-sm-4 control-label" for="parent_id">Upline ID</label>
 		<div class="col-md-7 col-sm-8">
 
@@ -355,7 +355,7 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_sponsor_id">
 		<label class="col-md-3 col-sm-4 control-label" for="sponsor_id">Sponsor ID</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
@@ -375,8 +375,8 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Paket</label>
+	<div t-attf-class="form-group" id="form_group_paket_id">
+		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Package</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
 				<select class="form-control" required="True" name="paket_id" 
@@ -393,7 +393,7 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_street">
 		<label class="col-md-3 col-sm-4 control-label" for="street">Street</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="street" id="street" 
@@ -402,8 +402,7 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_street2">
 		<label class="col-md-3 col-sm-4 control-label" for="street2">Street 2</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="street2" id="street2" 
@@ -412,8 +411,7 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_zip">
 		<label class="col-md-3 col-sm-4 control-label" for="zip">ZIP</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="zip" id="zip" 
@@ -422,8 +420,7 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_city">
 		<label class="col-md-3 col-sm-4 control-label" for="city">City</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="city" id="city" 
@@ -432,9 +429,7 @@
 		</div>
 	</div>
 
-
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_country_id">
 		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
@@ -452,7 +447,7 @@
 		</div>
 	</div>	
 
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_state_id">
 		<label class="col-md-3 col-sm-4 control-label" for="state_id">State</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
@@ -470,7 +465,7 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_email">
 		<label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="email" id="email" 
@@ -479,8 +474,7 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_bbm">
 		<label class="col-md-3 col-sm-4 control-label" for="bbm">BBM</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="bbm" id="bbm"
@@ -489,8 +483,7 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_phone">
 		<label class="col-md-3 col-sm-4 control-label" for="phone">Phone</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="phone" id="phone" 
@@ -499,8 +492,7 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_fax">
 		<label class="col-md-3 col-sm-4 control-label" for="fax">Fax</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="fax" id="fax" 
@@ -509,8 +501,7 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
+	<div t-attf-class="form-group" id="form_group_mobile">
 		<label class="col-md-3 col-sm-4 control-label" for="mobile">Mobile</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="mobile" id="mobile" 
@@ -519,9 +510,8 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="mobile">Bank Account Number</label>
+	<div t-attf-class="form-group" id="form_group_bank_no">
+		<label class="col-md-3 col-sm-4 control-label" for="bank_no">Bank Account Number</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="bank_no" id="bank_no" 
 				 t-attf-readonly="#{True if readonly==1 else False}"
@@ -529,9 +519,8 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="mobile">Bank Account Name</label>
+	<div t-attf-class="form-group" id="form_group_bank_account_name">
+		<label class="col-md-3 col-sm-4 control-label" for="bank_account_name">Bank Account Name</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="bank_account_name" id="bank_account_name" 
 				 t-attf-readonly="#{True if readonly==1 else False}"
@@ -539,9 +528,8 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="mobile">Bank Name</label>
+	<div t-attf-class="form-group" id="form_group_bank_name">
+		<label class="col-md-3 col-sm-4 control-label" for="bank_name">Bank Name</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="bank_name" id="bank_name" 
 				 t-attf-readonly="#{True if readonly==1 else False}"
@@ -549,9 +537,8 @@
 		</div>
 	</div>
 
-
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="mobile">Bank Branch</label>
+	<div t-attf-class="form-group" id="form_group_bank_branch">
+		<label class="col-md-3 col-sm-4 control-label" for="bank_branch">Bank Branch</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="bank_branch" id="bank_branch" 
 				 t-attf-readonly="#{True if readonly==1 else False}"
@@ -559,8 +546,8 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="mobile">No. KTP/SIM</label>
+	<div t-attf-class="form-group" id="form_group_id_number">
+		<label class="col-md-3 col-sm-4 control-label" for="id_number">ID Card Number</label>
 		<div class="col-md-7 col-sm-8">
 			<input type="text" class="form-control" name="id_number" id="id_number" 
 				 t-attf-readonly="#{True if readonly==1 else False}"
@@ -568,15 +555,15 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group">
-		<label class="col-md-3 col-sm-4 control-label" for="mobile">Signature</label>
+	<div t-attf-class="form-group" id="form_group_signature">
+		<label class="col-md-3 col-sm-4 control-label" for="signature">Signature</label>
 		<div class="col-md-7 col-sm-8">
             <input class="input-file" id="signature" type="file" name="signature"/>
         </div>
 	</div>
             <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
 
-	<div t-attf-class="form-group">			    		
+	<div t-attf-class="form-group" id="form_group_products">
         <t t-foreach="products or []" t-as="product">	
         	<div t-attf-class="form-group">	    		
 				<label class="col-md-3 col-sm-4 control-label">Qty <t t-esc="member and product.paket_produk_id.name or product.name"/></label>
