@@ -41,6 +41,7 @@
                     <field name="id_number" />
                     <field name="signature" class="oe_avatar" widget="image" />
                     <field name="lang"/>
+                    <field name="write_date"/>
 
                 </field>
 
