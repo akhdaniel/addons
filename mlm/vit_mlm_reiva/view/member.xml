@@ -1,0 +1,32 @@
+<openerp>
+	<data>
+
+       <record id="view_member_form3" model="ir.ui.view">
+            <field name="name">mlm_member_form3</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="vit_mlm.view_member_form"/>
+            <field name="arch" type="xml">
+
+            	<field name="website" position="replace"/>
+                <field name="sponsor_id" position="replace"/>
+                <field name="start_join" position="replace"/>
+                <field name="paket_harga" position="replace"/>
+                <field name="paket_cashback" position="replace"/>
+                <field name="jumlah_bayar" position="replace"/>
+                <field name="invoice_join_paid" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <field name="bbm" position="replace"/>
+
+                <field name="bank_no" position="replace"/>
+                <field name="bank_account_name" position="replace"/>
+                <field name="bank_name" position="replace"/>
+                <field name="bank_branch" position="replace"/>
+                <field name="id_number" position="replace"/>
+                <field name="signature" position="replace" />
+
+
+            </field>
+        </record>
+    </data>
+</openerp>
