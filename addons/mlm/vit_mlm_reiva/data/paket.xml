@@ -6,11 +6,11 @@
 			<field name="name">Invitation</field>
 			<field name="price"></field>
 			<field name="harga">0</field>
-			<field name="cashback"></field>
+			<field name="cashback">0</field>
 			<field name="hak_usaha">1</field>
 			<field name="description">Invitation Package</field>
-			<field name="is_upgradable" eval="False" />
-			<field name="is_submember" eval="True" />
+			<field name="is_upgradable" eval="True" />
+			<field name="is_submember" eval="False" />
 		</record>
 	</data>
 </openerp>

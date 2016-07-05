@@ -261,9 +261,10 @@ class member(osv.osv):
         'paket_produk_ids'	: _get_default_paket_produk,
         'cek_state'			: 'draft',
     }
-    _sql_constraints = [('id_number_uniq', 'unique(id_number)',
-        # 'No KTP / SIM sudah ada !')]
-        'ID Card already used !')]
+    _sql_constraints = [
+        ('id_number_uniq', 'unique(id_number)','ID Card already used !'),
+        ('cek_unik_email', 'UNIQUE(email)', 'Email already exists !')
+    ]
 
 
     #########################################################################

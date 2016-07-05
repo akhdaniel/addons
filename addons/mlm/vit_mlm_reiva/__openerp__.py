@@ -21,6 +21,7 @@ Manage
 		'view/member.xml',
 		'view/menu.xml',
 		'data/paket.xml',
+		'data/email_template.xml',
 	],
 	"installable": True,
 	"auto_install": False,
