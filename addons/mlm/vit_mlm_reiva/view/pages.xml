@@ -1,16 +1,102 @@
 <openerp>
     <data>
 
+        <!-- override the main website menu -->
         <template id="mlm_homepage2" name="MLM Homepage" inherit_id="vit_mlm_website.mlm_homepage">
+
+            <xpath expr="//div[@id='mlm_list_member']" position="replace">
+                <div id="mlm_list_member" class="col-md-4 text-center">
+                    <span class="fa fa-users fa-5x"/>
+                    <h4 class="mt16">
+                        <a t-attf-href="/mlm/member/list">Pre-Registration</a>
+                    </h4>
+                  <p>Pre-Registration List</p>
+                </div>
+            </xpath>
+
+            <xpath expr="//div[@id='mlm_new_member']" position="replace">
+                <div id="mlm_invite" class="col-md-4 text-center">
+                    <span class="fa fa-envelope fa-5x"/>
+                    <h4 class="mt16">
+                        <a t-attf-href="/mlm/member/create">Invite potential Associate</a>
+                    </h4>
+                  <p>Send an invitation email to potential Independent Associate</p>
+                </div>
+            </xpath>
+
             <xpath expr="//div[@id='mlm_stockist_member']" position="replace">
                 <div id="mlm_stockist_member" style="display:none"></div>
             </xpath>
+
             <xpath expr="//div[@id='mlm_shop']" position="replace">
                 <div id="mlm_shop" style="display:none"></div>
             </xpath>
+
             <xpath expr="//div[@id='mlm_blog']" position="replace">
                 <div id="mlm_blog" style="display:none"></div>
             </xpath>
+
+            <xpath expr="//div[@id='mlm_list_member']" position="after">
+                <div id="mlm_compensation_plan" class="col-md-4 text-center">
+                    <span class="fa fa-suitcase fa-5x"/>
+                    <h4 class="mt16">
+                        <a t-attf-href="/mlm/compensation_plan">Compensation Plan</a>
+                    </h4>
+                  <p>Preview REIVA Compensation Plan and unique advantages for future Independent Associates</p>
+                </div>
+
+                <div id="mlm_survey" class="col-md-4 text-center">
+                    <span class="fa fa-pencil-square-o fa-5x"/>
+                    <h4 class="mt16">
+                        <a t-attf-href="/mlm/survey">Survey</a>
+                    </h4>
+                  <p>Please take 15 seconds to complete this short survey about your interest in REIVA</p>
+                </div>
+            </xpath>
+
+        </template>
+
+        <!-- override member registration form -->
+        <template id="website.member_form2" inherit_id="website.member_form">
+            <xpath expr="//div[@id='form_group_sponsor_id']" position="replace">
+                <div id="form_group_sponsor_id" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_bbm']" position="replace">
+                <div id="form_group_bbm" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_fax']" position="replace">
+                <div id="form_group_fax" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_bank_no']" position="replace">
+                <div id="form_group_bank_no" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_bank_account_name']" position="replace">
+                <div id="form_group_bank_account_name" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_bank_name']" position="replace">
+                <div id="form_group_bank_name" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_bank_branch']" position="replace">
+                <div id="form_group_bank_branch" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_id_number']" position="replace">
+                <div id="form_group_id_number" style="display:none"></div>
+            </xpath>
+
+            <xpath expr="//div[@id='form_group_signature']" position="replace">
+                <div id="form_group_signature" style="display:none"></div>
+            </xpath>
+            <xpath expr="//div[@id='form_group_products']" position="replace">
+                <div id="form_group_products" style="display:none"></div>
+            </xpath>
+
         </template>
 
     </data>

@@ -17,7 +17,8 @@ Manage
 
 """,
 	"data": [
-		'view/pages.xml'
+		'view/pages.xml',
+		'view/member.xml',
 	],
 	"installable": True,
 	"auto_install": False,
