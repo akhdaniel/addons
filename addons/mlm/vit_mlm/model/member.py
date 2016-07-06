@@ -789,6 +789,11 @@ class member(osv.osv):
     def create_user(self, cr, uid, member, context=None):
         alias_id = 1
 
+        #default action upon login
+        action_id = self.pool.get('ir.actions.actions').search(cr, uid, [('name','=','Website')], context=context)
+        if not action_id:
+            raise osv.except_osv(_('error'),_("no action id Website, please contact Administrator") )
+
         sql = "INSERT INTO ""res_users"" (""id"", ""partner_id"", \
             ""alias_id"", ""share"", ""active"", ""company_id"", \
             ""action_id"", ""display_employees_suggestions"", \
@@ -797,10 +802,14 @@ class member(osv.osv):
             ""login"", ""create_uid"", ""write_uid"", \
             ""create_date"", ""write_date"") \
             VALUES (nextval('res_users_id_seq'), \
-            %d, %d, false, true, %d, NULL, true, NULL, '', \
+            %d, %d, false, true, %d, %d, true, NULL, '', \
             true, NULL, '%s', %d, %d, (now() at time zone 'UTC'), \
-            (now() at time zone 'UTC')) RETURNING id" % (member.id, alias_id,member.company_id,
-             member.name.lower(),uid,uid)
+            (now() at time zone 'UTC')) RETURNING id" % (
+                member.id,
+                alias_id,
+                member.company_id,
+                action_id[0],
+                member.name.lower(),uid,uid)
         res = cr.execute(sql)
 
         user_id = cr.fetchall()
