@@ -5,8 +5,18 @@ import base64
 import simplejson
 
 class Member(http.Controller):
-	@http.route('/mlm/member/tree/',  auth='public', website=True)
+	@http.route('/mlm/',  auth='public', website=True)
 	def index(self, **kw):
+		message_error = kw.get('message_error', '')
+		message_success = kw.get('message_success', '')
+
+		return http.request.render('vit_mlm_website.mlm_homepage', {
+			'message_error':message_error,
+			'message_success':message_success,
+		})
+
+	@http.route('/mlm/member/tree/',  auth='public', website=True)
+	def tree(self, **kw):
 		Members = http.request.env['res.partner']
 		return http.request.render('website.tree', {
 			'members': Members.search([('parent_id','=',False),('path','<>',False)])

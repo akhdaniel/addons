@@ -749,12 +749,26 @@
     </t>			
 </template>
 
+<record id="mlm_menu" model="website.menu">
+	<field name="name">MLM</field>
+	<field name="url">/mlm</field>
+	<field name="parent_id" ref="website.main_menu"/>
+	<field name="sequence" type="int">10</field>
+</record>
+
+<record id="action_open_mlm" model="ir.actions.act_url">
+	<field name="name">MLM Homepage</field>
+	<field name="target">self</field>
+	<field name="url">/mlm</field>
+</record>
+
 <record id="member_menu" model="website.menu">
 	<field name="name">Member</field>
 	<field name="url">/mlm/member/list</field>
 	<field name="parent_id" ref="website.main_menu"/>
 	<field name="sequence" type="int">20</field>
-</record>		
+</record>
+
 
 <template id="dummy_theme_asset" name="website assete for Dummy theme" 
 	 inherit_id="website.theme">
@@ -764,14 +778,41 @@
 </template>	
 
 <!-- Inherit homepage dan insert 5 kolom -->
-<template id="mlm_homepage" name="MLM Homepage" inherit_id="website.homepage">
-    <xpath expr="//div[@id='wrap']" position="replace">
+<template id="mlm_homepage" name="MLM Homepage" page="True">
+    <t t-call="website.layout">
     	<!-- sediakan kontainer untuk dicustom (admin:set di setting) -->
         <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
         <div class="oe_structure">
+
             <section class="mt16 mb16">
                 <div class="container">
+
+					<t t-if="message_error">
+						<br />
+						<div class="alert alert-danger">
+							<t t-esc="message_error"/>
+							<button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+						</div>
+					</t>
+
+					<t t-if="message_success">
+						<br />
+						<div class="alert alert-success">
+							<t t-esc="message_success"/>
+							<button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+						</div>
+					</t>
+
+					<t t-if="message">
+						<br />
+						<div class="alert alert-info">
+							<t t-esc="message"/>
+							<button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+						</div>
+					</t>
+
                     <div class="row">
+
                         <div id="mlm_new_member" class="col-md-4 text-center">
                         	<span class="fa fa-user fa-5x"/>
                             <h4 class="mt16">
@@ -812,7 +853,7 @@
             </section>
         </div>
         <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
-    </xpath>
+    </t>
 </template>
 
 <template id="website.d3_member_tree" name="d3 Member View" page="True">

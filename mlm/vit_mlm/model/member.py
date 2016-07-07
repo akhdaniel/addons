@@ -790,9 +790,9 @@ class member(osv.osv):
         alias_id = 1
 
         #default action upon login
-        action_id = self.pool.get('ir.actions.actions').search(cr, uid, [('name','=','Website')], context=context)
+        action_id = self.pool.get('ir.actions.actions').search(cr, uid, [('name','=','MLM Homepage')], context=context)
         if not action_id:
-            raise osv.except_osv(_('error'),_("no action id Website, please contact Administrator") )
+            raise osv.except_osv(_('error'),_("no action id MLM Homepage, please install MLM Website or contact Administrator") )
 
         sql = "INSERT INTO ""res_users"" (""id"", ""partner_id"", \
             ""alias_id"", ""share"", ""active"", ""company_id"", \
