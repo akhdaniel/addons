@@ -74,6 +74,8 @@ class Member(http.Controller):
 		Country = http.request.env['res.country']
 		Products  = http.request.env['mlm.paket_produk']
 		Mymembers = self._cari_users_members(cr, uid, uid, context)
+
+		default_paket = Paket.search([('code','=','X')])
 		values = {}
 		for field in ['name', 'sponsor_id', 'parent_id', 'paket_id', 'street', 
 			'street2', 'zip', 'city', 'state_id', 'country_id', 'bbm', 'email', 
@@ -82,9 +84,10 @@ class Member(http.Controller):
 				values[field] = kwargs.pop(field)
 		values.update(kwargs=kwargs.items())
 		values.update({
-			'parent' : parent,
-			'member' : None,
+			'default_parent' : parent,
+			'member' : None, # new member
 			'pakets' : Paket.search([]),
+			'default_paket': default_paket,
 			'members': Member.search([('id','in',Mymembers)]),
 			'states': State.search([]),
 			'countrys': Country.search([]),
@@ -140,8 +143,15 @@ class Member(http.Controller):
 
 		if post_description:
 			values['description'] += dict_to_str(_("Custom Fields: "), post_description)
-		lead_id = self.create_partner(request, dict(values, user_id=False), 
-			kwargs)
+		try:
+			lead_id = self.create_partner(request, dict(values, user_id=False),kwargs)
+		except Exception,e:
+			error = str(e)
+			# values = dict(values, error=error, kwargs=kwargs.items())
+			# return request.website.render(kwargs.get("view_from", "website.member_create"), values)
+			# return http.request.render('website.member_create', values)
+			return error + ". Press BACK button"
+
 		values.update(lead_id=lead_id)
 		if lead_id:
 			for field_value in post_file:
@@ -163,9 +173,10 @@ class Member(http.Controller):
 		Paket  = http.request.env['mlm.paket']
 		State = http.request.env['res.country.state']
 		Country = http.request.env['res.country']
+
 		return http.request.render('website.member_edit', {
 			'member': member,
-			'parent': member.parent_id,
+			'default_parent': member.parent_id,
 			'members': Member.search([]),
 			'pakets': Paket.search([]),
 			'states': State.search([]),

@@ -342,9 +342,10 @@
 				<select class="form-control" required="True" name="parent_id" 
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Upline...</option>
-				    <t t-foreach="members or []" t-as="parent">
-				        <option t-att-value="parent.id" t-attf-selected="#{member and member.parent_id.id == parent.id}">
-				        	<t t-esc="parent.name"/>
+				    <t t-foreach="members or []" t-as="m">
+				        <option t-att-value="m.id"
+								t-attf-selected="#{m.id == default_parent.id}">
+				        	<t t-esc="m.name"/>
 				        </option>
 				    </t>
 				</select>
@@ -383,12 +384,15 @@
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Paket...</option>
 				    <t t-foreach="pakets or []" t-as="paket">
-				        <option t-att-value="paket.id" t-attf-selected="#{member and member.paket_id.id == paket.id}"><t t-esc="paket.name"/></option>
+				        <option t-att-value="paket.id"
+                                t-attf-selected="#{member and member.paket_id.id == paket.id or default_paket}">
+                            <t t-esc="paket.name"/></option>
 				    </t>
 				</select>
 			</t>
 			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true" t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
+				<input class="form-control"  readonly="true"
+                       t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
 			</t>				
 		</div>
 	</div>
@@ -451,7 +455,7 @@
 		<label class="col-md-3 col-sm-4 control-label" for="state_id">State</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="state_id" id="state_id"
+				<select class="form-control" name="state_id" id="state_id"
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">State...</option>
 				    <t t-foreach="states or []" t-as="state">
@@ -460,7 +464,8 @@
 				</select>
 			</t>
 			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true" t-attf-value="#{member and member.state_id and member.state_id.name or ''}" />
+				<input class="form-control"  readonly="true"
+                       t-attf-value="#{member and member.state_id and member.state_id.name or ''}" />
 			</t>				
 		</div>
 	</div>
@@ -688,7 +693,7 @@
         <t t-set="title">Create New Member</t>
         <div class="oe_structure">
             <div class="container">
-               	<h1 t-esc="parent.name"/>
+               	<h1 t-esc="default_parent.name"/>
 
 		        <form action="/mlm/member/add" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
 
