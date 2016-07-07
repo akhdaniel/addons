@@ -753,7 +753,7 @@
 	<field name="name">MLM</field>
 	<field name="url">/mlm</field>
 	<field name="parent_id" ref="website.main_menu"/>
-	<field name="sequence" type="int">10</field>
+	<field name="sequence" type="int">15</field>
 </record>
 
 <record id="action_open_mlm" model="ir.actions.act_url">
