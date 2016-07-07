@@ -15,4 +15,4 @@ class Member(http.Controller):
         }
         request.registry['res.partner'].write(request.cr, SUPERUSER_ID, [user.partner_id.id], data, request.context)
         message = "Thank you for accepting invitation. You can now proceed to the next steps."
-        return request.redirect('/?message_success=%s' % (message), code=301)
+        return request.redirect('/mlm?message_success=%s' % (message), code=301)

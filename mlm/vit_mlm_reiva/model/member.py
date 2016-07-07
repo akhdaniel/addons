@@ -51,7 +51,7 @@ class member(osv.osv):
         for partner_id in ids:
             mtp.send_mail(cr, uid, mail_template_id[1], partner_id, context=context)
 
-        # self.action_confirm(cr, uid, ids, context=context)
+        self.action_confirm(cr, uid, ids, context=context)
         self.action_aktif(cr, uid, ids, context=context)
         self.write(cr, uid, ids[0], {
             'state': MEMBER_STATES[5][0]}, context=context)
