@@ -4,6 +4,22 @@
         <!-- override the main website menu -->
         <template id="mlm_homepage2" name="MLM Homepage" inherit_id="vit_mlm_website.mlm_homepage">
 
+            <xpath expr="//div[@id='mlm_new_member']" position="before">
+                <t t-if="user_id and user_id.name != 'Public user'">
+                    <t t-if="user_id.partner_id.state == 'invited'">
+                        <br />
+                        <div class="alert alert-success">
+                            Dear <span t-esc="user_id.partner_id.name"/>, <br/>
+                            Your current state is an invited Guest. To upgrade your state please accept this invitation.
+                            <br/>
+                            <br/>
+                            <a t-attf-href="/mlm/member/accept_invitation/{{ slug(user_id) }}" role="button" class="btn btn-primary btn-lg">Accept Invitation</a>
+                            <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                        </div>
+                    </t>
+                </t>
+            </xpath>
+
             <xpath expr="//div[@id='mlm_list_member']" position="replace">
                 <div id="mlm_list_member" class="col-md-4 text-center">
                     <span class="fa fa-users fa-5x"/>
@@ -40,7 +56,7 @@
                 <div id="mlm_compensation_plan" class="col-md-4 text-center">
                     <span class="fa fa-suitcase fa-5x"/>
                     <h4 class="mt16">
-                        <a t-attf-href="/mlm/compensation_plan">Compensation Plan</a>
+                        <a t-attf-href="/page/compensation-plan">Compensation Plan</a>
                     </h4>
                   <p>Preview REIVA Compensation Plan and unique advantages for future Independent Associates</p>
                 </div>
@@ -48,7 +64,7 @@
                 <div id="mlm_survey" class="col-md-4 text-center">
                     <span class="fa fa-pencil-square-o fa-5x"/>
                     <h4 class="mt16">
-                        <a t-attf-href="/mlm/survey">Survey</a>
+                        <a t-attf-href="/survey">Survey</a>
                     </h4>
                   <p>Please take 15 seconds to complete this short survey about your interest in REIVA</p>
                 </div>
