@@ -247,7 +247,7 @@
 		    			<th>Address</th>
 		    			<th>Mobile</th>
 		    			<th>Email</th>
-		    			<th>BBM</th>
+		    			<th>State</th>
 	                </tr>			    		
 	                <t t-foreach="members or []" t-as="member">
 			    		<tr>
@@ -275,7 +275,7 @@
 			    				<t t-esc="member.email"/>
 		                    </td>
 			    			<td>
-			    				<t t-esc="member.bbm"/><br/>
+			    				<t t-esc="member.state"/><br/>
 		                    </td>
 		                </tr>
 		            </t>
@@ -296,7 +296,6 @@
         </div>
     </t>			
 </template>
-
 
 <template id="website.member_form" name="Member Form" page="True">
 	<script>
@@ -597,7 +596,7 @@
 
 		        <div class="oe_structure"/>
 		
-		    	<a t-attf-href="/mlm/member/edit/{{ slug(member) }}" class="btn btn-primary" >Edit</a>
+		    	<a id="mlm_member_edit" t-attf-href="/mlm/member/edit/{{ slug(member) }}" class="btn btn-primary" >Edit</a>
 
 		        <div class="oe_structure"/>
 

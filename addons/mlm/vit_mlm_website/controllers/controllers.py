@@ -214,8 +214,8 @@ class Member(http.Controller):
 		path   = user.partner_id and user.partner_id.path
 		partner_uid = user.partner_id and user.partner_id.id
 		sql="select id from res_partner where path_ltree <@ '%s' \
-			or (path_ltree is null and sponsor_id = %d) \
-			order by path_ltree" % (path,partner_uid)
+			or (path_ltree is null and sponsor_id = %d) or (path_ltree is null and parent_id = %d) \
+			order by path_ltree" % (path,partner_uid,partner_uid)
 		cr.execute(sql)
 		member_ids = cr.fetchall()
 		return [x[0] for x in member_ids]
