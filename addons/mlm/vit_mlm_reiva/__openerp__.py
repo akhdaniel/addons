@@ -2,6 +2,7 @@
 	"name": "MLM for Reiva",
 	"version": "1.0", 
 	"depends": [
+		'auth_signup',
 		"website",
 		"vit_mlm",
 		"vit_mlm_website",
