@@ -2,6 +2,16 @@
     <data>
 
         <!-- override the main website menu -->
+        <template id="member_view2" inherit_id="website.member_view">
+            <xpath expr="//a[@id='mlm_member_edit']" position="after">
+                <t t-if="member.state == 'draft'">
+                    <a t-attf-href="/mlm/member/invite/{{ slug(member) }}"
+                       class="btn btn-primary" >Send Invitation</a>
+                </t>
+            </xpath>
+        </template>
+
+        <!-- override the main website menu -->
         <template id="mlm_homepage2" name="MLM Homepage" inherit_id="vit_mlm_website.mlm_homepage">
 
             <xpath expr="//div[@id='mlm_new_member']" position="before">

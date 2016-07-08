@@ -60,3 +60,5 @@ class member(osv.osv):
         user_id = user_obj.search(cr, uid, [('partner_id','=',ids[0])], context=context)
         user_obj.action_reset_password(cr, uid, user_id, context=context)
 
+    def action_preaktif(self, cr, uid, ids, context=None):
+        return self.write(cr, uid, ids, {'state': MEMBER_STATES[3][0]}, context=context)

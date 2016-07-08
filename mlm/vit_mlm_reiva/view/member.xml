@@ -12,6 +12,11 @@
                         class="oe_highlight"
                         states="draft"
                         string="Send Invitation"/>
+
+                    <button name="action_preaktif" type="object"
+                        class="oe_highlight"
+                        states="pre"
+                        string="Activate"/>
                 </button>
 
             	<field name="website" position="replace"/>
