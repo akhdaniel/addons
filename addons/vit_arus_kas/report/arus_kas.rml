@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<document filename="test.pdf">
+  <template pageSize="(595.0,842.0)" title="Test" author="Martin Simon" allowSplitting="20">
+    <pageTemplate id="first">
+      <frame id="first" x1="21.0" y1="42.0" width="553" height="758"/>
+    </pageTemplate>
+  </template>
+  <stylesheet>
+    <blockTableStyle id="Standard_Outline">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table1">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="0,-1" stop="0,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="1,-1" stop="1,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="2,-1" stop="2,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="3,-1" stop="3,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="4,-1" stop="4,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="5,-1" stop="5,-1"/>
+      <lineStyle kind="LINEBELOW" colorName="#000000" start="6,-1" stop="6,-1"/>
+      <blockBackground colorName="#eeeeee" start="0,0" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,0" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,0" stop="2,-1"/>
+      <blockBackground colorName="#eeeeee" start="3,0" stop="3,-1"/>
+      <blockBackground colorName="#eeeeee" start="4,0" stop="4,-1"/>
+      <blockBackground colorName="#eeeeee" start="5,0" stop="5,-1"/>
+      <blockBackground colorName="#eeeeee" start="6,0" stop="6,-1"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table2">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="0,0" stop="0,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="1,0" stop="1,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="2,0" stop="2,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="3,0" stop="3,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="4,0" stop="4,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="5,0" stop="5,0"/>
+      <lineStyle kind="LINEABOVE" colorName="#000000" start="6,0" stop="6,0"/>
+    </blockTableStyle>
+    <blockTableStyle id="Table3">
+      <blockAlignment value="LEFT"/>
+      <blockValign value="TOP"/>
+      <blockBackground colorName="#eeeeee" start="0,0" stop="0,-1"/>
+      <blockBackground colorName="#eeeeee" start="1,0" stop="1,-1"/>
+      <blockBackground colorName="#eeeeee" start="2,0" stop="2,-1"/>
+      <blockBackground colorName="#eeeeee" start="3,0" stop="3,-1"/>
+      <blockBackground colorName="#eeeeee" start="4,0" stop="4,-1"/>
+      <blockBackground colorName="#eeeeee" start="5,0" stop="5,-1"/>
+      <blockBackground colorName="#eeeeee" start="6,0" stop="6,-1"/>
+    </blockTableStyle>
+    <initialize>
+      <paraStyle name="all" alignment="justify"/>
+    </initialize>
+    <paraStyle name="P1" fontName="Helvetica-Bold" fontSize="9.0" leading="11"/>
+    <paraStyle name="P2" fontName="Helvetica-Bold" fontSize="8.0" leading="10"/>
+    <paraStyle name="P3" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER"/>
+    <paraStyle name="P4" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="RIGHT"/>
+    <paraStyle name="P5" fontName="Helvetica" fontSize="7.0" leading="9"/>
+    <paraStyle name="P6" fontName="Helvetica-Bold" fontSize="6.0" leading="8" alignment="RIGHT"/>
+    <paraStyle name="P7" fontName="Helvetica" fontSize="6.0" leading="8" alignment="RIGHT"/>
+    <paraStyle name="P8" fontName="Helvetica-Bold" fontSize="11.0" leading="14" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Standard" fontName="Helvetica"/>
+    <paraStyle name="Heading" fontName="Helvetica" fontSize="14.0" leading="17" spaceBefore="12.0" spaceAfter="6.0"/>
+    <paraStyle name="Text body" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="List" fontName="Helvetica" spaceBefore="0.0" spaceAfter="6.0"/>
+    <paraStyle name="Caption" fontName="Helvetica" fontSize="12.0" leading="15" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="Index" fontName="Helvetica"/>
+    <paraStyle name="Table Contents" fontName="Helvetica"/>
+    <paraStyle name="Table Heading" fontName="Helvetica" alignment="CENTER"/>
+    <images/>
+  </stylesheet>
+  <story>
+    <para style="P8">[[ repeatIn(objects,'kas') ]][[ setLang(kas.user_id.partner_id.lang) ]]Laporan Harian [[ kas.account_id.name ]] ( [[ kas.period_start_id.name ]] s/d [[ kas.period_end_id.name ]] )</para>
+    <blockTable colWidths="59.0,65.0,137.0,76.0,70.0,70.0,77.0" style="Table1">
+      <tr>
+        <td>
+          <para style="P2">Tanggal</para>
+        </td>
+        <td>
+          <para style="P2">Notes</para>
+        </td>
+        <td>
+          <para style="P2">Keterangan</para>
+        </td>
+        <td>
+          <para style="P4">Saldo Awal</para>
+        </td>
+        <td>
+          <para style="P4">Penerimaan</para>
+        </td>
+        <td>
+          <para style="P4">Pengeluaran</para>
+        </td>
+        <td>
+          <para style="P4">Saldo Akhir</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="59.0,65.0,137.0,76.0,70.0,70.0,77.0" style="Table2">
+      <tr>
+        <td>
+          <para style="P5">[[ repeatIn(kas.arus_kas_detail_ids,'line') ]][[ formatLang(line.date,date = True) ]]</para>
+        </td>
+        <td>
+          <para style="P5">[[ line.narration or '' ]]</para>
+        </td>
+        <td>
+          <para style="P5">[[ line.description or '' ]]</para>
+        </td>
+        <td>
+          <para style="P7">[[formatLang(line.initial_balance)]]</para>
+        </td>
+        <td>
+          <para style="P7">[[formatLang(line.debit)]]</para>
+        </td>
+        <td>
+          <para style="P7">[[formatLang(line.credit)]]</para>
+        </td>
+        <td>
+          <para style="P7">[[formatLang(line.balance)]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <blockTable colWidths="59.0,65.0,137.0,76.0,70.0,70.0,77.0" style="Table3">
+      <tr>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P1">
+            <font color="white"> </font>
+          </para>
+        </td>
+        <td>
+          <para style="P3">Total</para>
+        </td>
+        <td>
+          <para style="P6">[[formatLang(kas.t_initial_balance)]]</para>
+        </td>
+        <td>
+          <para style="P6">[[ formatLang(reduce(lambda x, line: x+line.debit , kas.arus_kas_detail_ids , 0)) ]]</para>
+        </td>
+        <td>
+          <para style="P6">[[ formatLang(reduce(lambda x, line: x+line.credit , kas.arus_kas_detail_ids , 0)) ]]</para>
+        </td>
+        <td>
+          <para style="P6">[[formatLang(kas.t_balance)]]</para>
+        </td>
+      </tr>
+    </blockTable>
+    <para style="Standard">
+      <font color="white"> </font>
+    </para>
+  </story>
+</document>
