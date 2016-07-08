@@ -1,0 +1,3 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_arus_kas,access_arus_kas,model_arus_kas,,1,1,1,1
+access_arus_kas_detail,access_arus_kas_detail,model_arus_kas_detail,,1,1,1,1
