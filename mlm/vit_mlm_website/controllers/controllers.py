@@ -3,6 +3,8 @@ from openerp import http, SUPERUSER_ID
 from openerp.http import request
 import base64
 import simplejson
+from openerp.addons.website.models.website import slug
+
 
 class Member(http.Controller):
 	@http.route('/mlm/',  auth='public', website=True)
@@ -98,7 +100,8 @@ class Member(http.Controller):
 
 	def create_partner(self, request, values, kwargs):
 		""" Allow to be overrided """
-		return request.registry['res.partner'].create(request.cr, SUPERUSER_ID, values, request.context)
+		pid= request.registry['res.partner'].create(request.cr, SUPERUSER_ID, values, request.context)
+		return request.registry['res.partner'].browse(request.cr, SUPERUSER_ID, pid, request.context )
 
 	def add_partner_response(self, values, kwargs):
 		return request.website.render(kwargs.get("view_callback", "website.add_member_thanks"), values)
@@ -165,7 +168,7 @@ class Member(http.Controller):
 				}
 				request.registry['ir.attachment'].create(request.cr, SUPERUSER_ID, attachment_value, context=request.context)
 
-		return request.redirect('/mlm/member/view/%d'% (lead_id), code=301)
+		return request.redirect('/mlm/member/view/%s'% (slug(lead_id)), code=301)
 
 	@http.route('/mlm/member/edit/<model("res.partner"):member>',  auth='user', website=True)
 	def edit(self, member, **kwargs):
