@@ -337,7 +337,7 @@
 		<label class="col-md-3 col-sm-4 control-label" for="parent_id">Upline ID</label>
 		<div class="col-md-7 col-sm-8">
 
-			<!--t t-if="readonly==0">
+			<t t-if="readonly==0">
 				<select class="form-control" required="True" name="parent_id" 
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Upline...</option>
@@ -349,10 +349,10 @@
 				    </t>
 				</select>
 			</t>
-			<t t-if="readonly==1"-->
+			<t t-if="readonly==1">
 				<input class="form-control" readonly="true"
                        t-attf-value="#{member and member.parent_id and member.parent_id.name or ''}" />
-			<!--/t-->
+			</t>
 		</div>
 	</div>
 
@@ -379,7 +379,7 @@
 	<div t-attf-class="form-group" id="form_group_paket_id">
 		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Package</label>
 		<div class="col-md-7 col-sm-8">
-			<!--t t-if="readonly==0">
+			<t t-if="readonly==0">
 				<select class="form-control" required="True" name="paket_id" 
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Paket...</option>
@@ -390,10 +390,10 @@
 				    </t>
 				</select>
 			</t>
-			<t t-if="readonly==1"-->
+			<t t-if="readonly==1">
 				<input class="form-control"  readonly="true"
                        t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
-			<!--/t-->
+			</t>
 		</div>
 	</div>
 
@@ -415,14 +415,6 @@
 		</div>
 	</div>
 
-	<div t-attf-class="form-group" id="form_group_zip">
-		<label class="col-md-3 col-sm-4 control-label" for="zip">ZIP</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="zip" id="zip" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.zip or ''}"/>
-		</div>
-	</div>
 
 	<div t-attf-class="form-group" id="form_group_city">
 		<label class="col-md-3 col-sm-4 control-label" for="city">City</label>
@@ -432,24 +424,6 @@
 				 t-attf-value="#{member and member.city or ''}"/>
 		</div>
 	</div>
-
-	<div t-attf-class="form-group" id="form_group_country_id">
-		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
-		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="country_id" id="country_id" onchange="changestate();"
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">Country...</option>
-				    <t t-foreach="countrys or []" t-as="country">
-				        <option t-att-value="country.id" t-attf-selected="#{member and member.country_id.id == country.id}"><t t-esc="country.name"/></option>
-				    </t>
-				</select>
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true" t-attf-value="#{member and member.country_id and member.country_id.name or ''}" />
-			</t>			
-		</div>
-	</div>	
 
 	<div t-attf-class="form-group" id="form_group_state_id">
 		<label class="col-md-3 col-sm-4 control-label" for="state_id">State</label>
@@ -467,6 +441,33 @@
 				<input class="form-control"  readonly="true"
                        t-attf-value="#{member and member.state_id and member.state_id.name or ''}" />
 			</t>				
+		</div>
+	</div>
+
+	<div t-attf-class="form-group" id="form_group_country_id">
+		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
+		<div class="col-md-7 col-sm-8">
+			<t t-if="readonly==0">
+				<select class="form-control" required="True" name="country_id" id="country_id" onchange="changestate();"
+					 t-attf-readonly="#{True if readonly==1 else False}">
+				    <option value="">Country...</option>
+				    <t t-foreach="countrys or []" t-as="country">
+				        <option t-att-value="country.id" t-attf-selected="#{member and member.country_id.id == country.id}"><t t-esc="country.name"/></option>
+				    </t>
+				</select>
+			</t>
+			<t t-if="readonly==1">
+				<input class="form-control"  readonly="true" t-attf-value="#{member and member.country_id and member.country_id.name or ''}" />
+			</t>
+		</div>
+	</div>
+
+    <div t-attf-class="form-group" id="form_group_zip">
+		<label class="col-md-3 col-sm-4 control-label" for="zip">ZIP</label>
+		<div class="col-md-7 col-sm-8">
+			<input type="text" class="form-control" name="zip" id="zip"
+				 t-attf-readonly="#{True if readonly==1 else False}"
+				 t-attf-value="#{member and member.zip or ''}"/>
 		</div>
 	</div>
 
