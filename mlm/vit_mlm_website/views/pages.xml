@@ -338,8 +338,9 @@
 		<div class="col-md-7 col-sm-8">
 
 			<t t-if="readonly==0">
+                <!-- #{True if readonly==1 else False} -->
 				<select class="form-control" required="True" name="parent_id" 
-					 t-attf-readonly="#{True if readonly==1 else False}">
+					 t-attf-readonly="#{True}">
 				    <option value="">Upline...</option>
 				    <t t-foreach="members or []" t-as="m">
 				        <option t-att-value="m.id"
@@ -380,7 +381,7 @@
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
 				<select class="form-control" required="True" name="paket_id" 
-					 t-attf-readonly="#{True if readonly==1 else False}">
+					 t-attf-readonly="#{True}">
 				    <option value="">Paket...</option>
 				    <t t-foreach="pakets or []" t-as="paket">
 				        <option t-att-value="paket.id"
