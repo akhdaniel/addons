@@ -26,22 +26,22 @@
                         </group>  -->                       
                     </sheet>
                     <footer>
-                        <button type="special" 
-                             special="cancel" 
-                             string="Cancel" 
-                             icon="gtk-cancel"/>
-                        
                         <button type="object" 
                              name="fill_table"
                              string="Ok" 
                              icon="gtk-ok"
-                             />             
+                             />  
+                        <button type="special" 
+                             special="cancel" 
+                             string="Cancel" 
+                             class="oe_link"
+                             icon="gtk-cancel"/>           
                     </footer>
                 </form>
             </field>
         </record>
     
-        <act_window name="Arus Kas"            
+        <act_window name="Cash Flow"            
             res_model="arus.kas.wizard"
             view_mode="form"
             target="new"
@@ -50,13 +50,11 @@
     
         <menuitem
             id="menu_arus_kas"
-            name="Arus Kas"
+            name="Cash Flow"
             parent="account.final_accounting_reports"
             action="action_vit_arus_kas_report"
             groups="account.group_account_manager,account.group_account_user"
             sequence="50"/>
             
-
-
     </data>
 </openerp>        

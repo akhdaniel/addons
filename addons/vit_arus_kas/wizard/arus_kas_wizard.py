@@ -47,12 +47,11 @@ class arus_kas_wizard(models.TransientModel):
                 'left join account_account a on (l.account_id = a.id) '\
                 'left join account_move am on (am.id=l.move_id) '\
 
-            'WHERE l.state != %s '\
+            'WHERE l.state = %s '\
                 'AND am.state = %s '\
                 'AND am.period_id < %s '\
                 'AND l.account_id = %s '\
                 'AND (l.debit != 0 or l.credit != 0) ',(l_state, m_state, period_id, account_id))     
-        
         debit = 0
         credit = 0
         output = cr.fetchone()
@@ -86,7 +85,7 @@ class arus_kas_wizard(models.TransientModel):
         sql = "delete from arus_kas where user_id = %s" % (uid)
         cr.execute(sql)
 
-        l_state = 'draft'   
+        l_state = 'valid'   
         am_state = 'posted' 
 
         arus_kas_id = self.pool.get('arus.kas').create(cr,uid,{'account_id':wizard.account_id.id,
@@ -96,7 +95,7 @@ class arus_kas_wizard(models.TransientModel):
 
         #cari opening balance_get_total_balance
         opening = self._get_total_debit_credit(cr, uid, ids, l_state, am_state, wizard.period_start_id.id, wizard.account_id.id, context=context)
-        opening_balance = opening[1]-opening[0]
+        opening_balance = opening[0]-opening[1]
 
         cr.execute('SELECT '\
                 'am.date as date, '\
@@ -111,7 +110,7 @@ class arus_kas_wizard(models.TransientModel):
                 'left join account_account a on (l.account_id = a.id) '\
                 'left join account_move am on (am.id=l.move_id) '\
 
-            'WHERE l.state != %s '\
+            'WHERE l.state = %s '\
                 'AND am.state = %s '\
                 'AND am.period_id >= %s and am.period_id <= %s '\
                 'AND l.account_id = %s '\
@@ -119,27 +118,33 @@ class arus_kas_wizard(models.TransientModel):
             'ORDER BY am.date,am.id ASC' ,(l_state,am_state, wizard.period_start_id.id,wizard.period_end_id.id,wizard.account_id.id))
 
         hasil_query = cr.fetchall()
-        #import pdb;pdb.set_trace()
         
-        self.pool.get('arus.kas').create(cr,uid,{'arus_kas_id'  : arus_kas_id,
-                                                    'narration'     : 'Opening Balance',
-                                                    'balance'       : opening_balance,
-                                                    })
+        self.pool.get('arus.kas.detail').create(cr,uid,{'arus_kas_id'      : arus_kas_id,
+                                                            'description'       : 'Opening Balance',
+                                                            'initial_balance'   : opening_balance,
+                                                            'balance'           : opening_balance,
+                                                            })
+        balance = opening_balance
         if hasil_query:
             balance = opening_balance
+            init_balance = opening_balance
             for execute in hasil_query: 
                 balance += execute[3]
                 balance -= execute[4] 
-                self.pool.get('arus.kas.detail').create(cr,uid,{'arus_kas_id' : arus_kas_id,
-                                                                    'date': execute[0] or False,
-                                                                    'description' : execute[1],
-                                                                    'narration' : execute[2],
-                                                                    'debit': execute[3],
-                                                                    'credit' : execute[4],
-                                                                    'balance' : balance})
+                self.pool.get('arus.kas.detail').create(cr,uid,{'arus_kas_id'       : arus_kas_id,
+                                                                    'date'          : execute[0] or False,
+                                                                    'description'   : execute[1],
+                                                                    'narration'     : execute[2],
+                                                                    'initial_balance' : init_balance,
+                                                                    'debit'         : execute[3],
+                                                                    'credit'        : execute[4],
+                                                                    'balance'       : balance})
+                init_balance += execute[3]
+                init_balance -= execute[4] 
                                                                                       
-                            
-
+        #import pdb;pdb.set_trace()              
+        self.pool.get('arus.kas').write(cr,uid,arus_kas_id,{'t_initial_balance'  : opening_balance ,
+                                                            't_balance'           : balance})
 
         view_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_arus_kas', 'vit_arus_kas_form')
         view_id = view_ref and view_ref[1] or False,    

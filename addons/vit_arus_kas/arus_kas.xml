@@ -3,20 +3,22 @@
 <data>
 
         <record id="vit_arus_kas_form" model="ir.ui.view">
-            <field name="name">Arus Kas</field>
+            <field name="name">Cash Flow</field>
             <field name="model">arus.kas</field>
             <field name="arch" type="xml">
                 <form string="Arus Kas" version="7.0" create="false">
-                    <sheet>                 
+                    <!-- <sheet> -->                 
                         <group>
                             <group string="CoA">
                                 <field name="account_id" readonly="1"/>
                                 <field name="user_id" invisible="1"/>    
                             </group>                            
                             <group string="Period">
-                                <field name="period_start_id" readonly="1"/>       
+                                <field name="period_start_id" readonly="1"/>
                                 <field name="period_end_id" readonly="1"/>     
                             </group>
+                            <field name="t_initial_balance" invisible="1"/> 
+                            <field name="t_balance" invisible="1"/> 
                         </group>
                         <notebook>
                             <page string="Details">
@@ -24,23 +26,24 @@
                                     <tree string="Arus Kas Detail" editable="bottom">
                                         <field name="id" invisible="1"/>
                                         <field name="date" invisible="0"/>
-                                        <field name="description"/>
                                         <field name="narration" invisible="0"/>
+                                        <field name="description"/> 
+                                        <field name="initial_balance" string="Starting Balance"/>
                                         <field name="debit" sum="Total Amount"/>
                                         <field name="credit" sum="Total Amount"/>
-                                        <field name="balance" sum="Total Amount"/>
+                                        <field name="balance" string="Ending Balance"/>
 
                                     </tree> 
                                 </field>                                                                
                             </page>    
                         </notebook>  
-                    </sheet>
+                   <!--  </sheet> -->
                 </form>
             </field>
         </record>
 
     <record id="vit_arus_kas_report" model="ir.actions.act_window">
-        <field name="name">Arus Kas</field>
+        <field name="name">Cash Flow</field>
         <field name="res_model">arus.kas</field>
         <field name="view_type">form</field>
         <field name="view_mode">form</field>
