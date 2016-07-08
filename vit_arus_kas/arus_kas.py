@@ -32,6 +32,8 @@ class arus_kas(models.Model):
 	period_end_id    	= fields.Many2one('account.period','Period End',)
 	user_id    			= fields.Many2one('res.users','Period End',)
 	arus_kas_detail_ids	= fields.One2many('arus.kas.detail','arus_kas_id','Arus Kas Detail')
+	t_initial_balance	= fields.Float('Total Starting Balance')
+	t_balance			= fields.Float('Total Ending Balance')
 
 
 arus_kas()
@@ -44,6 +46,7 @@ class arus_kas_detail(models.Model):
 	date 			= fields.Date('Date')
 	description  	= fields.Char('Description')
 	narration    	= fields.Char('Notes')
+	initial_balance	= fields.Float('Init Balance')
 	debit 			= fields.Float('Debit')
 	credit			= fields.Float('Credit')
 	balance			= fields.Float('Balance')

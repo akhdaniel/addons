@@ -35,6 +35,7 @@
             'report/arus_kas_report.xml',
             'arus_kas.xml',
             'wizard/arus_kas_wizard.xml',
+            'security/ir.model.access.csv',
 
             ],
     'active': False,

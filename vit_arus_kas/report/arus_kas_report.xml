@@ -4,12 +4,12 @@
         
         <report 
         id="arus_kas" 
-        string="Arus Kas" 
-        model="vit.arus.kas" 
-        name="vit.arus.kas" 
-        rml="vit_arus_kas/report/customer_card.rml" 
-        menu="False"
-        auto="False" 
+        string="Cash Flow" 
+        model="arus.kas" 
+        name="arus.kas" 
+        rml="vit_arus_kas/report/arus_kas.rml" 
+        menu="True"
+        auto="True" 
         header="False"/>
                      
     </data> 
