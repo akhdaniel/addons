@@ -337,10 +337,9 @@
 		<label class="col-md-3 col-sm-4 control-label" for="parent_id">Upline ID</label>
 		<div class="col-md-7 col-sm-8">
 
-			<t t-if="readonly==0">
-                <!-- #{True if readonly==1 else False} -->
+			<!--t t-if="readonly==0">
 				<select class="form-control" required="True" name="parent_id" 
-					 t-attf-readonly="#{True}">
+					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Upline...</option>
 				    <t t-foreach="members or []" t-as="m">
 				        <option t-att-value="m.id"
@@ -350,9 +349,10 @@
 				    </t>
 				</select>
 			</t>
-			<t t-if="readonly==1">
-				<input class="form-control" readonly="true" t-attf-value="#{member and member.parent_id and member.parent_id.name or ''}" />
-			</t>
+			<t t-if="readonly==1"-->
+				<input class="form-control" readonly="true"
+                       t-attf-value="#{member and member.parent_id and member.parent_id.name or ''}" />
+			<!--/t-->
 		</div>
 	</div>
 
@@ -379,9 +379,9 @@
 	<div t-attf-class="form-group" id="form_group_paket_id">
 		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Package</label>
 		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
+			<!--t t-if="readonly==0">
 				<select class="form-control" required="True" name="paket_id" 
-					 t-attf-readonly="#{True}">
+					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Paket...</option>
 				    <t t-foreach="pakets or []" t-as="paket">
 				        <option t-att-value="paket.id"
@@ -390,10 +390,10 @@
 				    </t>
 				</select>
 			</t>
-			<t t-if="readonly==1">
+			<t t-if="readonly==1"-->
 				<input class="form-control"  readonly="true"
                        t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
-			</t>				
+			<!--/t-->
 		</div>
 	</div>
 
