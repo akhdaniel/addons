@@ -15,6 +15,8 @@ Manage
 ======================================================================
 
 * additional features requested by Reiva
+* update email template : Reset Password, but we must delete the existing one before install or upgrade
+*
 
 """,
 	"data": [

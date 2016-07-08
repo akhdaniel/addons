@@ -150,9 +150,6 @@ class Member(http.Controller):
 			lead_id = self.create_partner(request, dict(values, user_id=False),kwargs)
 		except Exception,e:
 			error = str(e)
-			# values = dict(values, error=error, kwargs=kwargs.items())
-			# return request.website.render(kwargs.get("view_from", "website.member_create"), values)
-			# return http.request.render('website.member_create', values)
 			return error + ". Press BACK button"
 
 		values.update(lead_id=lead_id)
@@ -190,7 +187,11 @@ class Member(http.Controller):
 	@http.route('/mlm/member/update',  auth='user', method='post', website=True)		
 	def update_member(self, **kwargs):
 		id = int(kwargs['id'])
-		request.registry['res.partner'].write(request.cr, SUPERUSER_ID, [id], kwargs, request.context)
+		try:
+			request.registry['res.partner'].write(request.cr, SUPERUSER_ID, [id], kwargs, request.context)
+		except Exception,e:
+			error = str(e)
+			return error + ". Press BACK button"
 		return request.redirect('/mlm/member/view/%d'% (id), code=301)
 
 	@http.route('/mlm/member/stockist',  auth='user', website=True)
