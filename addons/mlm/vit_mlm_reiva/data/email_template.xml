@@ -5,7 +5,7 @@
         <record id="auth_signup.reset_password_email" model="email.template">
             <field name="name">Reset Password</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <field name="email_from"><![CDATA[${user.partner_id.name} <${(user.email)|safe}>]]></field>
+            <field name="email_from"><![CDATA[${object.parent_id.name} <${(object.parent_id.email)|safe}>]]></field>
             <field name="email_to">${object.email|safe}</field>
             <field name="subject">Password reset</field>
             <field name="lang">${object.lang}</field>
@@ -17,10 +17,11 @@
 <p>Note: If you do not expect this, you can safely ignore this email.</p>]]></field>
         </record>
 
+
         <!-- Default follow up message -->
         <record id="email_template_invitation" model="email.template">
             <field name="name">Invitation Email to join REIVA</field>
-            <field name="email_from"><![CDATA[${user.partner_id.name} <${(user.email)|safe}>]]></field>
+            <field name="email_from"><![CDATA[${object.parent_id.name} <${(object.parent_id.email)|safe}>]]></field>
             <field name="subject">Invitation Email to join REIVA</field>
             <field name="email_to">${object.email|safe}</field>
             <field name="lang">${object.lang}</field>
