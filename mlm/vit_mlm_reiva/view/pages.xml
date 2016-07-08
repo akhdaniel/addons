@@ -74,7 +74,7 @@
                 <div id="mlm_survey" class="col-md-4 text-center">
                     <span class="fa fa-pencil-square-o fa-5x"/>
                     <h4 class="mt16">
-                        <a t-attf-href="/survey">Survey</a>
+                        <a t-attf-href="/survey/start/guests-interest-1/phantom">Survey</a>
                     </h4>
                   <p>Please take 15 seconds to complete this short survey about your interest in REIVA</p>
                 </div>
