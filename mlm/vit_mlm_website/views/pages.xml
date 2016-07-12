@@ -448,11 +448,13 @@
 		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
 		<div class="col-md-7 col-sm-8">
 			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="country_id" id="country_id" onchange="changestate();"
+				<select class="form-control" required="True" name="country_id" id="country_id"
+						onchange="changestate();"
 					 t-attf-readonly="#{True if readonly==1 else False}">
 				    <option value="">Country...</option>
 				    <t t-foreach="countrys or []" t-as="country">
-				        <option t-att-value="country.id" t-attf-selected="#{member and member.country_id.id == country.id}"><t t-esc="country.name"/></option>
+				        <option t-att-value="country.id"
+								t-attf-selected="#{member and member.country_id.id == country.id or default_country_id==country.id}"><t t-esc="country.name"/></option>
 				    </t>
 				</select>
 			</t>
