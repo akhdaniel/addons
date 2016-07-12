@@ -74,8 +74,13 @@ class Member(http.Controller):
 		Paket  = http.request.env['mlm.paket']
 		State = http.request.env['res.country.state']
 		Country = http.request.env['res.country']
+		default_country_id = Country.search(['name','=','Canada'])
+		
 		Products  = http.request.env['mlm.paket_produk']
 		Mymembers = self._cari_users_members(cr, uid, uid, context)
+
+		langs = http.request.env['res.lang'].search([])
+		languages = [(language.code, language.name) for language in langs]
 
 		default_paket = Paket.search([('code','=','X')])
 		values = {}
@@ -93,7 +98,9 @@ class Member(http.Controller):
 			'members': Member.search([('id','in',Mymembers)]),
 			'states': State.search([]),
 			'countrys': Country.search([]),
+			'default_country_id': default_country_id[0].id,
 			'products': Products.search([]),
+			'languages': languages,
 
 		})
 		return http.request.render('website.member_create', values)
