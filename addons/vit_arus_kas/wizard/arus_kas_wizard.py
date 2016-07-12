@@ -115,7 +115,7 @@ class arus_kas_wizard(models.TransientModel):
                 'AND am.period_id >= %s and am.period_id <= %s '\
                 'AND l.account_id = %s '\
                 'AND (l.debit != 0 or l.credit != 0) '\
-            'ORDER BY am.date,am.id ASC' ,(l_state,am_state, wizard.period_start_id.id,wizard.period_end_id.id,wizard.account_id.id))
+            'ORDER BY am.narration,am.date,am.id ASC' ,(l_state,am_state, wizard.period_start_id.id,wizard.period_end_id.id,wizard.account_id.id))
 
         hasil_query = cr.fetchall()
         
