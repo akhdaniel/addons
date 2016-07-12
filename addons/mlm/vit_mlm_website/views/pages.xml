@@ -642,10 +642,10 @@
 
 				  <!-- Nav tabs -->
 				  <ul class="nav nav-tabs" role="tablist">
-					    <li role="presentation" class="active"><a href="#downlines" aria-controls="downlines" role="tab" data-toggle="tab">Downlines</a></li>
-					    <li role="presentation"><a href="#tree" aria-controls="tree" role="tab" data-toggle="tab">Tree</a></li>
+					    <li id="tab_downlines" role="presentation" class="active"><a href="#downlines" aria-controls="downlines" role="tab" data-toggle="tab">Downlines</a></li>
+					    <li id="tab_tree" role="presentation"><a href="#tree" aria-controls="tree" role="tab" data-toggle="tab">Tree</a></li>
 
-					    <li role="presentation"><a href="#bonus" aria-controls="bonus" role="tab" data-toggle="tab">Bonus</a></li>
+					    <li id="tab_bonus" role="presentation"><a href="#bonus" aria-controls="bonus" role="tab" data-toggle="tab">Bonus</a></li>
 				  </ul>
 
 				  <!-- Tab panes -->
