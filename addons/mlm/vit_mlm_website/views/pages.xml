@@ -247,8 +247,9 @@
 		    			<th>Address</th>
 		    			<th>Mobile</th>
 		    			<th>Email</th>
+		    			<th>Create Date</th>
 		    			<th>State</th>
-	                </tr>			    		
+	                </tr>
 	                <t t-foreach="members or []" t-as="member">
 			    		<tr>
 			    			<td>
@@ -273,6 +274,9 @@
 		                    </td>
 			    			<td>
 			    				<t t-esc="member.email"/>
+		                    </td>
+			    			<td>
+			    				<t t-esc="member.create_date"/><br/>
 		                    </td>
 			    			<td>
 			    				<t t-esc="member.state"/><br/>

@@ -10,7 +10,7 @@
                 </t>
             </xpath>
             <li id="tab_bonus" position="replace"/>
-            
+
         </template>
 
         <!-- override the main website menu -->

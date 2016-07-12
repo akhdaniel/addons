@@ -3,7 +3,7 @@
     'name': "Website MLM",
 
     'summary': """
-        Homepage untuk aplikasi MLM""",
+        Web Homepage for MLM application""",
 
     'description': """
         Add link in homepage for MLM purpose
