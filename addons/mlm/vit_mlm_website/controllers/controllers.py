@@ -74,7 +74,7 @@ class Member(http.Controller):
 		Paket  = http.request.env['mlm.paket']
 		State = http.request.env['res.country.state']
 		Country = http.request.env['res.country']
-		default_country_id = Country.search(['name','=','Canada'])
+		default_country_id = Country.search([('name','=','Canada')])
 		
 		Products  = http.request.env['mlm.paket_produk']
 		Mymembers = self._cari_users_members(cr, uid, uid, context)
