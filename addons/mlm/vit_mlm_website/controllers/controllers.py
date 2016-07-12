@@ -180,6 +180,8 @@ class Member(http.Controller):
 		Paket  = http.request.env['mlm.paket']
 		State = http.request.env['res.country.state']
 		Country = http.request.env['res.country']
+		langs = http.request.env['res.lang'].search([])
+		languages = [(language.code, language.name) for language in langs]
 
 		return http.request.render('website.member_edit', {
 			'member': member,
@@ -188,6 +190,7 @@ class Member(http.Controller):
 			'pakets': Paket.search([]),
 			'states': State.search([]),
 			'countrys': Country.search([]),
+			'languages': languages,
 			'kwargs':kwargs.items(),
 		})
 
