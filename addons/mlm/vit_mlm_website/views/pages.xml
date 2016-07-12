@@ -584,6 +584,27 @@
         </t>
     </div>
 
+
+	<div t-attf-class="form-group" id="form_group_lang">
+		<label class="col-md-3 col-sm-4 control-label" for="lang">Language</label>
+		<div class="col-md-7 col-sm-8">
+			<t t-if="readonly==0">
+				<select class="form-control" required="True" name="lang"
+					 t-attf-readonly="#{True if readonly==1 else False}">
+				    <option value="">Language...</option>
+				    <t t-foreach="languages or []" t-as="lang">
+				        <option t-att-value="lang[0]" t-attf-selected="#{member and member.lang == lang[0]}">
+				        	<t t-esc="lang[1]"/>
+				        </option>
+				    </t>
+				</select>
+			</t>
+			<t t-if="readonly==1">
+				<input class="form-control"  readonly="true"
+					   t-attf-value="#{member and member.lang  or ''}" />
+			</t>
+		</div>
+	</div>
 </template>
 
 <template id="website.member_view" name="Member View" page="True">
