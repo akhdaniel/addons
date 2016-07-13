@@ -216,18 +216,21 @@
             <div class="container">
                 <h1 id="member_list_title">Member List</h1>
                 <t t-set="i" t-value="1"/>
-                <table class="table table-striped">
-		    		<tr>
-		    			<th>No.</th>
-		    			<th>Member Name</th>
-		    			<th>Upline</th>
-		    			<th id="th_sponsor">Sponsor</th>
-		    			<th>Address</th>
-		    			<th>Mobile</th>
-		    			<th>Email</th>
-		    			<th>Create Date</th>
-		    			<th>State</th>
-	                </tr>
+                <table class="table table-striped display" id="member_list_table">
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Member Name</th>
+                            <th>Upline</th>
+                            <th id="th_sponsor">Sponsor</th>
+                            <th>Address</th>
+                            <th>Mobile</th>
+                            <th>Email</th>
+                            <th>Create Date</th>
+                            <th>State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 	                <t t-foreach="members or []" t-as="member">
 			    		<tr>
                             <td><span t-esc="i"/></td>
@@ -263,9 +266,17 @@
 		                </tr>
                         <t t-set="i" t-value="i+1"/>
 		            </t>
+                    </tbody>
 	            </table>
             </div>
         </div>
+
+		<script type="text/javascript" src="/web/static/lib/jquery/jquery.js" />
+		<script type="text/javascript">
+			$(document).ready(function() {
+                $('#member_list_table').DataTable();
+            } );
+		</script>
     </t>			
 </template>
 
@@ -796,7 +807,9 @@
 <template id="dummy_theme_asset" name="website assete for Dummy theme" 
 	 inherit_id="website.theme">
 	<xpath expr="." position="inside">
-			<link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
+		<link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
+		<link rel="stylesheet" href="/vit_mlm_website/static/src/js/datatables/css/jquery.dataTables.min.css"/>
+		<script src="/vit_mlm_website/static/src/js/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
 	</xpath>
 </template>	
 

@@ -6,6 +6,9 @@ import simplejson
 
 class Member(http.Controller):
 
+    def index(self, **kw):
+        print "overide"
+        return super(Member, self).index(**kw)
 
     @http.route('/mlm/member/invite/<model("res.partner"):member>', auth='user', website=True)
     def send_invitation(self, member, **kwargs):
