@@ -209,6 +209,15 @@
 	</script>
 </template>
 
+<template id="website.datatable">
+    <script src="/web/static/lib/jquery/jquery.js"/>
+    <script>
+        $(document).ready(function(){
+            $("#member_list_table").DataTable();
+        })
+    </script>
+</template>
+
 <template id="website.member_list" name="Member List" page="True">
     <t t-call="website.layout">
         <t t-set="title">Member List</t>
@@ -271,13 +280,8 @@
             </div>
         </div>
 
-		<script type="text/javascript" src="/web/static/lib/jquery/jquery.js" />
-		<script type="text/javascript">
-			$(document).ready(function() {
-                $('#member_list_table').DataTable();
-            } );
-		</script>
-    </t>			
+        <t t-call="website.datatable" />
+    </t>
 </template>
 
 <template id="website.add_member_thanks" name="Member Add Thank You" 
@@ -317,6 +321,8 @@
 				}); 
 		}
 	</script>
+
+
 
 	<div t-attf-class="form-group required #{error and 'name' in error and 'has-error' or ''}" id="form_group_name">
 		<label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
@@ -471,7 +477,7 @@
 	<div t-attf-class="form-group required" id="form_group_email">
 		<label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
 		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="email" id="email" required="required"
+			<input type="email" class="form-control" name="email" id="email" required="required"
 				 t-attf-readonly="#{True if readonly==1 else False}"
 				 t-attf-value="#{member and member.email or ''}"/>
 		</div>
@@ -717,6 +723,27 @@
     </t>			
 </template>	
 
+<template id="website.validation" name="Validation Script" >
+    <script src="/web/static/lib/jquery/jquery.js"/>
+    <script src="/vit_mlm_website/static/src/js/validator/jquery.validate.min.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+        $('#member_form2').validate({
+          rules: {
+            email: {
+              required: true,
+              email: true,
+              remote: {
+                    url: "/mlm/member/check_email",
+					type: "POST",
+               }
+            }
+          },
+			messages:{email:"Email exists"},
+        });
+    </script>
+</template>
+
 <template id="website.member_create" name="Create Member" page="True">
     <t t-call="website.layout">
         <t t-set="title">Create New Member</t>
@@ -724,7 +751,9 @@
             <div class="container">
                	<h1 t-esc="default_parent.name"/>
 
-		        <form action="/mlm/member/add" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+		        <form id="member_form2" action="/mlm/member/add" method="post"
+                      class="form-horizontal mt32"
+                      enctype="multipart/form-data" >
 
 		        	<t t-call="website.member_form">
 		        		<t t-set="readonly" t-value="0"/>
@@ -747,8 +776,12 @@
 		        </form>						
             </div>
         </div>
+
+        <t t-call="website.validation" />
     </t>			
 </template>
+
+
 
 <template id="website.member_edit" name="Edit Member" page="True">
     <t t-call="website.layout">
@@ -757,7 +790,8 @@
             <div class="container">
                	<h1 t-esc="member.name"/>
 
-		        <form action="/mlm/member/update" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+		        <form id="member_form" action="/mlm/member/update" method="post"
+                      class="form-horizontal mt32" enctype="multipart/form-data">
 
 		        	<t t-call="website.member_form">
 		        		<t t-set="readonly" t-value="0"/>
@@ -780,8 +814,12 @@
 		        </form>						
             </div>
         </div>
+        <t t-call="website.validation" />
     </t>			
 </template>
+
+
+
 
 <record id="mlm_menu" model="website.menu">
 	<field name="name">MLM</field>
@@ -804,12 +842,13 @@
 </record>
 
 
-<template id="dummy_theme_asset" name="website assete for Dummy theme" 
-	 inherit_id="website.theme">
+<template id="dummy_theme_asset" name="website asset for mlm app" inherit_id="website.assets_frontend">
 	<xpath expr="." position="inside">
 		<link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
 		<link rel="stylesheet" href="/vit_mlm_website/static/src/js/datatables/css/jquery.dataTables.min.css"/>
+
 		<script src="/vit_mlm_website/static/src/js/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+		<!--<script src="/vit_mlm_website/static/src/js/validator/jquery.validate.min.js" type="text/javascript"></script>-->
 	</xpath>
 </template>	
 
