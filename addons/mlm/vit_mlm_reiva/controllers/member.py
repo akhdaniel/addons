@@ -19,7 +19,7 @@ class Member(http.Controller):
         if user:
             state = user.partner_id.state
             if state == 'invited':
-                Partner = http.request.env['res.partner']
+                Partner =request.registry['res.partner']
                 Partner.write(cr, SUPERUSER_ID,
                     [user.partner_id.id], {'state':'pre'}, context)
 
