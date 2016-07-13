@@ -213,37 +213,13 @@
     <t t-call="website.layout">
         <t t-set="title">Member List</t>
         <div class="oe_structure">
-
             <div class="container">
 
-            	<!-- <t t-foreach="members" t-as="member">
-                    <h2>
-                    	<a t-attf-href="/mlm/member/view/{{ slug(member) }}">
-                    		 <t t-esc="member.name"/>
-                    	</a>
-                    </h2>
-                    
-                    <p>
-            			Member ID: <t t-esc="member.code"/><br/>
-            			Upline ID: <span t-field="member.parent_id"/><br/>
-            			Sponsor ID: <span t-field="member.sponsor_id"/><br/>
-            			Address: <t t-esc="member.street"/>
-            			<t t-esc="member.street2"/>
-            			<t t-esc="member.city"/>
-            			<span t-field="member.country_id"/>
-            		</p>
-
-                    <p>
-            			Phone: <t t-esc="member.street"/><br/>
-            			Email: <t t-esc="member.email"/><br/>
-            			BBM: <t t-esc="member.bbm"/><br/>
-            		</p> 
-                </t> -->
                 <table class="table table-striped">
 		    		<tr>
 		    			<th>Member Name</th>
 		    			<th>Upline</th>
-		    			<th>Sponsor</th>
+		    			<th id="th_sponsor">Sponsor</th>
 		    			<th>Address</th>
 		    			<th>Mobile</th>
 		    			<th>Email</th>
@@ -260,7 +236,7 @@
 			    			<td>
 			    				<t t-esc="member.parent_id.name or '' "/>
 		                    </td>
-			    			<td>
+			    			<td id="td_sponsor">
 			    				<t t-esc="member.sponsor_id.name or '' "/>
 		                    </td>
 			    			<td>
