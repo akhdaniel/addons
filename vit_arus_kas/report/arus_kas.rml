@@ -73,13 +73,13 @@
   </stylesheet>
   <story>
     <para style="P8">[[ repeatIn(objects,'kas') ]][[ setLang(kas.user_id.partner_id.lang) ]]Laporan Harian [[ kas.account_id.name ]] ( [[ kas.period_start_id.name ]] s/d [[ kas.period_end_id.name ]] )</para>
-    <blockTable colWidths="59.0,65.0,137.0,76.0,70.0,70.0,77.0" style="Table1">
+    <blockTable colWidths="57.0,83.0,121.0,76.0,70.0,70.0,77.0" style="Table1">
       <tr>
         <td>
           <para style="P2">Tanggal</para>
         </td>
         <td>
-          <para style="P2">Notes</para>
+          <para style="P2">No. Bukti</para>
         </td>
         <td>
           <para style="P2">Keterangan</para>
@@ -98,7 +98,7 @@
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="59.0,65.0,137.0,76.0,70.0,70.0,77.0" style="Table2">
+    <blockTable colWidths="57.0,83.0,121.0,76.0,70.0,70.0,77.0" style="Table2">
       <tr>
         <td>
           <para style="P5">[[ repeatIn(kas.arus_kas_detail_ids,'line') ]][[ formatLang(line.date,date = True) ]]</para>

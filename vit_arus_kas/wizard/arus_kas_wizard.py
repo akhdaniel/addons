@@ -103,7 +103,8 @@ class arus_kas_wizard(models.TransientModel):
                 'am.narration as narration, '\
                 'l.debit as debit, '\
                 'l.credit as credit, '\
-                'l.debit-l.credit as balance '\
+                'l.debit-l.credit as balance, '\
+                'am.name as number '\
 
             'FROM '\
                 'account_move_line l '\
@@ -115,7 +116,7 @@ class arus_kas_wizard(models.TransientModel):
                 'AND am.period_id >= %s and am.period_id <= %s '\
                 'AND l.account_id = %s '\
                 'AND (l.debit != 0 or l.credit != 0) '\
-            'ORDER BY am.date,am.narration ASC' ,(l_state,am_state, wizard.period_start_id.id,wizard.period_end_id.id,wizard.account_id.id))
+            'ORDER BY am.date,am.name ASC' ,(l_state,am_state, wizard.period_start_id.id,wizard.period_end_id.id,wizard.account_id.id))
 
         hasil_query = cr.fetchall()
         
@@ -134,7 +135,7 @@ class arus_kas_wizard(models.TransientModel):
                 self.pool.get('arus.kas.detail').create(cr,uid,{'arus_kas_id'       : arus_kas_id,
                                                                     'date'          : execute[0] or False,
                                                                     'description'   : execute[1],
-                                                                    'narration'     : execute[2],
+                                                                    'narration'     : execute[6],
                                                                     'initial_balance' : init_balance,
                                                                     'debit'         : execute[3],
                                                                     'credit'        : execute[4],
