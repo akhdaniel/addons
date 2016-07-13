@@ -20,7 +20,8 @@ class Member(http.Controller):
             state = user.partner_id.state
             if state == 'invited':
                 Partner = http.request.env['res.partner']
-                Partner.write(cr, uid, [user.partner_id.id], {'state':'pre'}, context=context)
+                Partner.write(cr, SUPERUSER_ID,
+                    [user.partner_id.id], {'state':'pre'}, context)
 
 
         return http.request.render('vit_mlm_website.mlm_homepage', {
