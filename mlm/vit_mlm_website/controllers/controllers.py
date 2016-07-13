@@ -241,3 +241,14 @@ class Member(http.Controller):
 		rows = cr.fetchall()
 		data = simplejson.dumps(dict(rows))
 		return data
+
+	@http.route('/mlm/member/check_email')
+	def check_email(self, **kw):
+		email = kw.get('email', '')
+		Member  = http.request.env['res.partner']
+		m = Member.search([('email','=', email)])
+		if m:
+			return "false"
+		else:
+			return "true"
+

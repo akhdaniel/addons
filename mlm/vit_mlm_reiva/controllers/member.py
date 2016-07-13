@@ -6,9 +6,26 @@ import simplejson
 
 class Member(http.Controller):
 
+    @http.route('/mlm/', auth='public', website=True)
     def index(self, **kw):
-        print "overide"
-        return super(Member, self).index(**kw)
+        cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+
+        message_error = kw.get('message_error', '')
+        message_success = kw.get('message_success', '')
+
+        # update state kalau masih invited
+        Users = pool['res.users']
+        user = Users.browse(cr, uid, uid, context=context)
+        if user:
+            state = user.partner_id.state
+            if state == 'invited':
+                Users.write(cr, uid, user.id, {'state':'pre'}, context=context)
+
+
+        return http.request.render('vit_mlm_website.mlm_homepage', {
+            'message_error': message_error,
+            'message_success': message_success,
+        })
 
     @http.route('/mlm/member/invite/<model("res.partner"):member>', auth='user', website=True)
     def send_invitation(self, member, **kwargs):
