@@ -214,9 +214,11 @@
         <t t-set="title">Member List</t>
         <div class="oe_structure">
             <div class="container">
-
+                <h1 id="member_list_title">Member List</h1>
+                <t t-set="i" t-value="1"/>
                 <table class="table table-striped">
 		    		<tr>
+		    			<th>No.</th>
 		    			<th>Member Name</th>
 		    			<th>Upline</th>
 		    			<th id="th_sponsor">Sponsor</th>
@@ -228,6 +230,7 @@
 	                </tr>
 	                <t t-foreach="members or []" t-as="member">
 			    		<tr>
+                            <td><span t-esc="i"/></td>
 			    			<td>
 			    				<a t-attf-href="/mlm/member/view/{{ slug(member) }}">
 		                    		<t t-esc="member.name"/>
@@ -258,6 +261,7 @@
 			    				<t t-esc="member.state"/><br/>
 		                    </td>
 		                </tr>
+                        <t t-set="i" t-value="i+1"/>
 		            </t>
 	            </table>
             </div>
