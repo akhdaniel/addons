@@ -159,5 +159,12 @@
 
         </template>
 
+
+        <!-- override tree -->
+        <template id="website.member_list2" inherit_id="website.member_list">
+            <xpath expr="//th[@id='th_sponsor']" position="replace"/>
+            <xpath expr="//td[@id='td_sponsor']" position="replace"/>
+        </template>
+
     </data>
 </openerp>
