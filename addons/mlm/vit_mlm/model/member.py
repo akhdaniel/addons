@@ -207,7 +207,8 @@ class member(osv.osv):
         'state'				: fields.selection(MEMBER_STATES,'Status',readonly=True,required=True),
 
         ### paket join
-        'paket_id'			: fields.many2one('mlm.paket', 'Join Package', required=True, domain="[('is_submember','=',False)]",readonly=True,states={'draft':[('readonly',False)]}),
+        'paket_id'			: fields.many2one('mlm.paket', 'Join Package',
+            domain="[('is_submember','=',False)]", readonly=True, states={'draft':[('readonly',False)]}),
         'paket_harga'		: fields.related('paket_id', 'price' ,
             type="float", relation="mlm.paket", string="Package Price",readonly=True),
         'paket_cashback'		: fields.float("Cashback Join",readonly=True,store=True),
