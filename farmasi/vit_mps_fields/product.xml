@@ -11,6 +11,9 @@
 		        <field name="virtual_available" position="after">
 		        	<field name="uom_id"/>
 		        	<field name="detail_available"/>
+		        	<field name="detail_qty_available"/>
+		        	<field name="detail_incoming_qty"/>
+		        	<field name="detail_outgoing_qty"/>
 		        </field>
 		    </field>
 		</record>
