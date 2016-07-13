@@ -49,7 +49,7 @@ class member(osv.osv):
            'vit_mlm_reiva',
            'email_template_invitation')
         for partner_id in ids:
-            mtp.send_mail(cr, uid, mail_template_id[1], partner_id, context=context)
+            mtp.send_mail(cr, uid, mail_template_id[1], partner_id, force_send=True, context=context)
 
         self.action_confirm(cr, uid, ids, context=context)
         self.action_aktif(cr, uid, ids, context=context)
