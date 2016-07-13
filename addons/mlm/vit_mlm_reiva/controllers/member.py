@@ -19,7 +19,8 @@ class Member(http.Controller):
         if user:
             state = user.partner_id.state
             if state == 'invited':
-                Users.write(cr, uid, user.id, {'state':'pre'}, context=context)
+                Partner = http.request.env['res.partner']
+                Partner.write(cr, uid, [user.partner_id.id], {'state':'pre'}, context=context)
 
 
         return http.request.render('vit_mlm_website.mlm_homepage', {
