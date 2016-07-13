@@ -60,7 +60,10 @@
 						                	domain="[('is_header','=',1),('categ_id','=',parent.category_id)]"/>       
 						                <field name="name" />       
 						                <field name="product_qty"/>       
-						                <field name="product_uom_id"/>       
+						                <field name="product_uom_id"/>
+						                <field name="product_qty_incoming" readonly="1" />
+						                <field name="product_qty_outgoing" readonly="1" /> 
+						                <field name="product_qty_hand" readonly="1" />      
 										<field name="product_qty_avail" readonly="1" />
 						                <field name="date_required"/>
 										<field name="purchase_requisition_id" />
