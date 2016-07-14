@@ -20,6 +20,7 @@ Manage
 
 """,
 	"data": [
+		'security/groups.xml',
 		'view/pages.xml',
 		'view/member.xml',
 		'view/menu.xml',
