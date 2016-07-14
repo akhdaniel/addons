@@ -93,7 +93,7 @@
                     <label class="col-md-3 col-sm-4 control-label" for="parent_id">Upline ID</label>
                     <div class="col-md-7 col-sm-8">
                         <input type="hidden"
-                               t-attf-value="#{member and member.parent_id and member.parent_id.id or default_parent.id}"
+                               t-attf-value="#{(member and member.parent_id and member.parent_id.id) or (default_parent and default_parent.id) or ''}"
                                name="parent_id" />
                         <input class="form-control"
                                readonly="true"
