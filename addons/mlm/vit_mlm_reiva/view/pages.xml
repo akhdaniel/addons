@@ -97,7 +97,7 @@
                                name="parent_id" />
                         <input class="form-control"
                                readonly="true"
-                                t-attf-value="#{member and member.parent_id and member.parent_id.name or default_parent.name}" />
+                                t-attf-value="#{(member and member.parent_id and member.parent_id.name) or (default_parent and default_parent.name) or ''}" />
                     </div>
                 </div>
             </xpath>
