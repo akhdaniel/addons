@@ -246,13 +246,15 @@ class Member(http.Controller):
 
 	@http.route('/mlm/member/check_email')
 	def check_email(self, **kw):
+		cr, uid, context, pool = request.cr, request.uid, request.context, request.registry
+
 		email = kw.get('email', '')
 		partner_id = kw.get('partner_id', False)
-		Member  = http.request.env['res.partner']
+		Partner = pool.get('res.partner')
 		cond = [('email','=', email)]
-		if partner_id:
+		if partner_id and partner_id!='undefined':
 			cond = cond + [('id','!=',partner_id)]
-		m = Member.search(cond)
+		m = Partner.search(cr, SUPERUSER_ID, cond, context=context)
 
 		if m:
 			return "false"
