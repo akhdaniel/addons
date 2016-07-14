@@ -604,7 +604,7 @@
 			</t>
 			<t t-if="readonly==1">
 				<input class="form-control"  readonly="true"
-					   t-attf-value="#{member and member.lang  or ''}" />
+					   t-attf-value="#{member and member_lang  or ''}" />
 			</t>
 		</div>
 	</div>
