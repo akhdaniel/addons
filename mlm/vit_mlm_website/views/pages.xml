@@ -258,6 +258,7 @@
 			    				<t t-esc="member.street"/>
 		            			<t t-esc="member.street2"/>
 		            			<t t-esc="member.city"/>
+		            			<span t-esc="member.state_id.name or ''"/>
 		            			<span t-esc="member.country_id.name or ''"/>
 		                    </td>
 			    			<td>
