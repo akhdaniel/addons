@@ -39,9 +39,11 @@ class Member(http.Controller):
 		# State = http.request.env['res.country.state']
 		# Country = http.request.env['res.country']
 		# Products  = http.request.env['mlm.paket_produk']
+		langs = http.request.env['res.lang'].search_read([('code','=',member.lang)])
 		return http.request.render('website.member_view', {
 			'member': member,
 			'products': member.paket_produk_ids,
+			'member_lang': langs[0]['name']
 			# 'members': Member.search([]),
 			# 'pakets': Paket.search([]),
 			# 'states': State.search([]),
