@@ -220,68 +220,76 @@
 
 <template id="website.member_list" name="Member List" page="True">
     <t t-call="website.layout">
-        <t t-set="title">Member List</t>
-        <div class="oe_structure">
-            <div class="container">
-                <h1 id="member_list_title">Member List</h1>
-                <t t-set="i" t-value="1"/>
-                <table class="table table-striped display" id="member_list_table">
-                    <thead>
-                        <tr>
-                            <th>No.</th>
-                            <th>Member Name</th>
-                            <th>Upline</th>
-                            <th id="th_sponsor">Sponsor</th>
-                            <th>Address</th>
-                            <th>Mobile</th>
-                            <th>Email</th>
-                            <th>Create Date</th>
-                            <th>State</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-	                <t t-foreach="members or []" t-as="member">
-			    		<tr>
-                            <td><span t-esc="i"/></td>
-			    			<td>
-			    				<a t-attf-href="/mlm/member/view/{{ slug(member) }}">
-		                    		<t t-esc="member.name"/>
-		                    	</a>
-		                    </td>
-			    			<td>
-			    				<t t-esc="member.parent_id.name or '' "/>
-		                    </td>
-			    			<td id="td_sponsor">
-			    				<t t-esc="member.sponsor_id.name or '' "/>
-		                    </td>
-			    			<td>
-			    				<t t-esc="member.street"/>
-		            			<t t-esc="member.street2"/>
-		            			<t t-esc="member.city"/>
-		            			<span t-esc="member.state_id.name or ''"/>
-		            			<span t-esc="member.country_id.name or ''"/>
-		                    </td>
-			    			<td>
-			    				<t t-esc="member.mobile"/>
-		                    </td>
-			    			<td>
-			    				<t t-esc="member.email"/>
-		                    </td>
-			    			<td>
-			    				<t t-esc="member.create_date"/><br/>
-		                    </td>
-			    			<td>
-			    				<t t-esc="member.state"/><br/>
-		                    </td>
-		                </tr>
-                        <t t-set="i" t-value="i+1"/>
-		            </t>
-                    </tbody>
-	            </table>
-            </div>
-        </div>
+		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+		<div class="oe_structure">
 
-        <t t-call="website.datatable" />
+			<section class="mt16 mb16">
+				<t t-set="title">Member List</t>
+				<div class="oe_structure">
+					<div class="container">
+						<h1 id="member_list_title">Member List</h1>
+						<t t-set="i" t-value="1"/>
+						<table class="table table-striped display" id="member_list_table">
+							<thead>
+								<tr>
+									<th>No.</th>
+									<th>Member Name</th>
+									<th>Upline</th>
+									<th id="th_sponsor">Sponsor</th>
+									<th>Address</th>
+									<th>Mobile</th>
+									<th>Email</th>
+									<th>Create Date</th>
+									<th>State</th>
+								</tr>
+							</thead>
+							<tbody>
+							<t t-foreach="members or []" t-as="member">
+								<tr>
+									<td><span t-esc="i"/></td>
+									<td>
+										<a t-attf-href="/mlm/member/view/{{ slug(member) }}">
+											<t t-esc="member.name"/>
+										</a>
+									</td>
+									<td>
+										<t t-esc="member.parent_id.name or '' "/>
+									</td>
+									<td id="td_sponsor">
+										<t t-esc="member.sponsor_id.name or '' "/>
+									</td>
+									<td>
+										<t t-esc="member.street"/>
+										<t t-esc="member.street2"/>
+										<t t-esc="member.city"/>
+										<span t-esc="member.state_id.name or ''"/>
+										<span t-esc="member.country_id.name or ''"/>
+									</td>
+									<td>
+										<t t-esc="member.mobile"/>
+									</td>
+									<td>
+										<t t-esc="member.email"/>
+									</td>
+									<td>
+										<t t-esc="member.create_date"/><br/>
+									</td>
+									<td>
+										<t t-esc="member.state"/><br/>
+									</td>
+								</tr>
+								<t t-set="i" t-value="i+1"/>
+							</t>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<t t-call="website.datatable" />
+			</section>
+		</div>
+        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+
     </t>
 </template>
 
@@ -623,104 +631,110 @@
 
 <template id="website.member_view" name="Member View" page="True">
 	<t t-call="website.layout">
+		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+		<div class="oe_structure">
+			<section class="mt16 mb16">
 
+			<t t-set="title">Member View</t>
+			<div class="oe_structure"/>
 
-        <t t-set="title">Member View</t>
-        <div class="oe_structure"/>
-        
-        <div class="oe_structure">
-            <div class="container">
+			<div class="oe_structure">
+				<div class="container">
 
-		        <div class="oe_structure"/>
-		
-		    	<a id="mlm_member_edit" t-attf-href="/mlm/member/edit/{{ slug(member) }}" class="btn btn-primary" >Edit</a>
+					<div class="oe_structure"/>
 
-		        <div class="oe_structure"/>
+					<a id="mlm_member_edit" t-attf-href="/mlm/member/edit/{{ slug(member) }}" class="btn btn-primary" >Edit</a>
 
-                <h1 t-esc="member.name"/>
-                <h2 t-esc="member.state"/>
+					<div class="oe_structure"/>
 
-		        <div class="form-horizontal mt32">
-		        	<t t-call="website.member_form">
-		        		<t t-set="readonly" t-value="1"/>
-		        		<t t-set="member" t-value="member"/>
-		        		<t t-set="parent" t-value="member.parent_id"/>
-		        	</t>
-		        </div>
+					<h1 t-esc="member.name"/>
+					<h2 t-esc="member.state"/>
 
-		        <div class="oe_structure"/>
-			    
-			    <div role="tabpanel">
+					<div class="form-horizontal mt32">
+						<t t-call="website.member_form">
+							<t t-set="readonly" t-value="1"/>
+							<t t-set="member" t-value="member"/>
+							<t t-set="parent" t-value="member.parent_id"/>
+						</t>
+					</div>
 
-				  <!-- Nav tabs -->
-				  <ul class="nav nav-tabs" role="tablist">
-					    <li id="tab_downlines" role="presentation" class="active"><a href="#downlines" aria-controls="downlines" role="tab" data-toggle="tab">Downlines</a></li>
-					    <li id="tab_tree" role="presentation"><a href="#tree" aria-controls="tree" role="tab" data-toggle="tab">Tree</a></li>
+					<div class="oe_structure"/>
 
-					    <li id="tab_bonus" role="presentation"><a href="#bonus" aria-controls="bonus" role="tab" data-toggle="tab">Bonus</a></li>
-				  </ul>
+					<div role="tabpanel">
 
-				  <!-- Tab panes -->
-				  <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="downlines">
-					    	<table class="table table-striped">
-					    		<tr>
-					    			<th>Name</th>
-					    			<th>Code</th>
-					    			<th>Phone</th>
-					    			<th>Mobile</th>
-					    			<th>Email</th>
-					    			<th>BBM</th>
-				                </tr>			    		
-			                <t t-foreach="member.child_ids or []" t-as="child">
-					    		<tr>
-					    			<td t-esc="child.name" />
-					    			<td t-esc="child.code" />
-					    			<td t-esc="child.phone" />
-					    			<td t-esc="child.mobile" />
-					    			<td t-esc="child.email" />
-					    			<td t-esc="child.bbm" />
-				                </tr>
-				            </t>
-				            </table>
-					    </div>
+					  <!-- Nav tabs -->
+					  <ul class="nav nav-tabs" role="tablist">
+							<li id="tab_downlines" role="presentation" class="active"><a href="#downlines" aria-controls="downlines" role="tab" data-toggle="tab">Downlines</a></li>
+							<li id="tab_tree" role="presentation"><a href="#tree" aria-controls="tree" role="tab" data-toggle="tab">Tree</a></li>
 
-					    <div role="tabpanel" class="tab-pane" id="tree">
-					    	<t t-call="website.member_tree">
-			                    <t t-set="member" t-value="member"/>
-					    	</t>
-					    </div>
+							<li id="tab_bonus" role="presentation"><a href="#bonus" aria-controls="bonus" role="tab" data-toggle="tab">Bonus</a></li>
+					  </ul>
 
-					    <div role="tabpanel" class="tab-pane" id="bonus">
-					    	<table class="table table-striped">
-					    		<tr>
-					    			<th>New Member</th>
-					    			<th>At Level</th>
-					    			<th>Amount</th>
-					    			<th>Trans. Date</th>
-					    			<th>Bonus Name</th>
-					    			<th>Description</th>
-					    			<th>Is Transferd</th>
-				                </tr>			    		
-			                <t t-foreach="member.member_bonus_ids or []" t-as="b">
-					    		<tr>
-					    			<td t-esc="b.new_member_id.name" />
-					    			<td t-esc="b.level" />
-					    			<td t-esc="b.amount" />
-					    			<td t-esc="b.trans_date" />
-					    			<td t-esc="b.bonus_id.name" />
-					    			<td t-esc="b.description" />
-					    			<td t-esc="b.is_transfered" />
-				                </tr>
-				            </t>
-				            </table>
-					    </div>
-				  </div>
+					  <!-- Tab panes -->
+					  <div class="tab-content">
+							<div role="tabpanel" class="tab-pane active" id="downlines">
+								<table class="table table-striped">
+									<tr>
+										<th>Name</th>
+										<th>Code</th>
+										<th>Phone</th>
+										<th>Mobile</th>
+										<th>Email</th>
+										<th>BBM</th>
+									</tr>
+								<t t-foreach="member.child_ids or []" t-as="child">
+									<tr>
+										<td t-esc="child.name" />
+										<td t-esc="child.code" />
+										<td t-esc="child.phone" />
+										<td t-esc="child.mobile" />
+										<td t-esc="child.email" />
+										<td t-esc="child.bbm" />
+									</tr>
+								</t>
+								</table>
+							</div>
+
+							<div role="tabpanel" class="tab-pane" id="tree">
+								<t t-call="website.member_tree">
+									<t t-set="member" t-value="member"/>
+								</t>
+							</div>
+
+							<div role="tabpanel" class="tab-pane" id="bonus">
+								<table class="table table-striped">
+									<tr>
+										<th>New Member</th>
+										<th>At Level</th>
+										<th>Amount</th>
+										<th>Trans. Date</th>
+										<th>Bonus Name</th>
+										<th>Description</th>
+										<th>Is Transferd</th>
+									</tr>
+								<t t-foreach="member.member_bonus_ids or []" t-as="b">
+									<tr>
+										<td t-esc="b.new_member_id.name" />
+										<td t-esc="b.level" />
+										<td t-esc="b.amount" />
+										<td t-esc="b.trans_date" />
+										<td t-esc="b.bonus_id.name" />
+										<td t-esc="b.description" />
+										<td t-esc="b.is_transfered" />
+									</tr>
+								</t>
+								</table>
+							</div>
+					  </div>
+					</div>
+
 				</div>
+			</div>
+			<div class="oe_structure"/>
+		</section>
+		</div>
+        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
 
-            </div>
-        </div>
-        <div class="oe_structure"/>
     </t>			
 </template>	
 
@@ -752,76 +766,88 @@
 
 <template id="website.member_create" name="Create Member" page="True">
     <t t-call="website.layout">
-        <t t-set="title">Create New Member</t>
-        <div class="oe_structure">
-            <div class="container">
-               	<h1 t-esc="default_parent.name"/>
+		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+		<div class="oe_structure">
+			<section class="mt16 mb16">
+				<t t-set="title">Create New Member</t>
+				<div class="oe_structure">
+					<div class="container">
+						<h1 t-esc="default_parent.name"/>
 
-		        <form id="member_form2" action="/mlm/member/add" method="post"
-                      class="form-horizontal mt32"
-                      enctype="multipart/form-data" >
+						<form id="member_form2" action="/mlm/member/add" method="post"
+							  class="form-horizontal mt32"
+							  enctype="multipart/form-data" >
 
-		        	<t t-call="website.member_form">
-		        		<t t-set="readonly" t-value="0"/>
-		        		<t t-set="member" t-value="member"/>
-		        		<t t-set="members" t-value="members"/>
-		        		<t t-set="parent" t-value="parent"/>
-		        		<t t-set="pakets" t-value="pakets"/>
-		        		<t t-set="paket_produk_id" t-value="paket_produk_id"/>
-		        	</t>
+							<t t-call="website.member_form">
+								<t t-set="readonly" t-value="0"/>
+								<t t-set="member" t-value="member"/>
+								<t t-set="members" t-value="members"/>
+								<t t-set="parent" t-value="parent"/>
+								<t t-set="pakets" t-value="pakets"/>
+								<t t-set="paket_produk_id" t-value="paket_produk_id"/>
+							</t>
 
-		            <div class="form-group">
-		                <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-		                    <button class="btn btn-primary btn-lg">Confirm</button>
-		                </div>
-		            </div>
+							<div class="form-group">
+								<div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+									<button class="btn btn-primary btn-lg">Confirm</button>
+								</div>
+							</div>
 
-		            <t t-foreach="kwargs" t-as="kwarg">
-		                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-		            </t>		            
-		        </form>						
-            </div>
-        </div>
+							<t t-foreach="kwargs" t-as="kwarg">
+								<input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+							</t>
+						</form>
+					</div>
+				</div>
 
-        <t t-call="website.validation" />
-    </t>			
+				<t t-call="website.validation" />
+			</section>
+		</div>
+        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+	</t>
 </template>
 
 
 
 <template id="website.member_edit" name="Edit Member" page="True">
     <t t-call="website.layout">
-        <t t-set="title">Edit Member</t>
-        <div class="oe_structure">
-            <div class="container">
-               	<h1 t-esc="member.name"/>
+		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+		<div class="oe_structure">
+			<t t-set="title">Edit Member</t>
+			<div class="oe_structure">
+				<section class="mt16 mb16">
+					<div class="container">
+					<h1 t-esc="member.name"/>
 
-		        <form id="member_form2" action="/mlm/member/update" method="post"
-                      class="form-horizontal mt32" enctype="multipart/form-data">
+					<form id="member_form2" action="/mlm/member/update" method="post"
+						  class="form-horizontal mt32" enctype="multipart/form-data">
 
-		        	<t t-call="website.member_form">
-		        		<t t-set="readonly" t-value="0"/>
-		        		<t t-set="member" t-value="member"/>
-		        		<t t-set="members" t-value="members"/>
-		        		<t t-set="parent" t-value="parent"/>
-		        		<t t-set="pakets" t-value="pakets"/>		        		
-		        	</t>
+						<t t-call="website.member_form">
+							<t t-set="readonly" t-value="0"/>
+							<t t-set="member" t-value="member"/>
+							<t t-set="members" t-value="members"/>
+							<t t-set="parent" t-value="parent"/>
+							<t t-set="pakets" t-value="pakets"/>
+						</t>
 
-		            <div class="form-group">
-		                <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-		                    <button class="btn btn-primary btn-lg">Save</button>
-		                </div>
-		            </div>
+						<div class="form-group">
+							<div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+								<button class="btn btn-primary btn-lg">Save</button>
+							</div>
+						</div>
 
-	                <input type="hidden" name="id" id="partner_id" t-att-value="member.id"/>
-		            <t t-foreach="kwargs" t-as="kwarg">
-		                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-		            </t>		            
-		        </form>						
-            </div>
-        </div>
-        <t t-call="website.validation" />
-    </t>			
+						<input type="hidden" name="id" id="partner_id" t-att-value="member.id"/>
+						<t t-foreach="kwargs" t-as="kwarg">
+							<input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+						</t>
+					</form>
+				</div>
+				</section>
+			</div>
+			<t t-call="website.validation" />
+		</div>
+        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+    </t>
 </template>
 
 
