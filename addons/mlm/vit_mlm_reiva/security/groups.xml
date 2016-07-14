@@ -2,7 +2,7 @@
 	<data noupdate="0">
 
 		<record id="group_mlm_vp" model="res.groups">
-			<field name="name">MLM / VP Marketing</field>
+			<field name="name">MLM / Head of Network</field>
         </record>
 
     </data>
