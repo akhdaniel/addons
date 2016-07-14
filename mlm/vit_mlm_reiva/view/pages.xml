@@ -10,6 +10,7 @@
                 </t>
             </xpath>
             <li id="tab_bonus" position="replace"/>
+            <xpath expr="//div[@id='downlines']/table/tr/th[contains(.,'BBM')]" position="replace" />
 
         </template>
 
