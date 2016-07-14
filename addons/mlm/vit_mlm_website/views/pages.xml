@@ -759,7 +759,7 @@
 				}
             }
           },
-			messages:{email:'This email (and this person therefore) is already registered. [en]<br/>Ce courriel (et cette personne par conséquent) est déjà enregistré. [fr]'},
+			messages:{email:'This email address (and this person therefore) is already registered. [en] <br/>Cette adresse courriel (et cette personne par conséquent) est déjà enregistré. [fr]'},
         });
     </script>
 </template>
