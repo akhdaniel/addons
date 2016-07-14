@@ -247,8 +247,13 @@ class Member(http.Controller):
 	@http.route('/mlm/member/check_email')
 	def check_email(self, **kw):
 		email = kw.get('email', '')
+		partner_id = kw.get('partner_id', False)
 		Member  = http.request.env['res.partner']
-		m = Member.search([('email','=', email)])
+		cond = [('email','=', email)]
+		if partner_id:
+			cond = cond + [('id','!=',partner_id)]
+		m = Member.search(cond)
+
 		if m:
 			return "false"
 		else:
