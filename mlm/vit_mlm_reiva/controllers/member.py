@@ -3,6 +3,7 @@ from openerp import http, SUPERUSER_ID
 from openerp.http import request
 import base64
 import simplejson
+from openerp.tools.translate import _
 
 class Member(http.Controller):
 
@@ -33,7 +34,8 @@ class Member(http.Controller):
     def send_invitation(self, member, **kwargs):
         try:
             request.registry['res.partner'].action_invite(request.cr, SUPERUSER_ID, [member.id], request.context)
-            message = "Invitation sent to %s." % (member.name)
+            message = _("Invitation sent to %s") % (member.name)
+            #Votre invitation a été transmise à
             return request.redirect('/mlm?message_success=%s' % (message), code=301)
         except Exception, e:
             message = str(e)

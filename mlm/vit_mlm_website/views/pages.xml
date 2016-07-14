@@ -223,10 +223,12 @@
 		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
 		<div class="oe_structure">
 
+
 			<section class="mt16 mb16">
 				<t t-set="title">Member List</t>
 				<div class="oe_structure">
 					<div class="container">
+						<a id="mlm_member_add" t-attf-href="/mlm/member/create" class="btn btn-primary" >Create a New Invitation</a>
 						<h1 id="member_list_title">Member List</h1>
 						<t t-set="i" t-value="1"/>
 						<table class="table table-striped display" id="member_list_table">
