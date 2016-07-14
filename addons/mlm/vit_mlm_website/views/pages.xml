@@ -737,10 +737,15 @@
               remote: {
                     url: "/mlm/member/check_email",
 					type: "POST",
-               }
+					data: {
+					  partner_id: function() {
+						return $("#partner_id").val();
+					  }
+					},
+				}
             }
           },
-			messages:{email:"Email exists"},
+			messages:{email:"Email already exists"},
         });
     </script>
 </template>
@@ -791,7 +796,7 @@
             <div class="container">
                	<h1 t-esc="member.name"/>
 
-		        <form id="member_form" action="/mlm/member/update" method="post"
+		        <form id="member_form2" action="/mlm/member/update" method="post"
                       class="form-horizontal mt32" enctype="multipart/form-data">
 
 		        	<t t-call="website.member_form">
@@ -808,7 +813,7 @@
 		                </div>
 		            </div>
 
-	                <input type="hidden" name="id" t-att-value="member.id"/>
+	                <input type="hidden" name="id" id="partner_id" t-att-value="member.id"/>
 		            <t t-foreach="kwargs" t-as="kwarg">
 		                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
 		            </t>		            
