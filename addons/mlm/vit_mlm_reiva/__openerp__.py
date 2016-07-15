@@ -20,11 +20,11 @@ Manage
 
 """,
 	"data": [
+		'data/paket.xml',
 		'security/groups.xml',
 		'view/pages.xml',
 		'view/member.xml',
 		'view/menu.xml',
-		'data/paket.xml',
 		'data/email_template.xml',
 	],
 	"installable": True,
