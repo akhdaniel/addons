@@ -5,9 +5,13 @@ import openerp.addons.decimal_precision as dp
 import time
 import logging
 from openerp.tools.translate import _
-from datetime import datetime
+from datetime import datetime, timedelta
+from openerp.tools.misc import DEFAULT_SERVER_DATETIME_FORMAT, ustr
 
 _logger = logging.getLogger(__name__)
+def now(**kwargs):
+    dt = datetime.now() + timedelta(**kwargs)
+    return dt.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 
 MEMBER_STATES = [('draft', 'Draft'), ('open', 'Verification'), ('reject', 'Rejected'),
                  ('aktif', 'Active'), ('nonaktif', 'Non Active'),
@@ -51,12 +55,18 @@ class member(osv.osv):
 
         self.action_confirm(cr, uid, ids, context=context)
         self.action_aktif(cr, uid, ids, context=context)
+        self.signup_prepare(cr, uid, ids, signup_type="reset", expiration=now(days=+1), context=context)
+
         self.write(cr, uid, ids[0], {
-            'state': MEMBER_STATES[5][0]}, context=context)
+            'state': MEMBER_STATES[5][0],
+            # 'signup_url': signup_url,
+            }, context=context)
 
         mail_template_id = self.pool.get('ir.model.data').get_object_reference(cr, uid,
-           'auth_signup',
-           'set_password_email')
+           # 'auth_signup',
+           'vit_mlm_reiva',
+           'set_password_email_reiva')
+
 
         user_id = user_obj.search(cr,SUPERUSER_ID,  [('partner_id','=',ids[0])], context=context)
         if user_id:

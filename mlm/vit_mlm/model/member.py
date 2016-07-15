@@ -815,6 +815,8 @@ class member(osv.osv):
 
         user_id = cr.fetchall()
 
+
+
         group =  self.pool.get('res.groups')
         gids =group.search(cr, uid, [('name','in',['Employee','Contact Creation',
             'MLM / Member',
