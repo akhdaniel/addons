@@ -1,5 +1,6 @@
 from openerp import tools
 from openerp.osv import fields, osv
+from openerp import http, SUPERUSER_ID
 import openerp.addons.decimal_precision as dp
 import time
 import logging
@@ -45,20 +46,29 @@ class member(osv.osv):
 
     def action_invite(self, cr, uid, ids, context=None):
         mtp = self.pool.get('email.template')
-        mail_template_id = self.pool.get('ir.model.data').get_object_reference(cr, uid,
-           'vit_mlm_reiva',
-           'email_template_invitation')
-        for partner_id in ids:
-            mtp.send_mail(cr, uid, mail_template_id[1], partner_id, force_send=True, context=context)
+        user_obj = self.pool.get('res.users')
+
 
         self.action_confirm(cr, uid, ids, context=context)
         self.action_aktif(cr, uid, ids, context=context)
         self.write(cr, uid, ids[0], {
             'state': MEMBER_STATES[5][0]}, context=context)
 
-        user_obj = self.pool.get('res.users')
-        user_id = user_obj.search(cr, uid, [('partner_id','=',ids[0])], context=context)
-        user_obj.action_reset_password(cr, uid, user_id, context=context)
+        mail_template_id = self.pool.get('ir.model.data').get_object_reference(cr, uid,
+           'auth_signup',
+           'set_password_email')
+
+        user_id = user_obj.search(cr,SUPERUSER_ID,  [('partner_id','=',ids[0])], context=context)
+        if user_id:
+            user = user_obj.browse(cr, SUPERUSER_ID, user_id[0], context=context)
+            context['lang'] = user[0].lang  # translate in targeted user language
+            mtp.send_mail(cr, SUPERUSER_ID, mail_template_id[1], user[0].id,
+                          force_send=True, raise_exception=False,
+                          context=context)
+
+        # user_obj = self.pool.get('res.users')
+        # user_id = user_obj.search(cr, uid, [('partner_id','=',ids[0])], context=context)
+        # user_obj.action_reset_password(cr, uid, user_id, context=context)
 
     def action_preaktif(self, cr, uid, ids, context=None):
         return self.write(cr, uid, ids, {'state': MEMBER_STATES[3][0]}, context=context)

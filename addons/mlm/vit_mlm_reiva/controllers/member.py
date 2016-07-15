@@ -32,6 +32,7 @@ class Member(http.Controller):
 
     @http.route('/mlm/member/invite/<model("res.partner"):member>', auth='user', website=True)
     def send_invitation(self, member, **kwargs):
+        print "ni"
         try:
             request.registry['res.partner'].action_invite(request.cr, SUPERUSER_ID, [member.id], request.context)
             message = _("Invitation sent to %s") % (member.name)
