@@ -810,7 +810,9 @@ class member(osv.osv):
                 alias_id,
                 member.company_id,
                 action_id[0],
-                member.name.lower(),uid,uid)
+                # member.name.lower(),
+                member.email.lower(),
+                uid,uid)
         res = cr.execute(sql)
 
         user_id = cr.fetchall()
