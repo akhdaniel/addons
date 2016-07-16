@@ -25,11 +25,14 @@ class Member(http.Controller):
 		})
 
 	@http.route('/mlm/member/list', auth='user', website=True)
-	def list(self, **kw):		
+	def list(self, **kw):
+		lang = request.context['lang']
 		Partners = http.request.env['res.partner']
 		Mymembers = self._cari_users_members(request.cr, request.uid, request.uid, request.context)
 		return http.request.render('website.member_list', {
-			'members': Partners.search([('id','in',Mymembers)])
+			'members': Partners.search([('id','in',Mymembers)]),
+			'lang':lang,
+
 		}) 
 
 	@http.route('/mlm/member/view/<model("res.partner"):member>',  auth='user', website=True)

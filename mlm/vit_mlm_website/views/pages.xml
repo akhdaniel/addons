@@ -211,9 +211,14 @@
 
 <template id="website.datatable">
     <script src="/web/static/lib/jquery/jquery.js"/>
+
     <script>
         $(document).ready(function(){
-            $("#member_list_table").DataTable();
+            $("#member_list_table").DataTable({
+				language: {
+					url: '/vit_mlm_website/static/src/js/datatables/js/<t t-esc="lang"/>.js'
+				}
+			});
         })
     </script>
 </template>
