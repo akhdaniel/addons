@@ -1,0 +1,49 @@
+<openerp>
+    <data>
+        
+        <template id="assets_backend" name="xport_xcel_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <!-- <link rel='stylesheet' href="/xport_xcel/static/src/css/xport_xcel.css"/> -->
+                <script type="text/javascript" src="/xport_xcel/static/src/js/xport_xcel.js"></script>
+            </xpath>
+        </template>
+
+        <!-- Export wizard -->
+        <record id="view_xport_xcel" model="ir.ui.view">
+            <field name="name">xport xcel wizard</field>
+            <field name="model">hr.xport.xcel</field>
+            <field name="arch" type="xml">
+                <form string="Configure Report Payroll" class="oe_form_configuration">
+                    <!-- <header>
+                        <button string="Export" type="object" name="execute" class="oe_highlight oe_xport_xcel"/>
+                        or
+                        <button string="Cancel" type="object" name="cancel" class="oe_link"/>
+                    </header> -->
+                    <div name="dates" class='oe_xdates'>
+                        <separator string="Dates Value"/>
+                        <group name="Dates">
+                            <label for="date_from"/>
+                            <div>
+                                <field name="date_from" class="oe_inline oe_dt_from"/> - <field name="date_to" class="oe_inline oe_dt_to"/>
+                            </div>
+                            <!-- <field name="trans_date" class="oe_dt_trf" invisble="1"/> -->
+                        </group>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_xport_xcel" model="ir.actions.act_window">
+            <field name="name">Configure Sales</field>
+            <!-- <field name="type">ir.actions.act_window</field> -->
+            <field name="res_model">hr.xport.xcel</field>
+            <!-- <field name="view_id" ref="view_xport_xcel"/> -->
+            <field name="view_mode">form</field>
+            <field name="view_type">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_xport_xcel" name="Transfer Bank" parent="hr_payroll.menu_hr_root_payroll" action="action_xport_xcel"/>
+
+    </data>
+</openerp>

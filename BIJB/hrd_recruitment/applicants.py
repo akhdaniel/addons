@@ -114,7 +114,7 @@ class hr_applicant(osv.osv):
                 emp_id = hr_employee.create(cr, uid, {'name': applicant.partner_name or applicant.name,
                                                      'job_id': applicant.job_id.id,
                                                      'department_id' : applicant.department_id.id,
-
+                                                     'address_id2' : applicant.job_id.address_id.id,
                                                      #### informasi Probadi ####
                                                      'kelamin':applicant.jen_kel,
                                                      'blood' : applicant.blood,
@@ -167,7 +167,6 @@ class hr_applicant(osv.osv):
                                                      'koneksi1_ids':prod_ids5,
                                                      'koneksi2_ids':prod_ids6,                                                     
                                                      })
-                import pdb;pdb.set_trace()
                 self.write(cr, uid, [applicant.id], {'emp_id': emp_id}, context=context)
                 self.pool['hr.job'].message_post(
                     cr, uid, [applicant.job_id.id],

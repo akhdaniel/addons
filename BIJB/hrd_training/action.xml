@@ -60,7 +60,7 @@
     <menuitem id="hr_menu_training" parent="menu_open_training" name="Analisa Kebutuhan Pelatihan" groups="base.group_hr_manager,base.group_hr_user,base.group_user"/> 
     <menuitem action="action_hr_training1" id="hr_menu_training1" parent="hr_menu_training" name="Pelatihan Internal" groups="base.group_hr_manager,base.group_hr_user,base.group_user"/> 
     <menuitem action="action_hr_training2" id="hr_menu_training2" parent="hr_menu_training" name="Pelatihan Eksternal" groups="base.group_hr_manager,base.group_hr_user,base.group_user"/> 
-    <menuitem action="action_hr_training3" id="hr_menu_training3" parent="hr_menu_training" name="Pelatihan Khusus SIO" groups="base.group_hr_manager,base.group_hr_user,base.group_user"/>
+    <!-- <menuitem action="action_hr_training3" id="hr_menu_training3" parent="hr_menu_training" name="Pelatihan Khusus SIO" groups="base.group_hr_manager,base.group_hr_user,base.group_user"/> -->
     <menuitem action="action_hr_nontraining" id="hr_menu_training4" parent="hr_menu_training" name="Pelatihan Non Training" groups="base.group_hr_manager,base.group_hr_user,base.group_user"/>
     <!-- <menuitem action="action_hr_rencana_training" id="hr_menu_rencana_training" parent="menu_open_training" name="Daftar Peserta Pelatihan" /> -->
     <menuitem action="action_hr_detail_training" id="hr_menu_detail_training" parent="menu_open_training" name="Detail Peserta Pelatihan" />

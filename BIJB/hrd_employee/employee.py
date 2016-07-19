@@ -126,6 +126,9 @@ class employee(osv.osv):
         'work_email' : fields.char('Email Kantor'),
         'work_phone' : fields.char('Telepon Kantor'),
         'coach_id' : fields.many2one('hr.employee', '',readonly=True),
+        'ket_resign' : fields.char("Keterangan Resign"),
+        'tgl_resign' : fields.date("Tanggal Resign"),
+        'divisi_id' : fields.many2one('hr.divisi','Divisi', domain="[('department_id','=',department_id)]"),
         }
 
     _defaults = {    
@@ -154,6 +157,15 @@ employee()
 #####################################################################################
 
 
+class divisi(osv.osv):
+    _name = 'hr.divisi'
+
+    _columns = {
+        'name' : fields.char("Divisi"),
+        'department_id' : fields.many2one('hr.departmen','departmen'),
+        'manager_id' : fields.many2one('hr.employee','Manager'),
+    }
+divisi()
 
 class susunan_keluarga1(osv.osv):
     _name='hr_employee.suskel1'
@@ -167,6 +179,7 @@ class susunan_keluarga1(osv.osv):
         'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan'),
         'pekerjaan':fields.char('Pekerjaan',60),
         'susunan':fields.selection([('Suami','Suami'),('Istri','Istri'),('anak1','Anak ke-1'),('anak2','Anak ke-2'),('anak3','Anak ke-3'),('anak4','Anak ke-4'),('anak5','Anak ke-5'),('anak6','Anak ke-6')],'Status Dalam Keluarga'),
+        'no_id' : fields.char("No.ID")    
             }
 susunan_keluarga1()
 

@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_xport_xcel_xport_xcel,xport_xcel.xport_xcel,model_xport_xcel_xport_xcel,,1,0,0,0

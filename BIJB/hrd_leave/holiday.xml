@@ -87,5 +87,57 @@
         <menuitem name="Pemohonan Sakit" parent="menu_open_permohonan" id="menu_permohonan_sakit" action="request_sakit" sequence="21"/>
         <menuitem name="Perjalanan Dinas" parent="menu_open_permohonan" id="menu_permohonan_dinas" action="request_dinas" sequence="22"/>
 	
+        <!-- edit holiday -->
+
+        <record model="ir.ui.view" id="edit_holiday_new">
+            <field name="name">Leave Request</field>
+            <field name="model">hr.holidays</field>
+            <field name="arch" type="xml">
+                <form string="Leave Request">
+                <field name="can_reset" invisible="1"/>
+                <field name="type" invisible="1"/>
+                <header>
+                    <button string="Confirm" name="confirm" states="draft" type="workflow" class="oe_highlight"/>
+                    <button string="Approve" name="validate" states="confirm" type="workflow" groups="base.group_hr_user" class="oe_highlight"/>
+                    <button string="Validate" name="second_validate" states="validate1" type="workflow" groups="base.group_hr_user" class="oe_highlight"/>
+                    <button string="Refuse" name="refuse" states="confirm,validate,validate1" type="workflow" groups="base.group_hr_user"/>
+                    <button string="Reset to Draft" name="reset" type="workflow"
+                            attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['confirm', 'refuse'])]}"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,confirm,validate" statusbar_colors='{"confirm":"blue","validate1":"blue","refuse":"red"}'/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" attrs="{'readonly':[('state','!=','draft'),('state','!=','confirm')], 'required': [('type', '=', 'add')]}"/>
+                            <field name="holiday_status_id" context="{'employee_id':employee_id}"/>
+                                <label for="number_of_days_temp" string="Duration"/>
+                            <div>
+                                <group col="3" attrs="{'invisible': [('type', '=', 'add')]}">
+                                    <field name="date_from" nolabel="1" on_change="onchange_date_from(date_to, date_from)" attrs="{'required':[('type', '=', 'remove')]}" class="oe_inline"/><label string="-" class="oe_inline"/>
+                                    <field name="date_to" nolabel="1" on_change="onchange_date_to(date_to, date_from)"  attrs="{'required':[('type', '=', 'remove')]}" class="oe_inline"/>
+                                </group>
+                                <div>
+                                    <field name="number_of_days_temp" class="oe_inline"/> days
+                                </div>
+                            </div>
+                        </group>
+                        <group>
+                            <field name="holiday_type" on_change="onchange_type(holiday_type)" attrs="{'readonly':[('type', '=', 'aa'),('state','!=','draft')]}" string="Mode" groups="base.group_hr_user" context="{'employee_id':employee_id}" />
+                            <field name="employee_id" attrs="{'required':[('holiday_type','=','employee')],'invisible':[('holiday_type','=','category')]}" on_change="onchange_employee(employee_id)" groups="base.group_hr_user"/>
+                            <field name="category_id" attrs="{'required':[('holiday_type','=','category')], 'readonly': [('type', '=', 'remove'),('state','!=','draft'), ('state','!=','confirm')], 'invisible':[('holiday_type','=','employee')]}"/>
+                            <field name="department_id" attrs="{'readonly':['|', ('type','=','add'),('holiday_type','=','category')],'invisible':[('holiday_type','=','category')]}" groups="base.group_hr_user"/>
+                        </group>
+                    </group>
+                    <field name="notes" nolabel="1" colspan="4" placeholder="Add a reason..." attrs="{'invisible': [('type', '=', 'remove')]}"/>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+
 	</data>
 </openerp>

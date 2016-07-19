@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+
+		<record model="ir.actions.act_window" id="action_schedule_warning">
+	        <field name="name">Schedule Warning</field>
+	        <field name="res_model">schedule.warning</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+
+	    <record id="warning_form_view" model="ir.ui.view">
+	        <field name="name">Schedule Warning</field>
+	        <field name="model">schedule.warning</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	            <form string="Schedule Warning">
+	            	<group>
+	                	<field name="name"/>
+	                	<field name="lama"/>
+	            	</group>
+	            </form>
+	        </field>
+	    </record>
+
+	    <record id="warning_tree_view" model="ir.ui.view">
+	        <field name="name">Schedule Warning</field>
+	        <field name="model">schedule.warning</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	            <tree string="Schedule Warning">
+	                <field name="name"/>
+	                <field name="lama"/>
+	            </tree>
+	        </field>
+	    </record>
+
+	    <!-- <record model="ir.ui.view" id="contract_test">
+            <field name="name">contract</field>
+            <field name="model">hr.contract</field>
+            <field name="inherit_id" ref="hr_contract.hr_contract_view_form"/>
+            <field name="arch" type="xml">
+            	<field name="employee_id" position="after">
+            		<button name="cron_kontrak" string="Exec" type="object"/>
+            	</field>
+            </field>
+        </record> -->
+
+        <record forcecreate="1" id="contract_kaladuarsa" model="ir.cron">
+            <field name="name">Schedule Warning Kontrak</field>
+            <field eval="1" name="active" />
+            <field name="user_id" ref="base.user_root" />
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall" />
+            <field eval="'hr.contract'" name="model" />
+            <field eval="'cron_kontrak'" name="function" />
+            <field eval="'()'" name="args" />
+            <field name="nextcall">"2015-05-13 09:00:00"</field>
+        </record>
+
+		<menuitem action="action_schedule_warning" parent="base.menu_tools" name="Schedule Warning" id="master_hr_type" sequence="401"/>
+
+	</data>
+</openerp>

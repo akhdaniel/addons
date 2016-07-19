@@ -41,7 +41,7 @@ class job(osv.osv):
 		job_name = per.name
 		job_pengalaman = per.pengalaman
 		job_kelamin = per.kelamin
-		job_domisili = per.tempat_lahir_id
+		job_domisili = per.tempat_lahir_id.name
 		job_umr = per.usia
 		job_sts_prk = per.sts_prk
 		job_pend = per.type_id.id      
@@ -69,13 +69,13 @@ class job(osv.osv):
 		if job_b_pengalaman :
 			filt.append(('pengalaman','>=',job_pengalaman))
 		if job_b_kelamin :
-			filt.append(('kelamin','=',job_kelamin))
+			filt.append(('jen_kel','=',job_kelamin))
 		if job_b_domisili :
-			filt.append(('kab_id','=',job_domisili_id))
+			filt.append(('kab_id','=',job_domisili))
 		if job_b_umr :
 			filt.append(('age','<=',job_umr))
 		if job_b_status :
-			filt.append(('status','=',job_status))
+			filt.append(('status','=',job_sts_prk))
 		# if job_b_pend :
 		# 	filt.append(('type_id','=',job_pend))
 
@@ -91,7 +91,7 @@ class job(osv.osv):
 			ada = partner.browse(cr,uid,pero)
 			for rr in ada:
 				if rr.job_id.name == job_name :
-					partner.write(cr,uid,[rr.id],{'app_id':rr.job_id.id,'dep_app':rr.department_id_id.id}, context=context) 			
+					partner.write(cr,uid,[rr.id],{'app_id':rr.job_id.id,'dep_app':rr.department_id.id}, context=context) 			
 		self.write(cr,uid,ids,{'status_rec':'execute'},context=context)
 		return True
 	
@@ -128,7 +128,7 @@ class job(osv.osv):
 		'pengalaman':fields.integer('Pengalaman (min-th)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
 		'usia':fields.selection([('18','18'),('19','19'),('20','20'),('21','21'),('22','22'),('23','23'),('24','24'),('25','25'),('26','26'),('27','27'),('28','28'),('29','29'),('30','30'),('31','31'),('32','32'),('33','33'),('34','34'),('35','35'),('36','36'),('37','37'),('38','38'),('39','39'),('40','40'),('41','41'),('42','42'),('43','43'),('44','44'),('45','45'),('46','46'),('47','47'),('48','48'),('49','49'),('50','50')],string='Usia (max)',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
 		'sts_prk':fields.selection([('single','Single'),('menikah','Menikah')],string='Status Pernikahan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
-		'kelamin':fields.selection([('male','Male'),('female','Female'),('male/Female','Male / Female')],string='Jenis Kelamin',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
+		'kelamin':fields.selection([('L','Pria'),('W','Wanita')],string='Jenis Kelamin',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),
 		#'domisili_id':fields.many2one('hr_recruit.kota','Domisili',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),    
 		'tempat_lahir_id':fields.many2one('hr_recruit.kota','Domisili',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}), 
 		'type_id': fields.many2one('hr.recruitment.degree', 'Pendidikan',states={'verify':[('readonly',True)], 'in_progress':[('readonly',True)]}),

@@ -119,7 +119,6 @@ class hr_attendance(osv.osv):
 		return results
 
 	def _onchange_action(self,cr,uid,ids,binary_action,context=None):
-		import pdb;pdb.set_trace()
 		if binary_action == '0' :
 			ba = 'sign_in'
 		else :

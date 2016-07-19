@@ -29,6 +29,7 @@
             	
                 <field name="wage" position="after">
             		<field name="jenis_tunjangan"/>
+                    <field name="zakat"/>
             	</field>
 
                 <page string="Information" name="information" position="after">

@@ -1,5 +1,11 @@
 <openerp>
 	<data>
+        <!-- CATEGORY -->
+
+        <record id="ZAKAT" model="hr.salary.rule.category">
+            <field name="name">Zakat</field>
+            <field name="code">ZAKAT</field>
+        </record>
 
 		<!--Allowance-->
 		<record id="hr_rule_basic" model="hr.salary.rule">
@@ -63,6 +69,26 @@
 	        <field name="amount_python_compute">result = (worked_days.LEMBUR.number_of_hours/173)*contract.wage </field>
 	    </record>
 
+        <record id="hr_payroll_rules_thr" model="hr.salary.rule">
+            <field name="name">THR</field>
+            <field name="code">THR</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="sequence">103</field>
+            <field name="amount_python_compute">result = inputs.THR.amount </field>
+        </record>
+
+        <record id="hr_payroll_rules_bonus" model="hr.salary.rule">
+            <field name="name">BONUS</field>
+            <field name="code">BONUS</field>
+            <field name="category_id" ref="hr_payroll.ALW"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="sequence">103</field>
+            <field name="amount_python_compute">result = inputs.BONUS.amount </field>
+        </record>
+
 	    <!--deduction-->
 	    <record id="hr_payroll_rules_pot_absen" model="hr.salary.rule">
 	        <field name="name">Ketidkhadiran</field>
@@ -71,7 +97,7 @@
 	        <field name="condition_select">none</field>
 			<field name="sequence">101</field>
 	        <field name="amount_select">code</field>
-	        <field name="amount_python_compute">result = -((((contract.wage + contract.jenis_tunjangan.tunj_makan + contract.jenis_tunjangan.tunj_transport)/22)*(worked_days.TK.number_of_days)) + (((contract.jenis_tunjangan.tunj_makan + contract.jenis_tunjangan.tunj_transport)/22)*payslip.jum_is))</field>
+	        <field name="amount_python_compute">result = (payslip.tk+payslip.izin)*((contract.jenis_tunjangan.tunj_makan + contract.jenis_tunjangan.tunj_transport)/(payslip.jum_harikerja1+payslip.izin))</field>
 	    </record>
 
 	    <record id="hr_payroll_rules_jht" model="hr.salary.rule">
@@ -81,7 +107,7 @@
 	        <field name="condition_select">none</field>
 			<field name="sequence">101</field>
 	        <field name="amount_select">code</field>
-	        <field name="amount_python_compute">result = -(2*contract.wage)/100</field>
+	        <field name="amount_python_compute">result = 0</field>
 	    </record>
 
 	    <record id="hr_payroll_rules_kasbon" model="hr.salary.rule">
@@ -91,18 +117,60 @@
 	        <field name="condition_select">none</field>
 	        <field name="amount_select">code</field>
 			<field name="sequence">103</field>
-	        <field name="amount_python_compute">result = -inputs.KASBON.amount </field>
+	        <field name="amount_python_compute">result = inputs.KASBON.amount </field>
 	    </record>
 
+        <record id="hr_payroll_rules_cicilan" model="hr.salary.rule">
+            <field name="name">Cicilan</field>
+            <field name="code">CICILAN</field>
+            <field name="category_id" ref="hr_payroll.DED"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="sequence">104</field>
+            <field name="amount_python_compute">result = inputs.CICILAN.amount </field>
+        </record>
+
+        <!-- ZAKAT -->
+
+        <record id="hr_payroll_rules_zakat" model="hr.salary.rule">
+            <field name="name">Zakat</field>
+            <field name="code">ZAKAT</field>
+            <field name="category_id" ref="ZAKAT"/>
+            <field name="condition_select">none</field>
+            <field name="amount_select">code</field>
+            <field name="sequence">104</field>
+            <field name="amount_python_compute">result = (categories.BASIC + categories.ALW - categories.DED)*0.025 if contract.zakat == True else 0 </field>
+        </record>
 
 	    <!-- salary rule input -->
 
-	    <record id="hr_payroll_rules_input_kasbon" model="hr.rule.input">
+        <record id="hr_payroll_rules_input_thr" model="hr.rule.input">
+            <field name="name">THR</field>
+            <field name="code">THR</field>
+            <field name="sequence">20</field>   
+            <field name="input_id" ref="hr_payroll_rules_thr"/>          
+        </record>   
+
+        <record id="hr_payroll_rules_input_bonus" model="hr.rule.input">
+            <field name="name">BONUS</field>
+            <field name="code">BONUS</field>
+            <field name="sequence">21</field>   
+            <field name="input_id" ref="hr_payroll_rules_bonus"/>          
+        </record> 
+	    
+        <record id="hr_payroll_rules_input_kasbon" model="hr.rule.input">
 	        <field name="name">KASBON</field>
 	        <field name="code">KASBON</field>
-			<field name="sequence">21</field>	
+			<field name="sequence">22</field>	
 	        <field name="input_id" ref="hr_payroll_rules_kasbon"/>	    	
-		</record>	    
+		</record>	  
+
+        <record id="hr_payroll_rules_input_cicilan" model="hr.rule.input">
+            <field name="name">Cicilan</field>
+            <field name="code">CICILAN</field>
+            <field name="sequence">22</field>   
+            <field name="input_id" ref="hr_payroll_rules_cicilan"/>          
+        </record>
 
 		<!-- Salary Structure -->
 
@@ -118,7 +186,11 @@
             ref('hr_payroll_rules_overtime'), 
             ref('hr_payroll_rules_pot_absen'), 
             ref('hr_payroll_rules_jht'), 
-            ref('hr_payroll_rules_kasbon'), 
+            ref('hr_payroll_rules_kasbon'),
+            ref('hr_payroll_rules_thr'),
+            ref('hr_payroll_rules_bonus'),
+            ref('hr_payroll_rules_cicilan'),
+            ref('hr_payroll_rules_zakat'),
              ])]" name="rule_ids"/>
 	    </record>
 

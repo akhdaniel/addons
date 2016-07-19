@@ -26,12 +26,10 @@ class calendar_meeting(osv.osv):
                 date_mm = datetime.strptime(event.start_datetime,"%Y-%m-%d %H:%M:%S").minute
                 dates =str(date_y) + "-" + str(date_m) + '-' + str(date_d)
                 jam =str(date_h) + ":" + str(date_mm) + ":00"
-                import pdb;
-                pdb.set_trace();
                 if event.location == False :
                     raise osv.except_osv(_('Peringatan!'),_('Lokasi Interview Tidak Boleh Kosong'))
                 if mobile != False:
-                    payload = {'username': 'tig', 'password': 'p4ssw0rd','hp':mobile,'message':'Salam, Kami mengundang Sdr/i '+att.partner_name+' mengikuti Tes tulis u/ posisi '+att.job_id.name+' pada tanggal: '+dates+' Jam '+jam+' tempat : '+event.location+'. Mohon konfirmasi kehadiran dengan menghubungi CP : Ridwan 083822761725. Terimakasih'}
+                    payload = {'username': 'bijb', 'password': 'b1jbBerjaya','hp':mobile,'message':'Salam, Kami mengundang Sdr/i '+att.partner_name+' mengikuti Tes tulis u/ posisi '+att.job_id.name+' pada tanggal: '+dates+' Jam '+jam+' tempat : '+event.location+'. Mohon konfirmasi kehadiran dengan menghubungi CP : Ridwan 083822761725. Terimakasih'}
                     r = requests.get("http://103.16.199.187/masking/send.php", params=payload)
         return
 
