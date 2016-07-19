@@ -19,6 +19,7 @@ class hr_contract(osv.osv):
         "tunj_makan"            : fields.float("Tunjangan Makan"),
         "tunj_transport"        : fields.float("Tunjangan Transport"),
         "tunj_komunikasi"       : fields.float("Tunjangan Komunikasi"),
+        "zakat" : fields.boolean("Zakat Penghasilan")
     }
     
 hr_contract()

@@ -66,11 +66,11 @@
                                 </div>
                                 <field name="tempat_lahir_id" class="oe_inline" nolabel="1"/>
                                 
-                                <div>
+                                <!-- <div>
                                     <field name="bol_type_id" nolabel="1" />
                                     <label for="type_id" class="oe_inline" />
-                                </div>    
-                                <field name="type_id" class="oe_inline" nolabel="1"/>
+                                </div>   
+                                <field name="type_id" class="oe_inline" nolabel="1"/>-->
                             </group>
 
                             <div attrs="{'invisible': [('state', '!=', 'recruit')]}">

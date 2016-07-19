@@ -10,8 +10,8 @@
                 <label for="work_email" class="oe_edit_only" position="replace"/>
                 <field name="work_email" position="replace"/>
                 <field name="work_phone" position="replace"/>
-                <label for="category_ids" class="oe_edit_only" groups="base.group_hr_user" position='replace'/>
-                <field name="category_ids" widget="many2many_tags" placeholder="e.g. Part Time" groups="base.group_hr_user" position='replace'/>
+                <!-- <label for="category_ids" class="oe_edit_only" groups="base.group_hr_user" position='replace'/>
+                <field name="category_ids" widget="many2many_tags" placeholder="e.g. Part Time" groups="base.group_hr_user" position='replace'/> -->
                 <field name='address_home_id' position='replace'/>
                 <page string="Public Information" position="replace"> 
                     <page string="Job &amp; Public Information" groups="base.group_user">				
@@ -136,6 +136,7 @@
                                         <tree editable="bottom">
                                                 <field name="susunan"/>
                                                 <field name="name"/>
+                                                <field name="no_id"/>
                                                 <field name="kelamin"/> 
                                                 <field name="kota_id"/>
                                                 <field name="tgl_lahir"/>
@@ -299,7 +300,10 @@
                             </field>           
                         </page>      -->      
                     </page>
-                   
+                   <field name="active" position="after">
+                        <field name="tgl_resign" attrs="{'invisible':[('active','=',True)]}"/>
+                        <field name="ket_resign" attrs="{'invisible':[('active','=',True)]}"/>
+                    </field>
              </field>                                                   
         </record>
         

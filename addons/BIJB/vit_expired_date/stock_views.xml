@@ -1,0 +1,75 @@
+<openerp>
+	<data>
+
+        <record id="vit_view_production_lot_tree" model="ir.ui.view">
+            <field name="name">stock.production.lot.tree</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+            <field name="arch" type="xml">
+                <tree string="Serial Number" position="replace">
+                	<tree string="Serial Number" colors="green:expired_days &lt;= 365 and expired_days &gt;= 183; orange:expired_days &lt;= 182 and expired_days &gt;= 91;red:expired_days &lt;= 90 and expired_days &gt;= 1;grey:expired_days &lt; 0">
+	                    <field name="name"/>
+	                    <field name="ref"/>
+	                    <field name="product_id"/>
+	                    <field name="create_date"/>
+	                    <field name="alert_date"/>
+	                    <field name="expired_days"/>
+	                    <field name="expired_days_field" invisible="1"/>
+                	</tree>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="vit_search_product_lot_filter">
+            <field name="name">Production Lots Filter</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+            <field name="arch" type="xml">
+                <filter string="Product" position="after">
+                	<group string=" E D ">
+	                	<filter string="Expired" name="expired" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;',0)]" context="{}"/><filter string="Not Expired" name="not_expired" icon="terp-accessories-archiver" domain="[('expired_days_field','&gt;=',0)]" context="{}"/>
+	                	<filter string="3 Months" name="3months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',90),('expired_days_field','&gt;=',1)]" context="{}"/>
+	                	<filter string="6 Months" name="6months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',182),('expired_days_field','&gt;=',91)]" context="{}"/>
+	                	<filter string="12 Months" name="12months" icon="terp-accessories-archiver" domain="[('expired_days_field','&lt;=',365),('expired_days_field','&gt;=',183)]" context="{}"/>
+                	</group>            	                	
+            	</filter>
+            </field>
+        </record>
+
+        <record id="vit_action_production_lot_form" model="ir.actions.act_window">
+            <field name="name">Serial Numbers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.production.lot</field>
+            <field name="view_type">form</field>
+            <field name="view_id" ref="stock.view_production_lot_tree"/>
+            <field name="search_view_id" ref="stock.search_product_lot_filter"/>
+            <field name="inherit_id" ref="stock.action_production_lot_form"/>
+            <field name="context">{'search_default_not_expired': 1}</field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a serial number.
+              </p><p>
+                This is the list of all the production lots you recorded. When
+                you select a lot, you can get the traceability of the products contained in lot.
+              </p>
+            </field>
+        </record>
+
+        <menuitem action="vit_action_production_lot_form" id="stock.menu_action_production_lot_form"
+            parent="stock.menu_traceability" groups="stock.group_production_lot"
+            sequence="1"/>
+
+
+      <!--  <record id="vit_stock_view_production_lot_form" model="ir.ui.view">
+            <field name="name">stock.production.lot</field>
+            <field name="model">stock.production.lot</field>
+            <field name="inherit_id" ref="stock.view_production_lot_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="after">
+                    <button name="cron_expired_product" string="Exec" type="object"/>
+                </field>     
+            </field>
+        </record> -->
+
+	</data>
+</openerp>

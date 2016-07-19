@@ -4,6 +4,17 @@
 
     <!-- ACTION WINDOWS -->
 
+    <record model="ir.actions.act_window" id="employee_non_aktif">
+        <field name="name">Karyawan Tidak Aktif</field>
+        <field name="res_model">hr.employee</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('active','=',False)]</field>
+        <field name="view_id" ref="hr.view_employee_tree"/>
+        <field name="search_view_id" ref="hr.view_employee_filter"/>
+        <field name="view_mode">tree,form</field>
+    </record>
+
     <record model="ir.actions.act_window" id="action_hr_department">
         <field name="name">Master Department</field>
         <field name="res_model">hr.department</field>
@@ -193,6 +204,13 @@
         <field name="view_mode">tree,form</field>
     </record>
 
+    <record model="ir.actions.act_window" id="action_working_schedule">
+        <field name="name">Working Schedule</field>
+        <field name="res_model">resource.calendar</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>   
+
     <menuitem parent="hr.menu_hr_configuration" name="Tools" id="base.menu_tools" sequence="120" />  
     <menuitem action="action_hr_recruit_pend" parent="base.menu_tools" name="Master Pendidikan" id="master_hr_type" sequence="140" />
     <menuitem action="action_hr_recruit_jur" parent="base.menu_tools" name="Master Jurusan" id="master_hr_jurusan" sequence="150" />
@@ -213,5 +231,8 @@
     <menuitem name="Reporting" id="hrd_ppi_main_reporting" parent="hr.menu_hr_root" sequence="30"/>
     <menuitem action="action_hr_department" id="hr_menu_department" parent="base.menu_tools" name="Master Department" sequence="40"/>   
 
+    <menuitem action="employee_non_aktif" id="hr_employee_nonactive" parent="hr.menu_hr_main" name="Karyawan Tidak Aktif" sequence="3" groups="base.group_hr_manager"/>
+
+    <menuitem action="action_working_schedule" name="Working Schedule" id="action_working_schedule_1" parent="base.menu_tools" sequence="40"/>
 </data>
 </openerp>
