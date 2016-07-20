@@ -1,4 +1,5 @@
 from openerp import tools
+from openerp import SUPERUSER_ID
 from openerp.osv import fields,osv
 import openerp.addons.decimal_precision as dp
 import time
@@ -820,7 +821,7 @@ class member(osv.osv):
 
 
         group =  self.pool.get('res.groups')
-        gids =group.search(cr, uid, [('name','in',['Employee','Contact Creation',
+        gids =group.search(cr, SUPERUSER_ID, [('name','in',['Employee','Contact Creation',
             'MLM / Member',
             'Portal'])], context=context)
 
