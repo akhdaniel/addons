@@ -820,7 +820,7 @@ class member(osv.osv):
 
 
         group =  self.pool.get('res.groups')
-        gids =group.search(cr, uid, [('name','in',['Employee','Contact Creation',
+        gids =group.search(cr, uid, [('name','in',['Employee','Employé','Contact Creation',
             'MLM / Member',
             'Portal'])], context=context)
 
