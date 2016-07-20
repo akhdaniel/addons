@@ -821,9 +821,26 @@ class member(osv.osv):
 
 
         group =  self.pool.get('res.groups')
-        gids =group.search(cr, SUPERUSER_ID, [('name','in',['Employee','Contact Creation',
-            'MLM / Member',
-            'Portal'])], context=context)
+
+        #employee
+        grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_user')
+        group_user_id = grp_ref and grp_ref[1] or False,
+
+        #'Contact Creation'
+        grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_partner_manager')
+        group_partner_manager_id = grp_ref and grp_ref[1] or False,
+
+        #'Portal'
+        grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_portal')
+        group_portal_id = grp_ref and grp_ref[1] or False,
+
+        #'MLM / Member'
+        grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_mlm', 'group_mlm_user')
+        group_mlm_user_id = grp_ref and grp_ref[1] or False,
+
+        gids =group.search(cr, SUPERUSER_ID, [('id','in',[group_user_id,group_partner_manager_id,
+            group_portal_id,group_mlm_user_id
+            ])], context=context)
 
         for gid in gids:
             sql = "insert into res_groups_users_rel (uid,gid) values (%d, %d)" % (user_id[0][0], gid)
