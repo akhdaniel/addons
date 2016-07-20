@@ -234,11 +234,13 @@
 					<div class="container">
 					  <div class="row">
 						  <div class="col-md-6">
-							<h1 id="member_list_title">Member List</h1>
+							<h1>Member List</h1>
 						  </div>
 						  <div class="col-md-6">
 							  <span class="pull-right">
-								<h1><a id="mlm_member_add" t-attf-href="/mlm/member/create" class="btn btn-primary" >Create a New Invitation</a></h1>
+								<h1>
+									<a t-attf-href="/mlm/member/create" class="btn btn-primary" id="mlm_member_add">Create a New Invitation</a>
+								</h1>
 							  </span>
 						  </div>
 					  </div>
@@ -937,7 +939,6 @@
 					</t>
 
                     <div class="row">
-
                         <div id="mlm_new_member" class="col-md-4 text-center">
                         	<span class="fa fa-user fa-5x"/>
                             <h4 class="mt16">

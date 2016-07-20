@@ -25,7 +25,6 @@
     # always loaded
     'data': [
         'views/pages.xml',
-
     ],
     'css':['static/src/css/*.css'],
     'js':['static/src/js/*.js'],
