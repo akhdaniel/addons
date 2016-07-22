@@ -1,0 +1,1116 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+#	* vit_mlm
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 8.0-20160628\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-07-16 10:28+0000\n"
+"PO-Revision-Date: 2016-07-16 10:28+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: vit_mlm
+#: field:res.company,ap_coa_id:0
+msgid "AP COA for member bonus"
+msgstr "AP COA for member bonus"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Activate"
+msgstr "Activate"
+
+#. module: vit_mlm
+#: help:mlm.member_bonus,new_member_id:0
+msgid "Activated Member that trigger the bonus"
+msgstr "Activated Member that trigger the bonus"
+
+#. module: vit_mlm
+#: field:mlm.member_bonus,new_member_id:0
+msgid "Activated New Member"
+msgstr "Activated New Member"
+
+#. module: vit_mlm
+#: selection:res.partner,state:0
+msgid "Active"
+msgstr "Active"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_ads
+msgid "Advertising"
+msgstr "Advertising"
+
+#. module: vit_mlm
+#: field:mlm.paket,is_affiliate:0
+msgid "Affiliate Member ?"
+msgstr "Affiliate Member ?"
+
+#. module: vit_mlm
+#: field:res.partner,jumlah_bayar:0
+msgid "Amount Due"
+msgstr "Amount Due"
+
+#. module: vit_mlm
+#: selection:mlm.broadcast,channel:0
+msgid "Android"
+msgstr "Android"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_broadcast_android
+msgid "Android Users"
+msgstr "Android Users"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Are you sure to create Sale Order Upgrade to this member ?"
+msgstr "Are you sure to create Sale Order Upgrade to this member ?"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Are you sure to eliminate this member ?"
+msgstr "Are you sure to eliminate this member ?"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Are you sure to upgrade this member ?"
+msgstr "Are you sure to upgrade this member ?"
+
+#. module: vit_mlm
+#: field:mlm.member_bonus,level:0
+msgid "At Level"
+msgstr "At Level"
+
+#. module: vit_mlm
+#: field:res.partner,bbm:0
+msgid "BBM Pin"
+msgstr "BBM Pin"
+
+#. module: vit_mlm
+#: field:res.partner,bank_account_name:0
+msgid "Bank Account Name"
+msgstr "Bank Account Name"
+
+#. module: vit_mlm
+#: field:res.partner,bank_no:0
+msgid "Bank Account Number"
+msgstr "Bank Account Number"
+
+#. module: vit_mlm
+#: field:res.partner,bank_branch:0
+msgid "Bank Branch"
+msgstr "Bank Branch"
+
+#. module: vit_mlm
+#: field:res.partner,bank_name:0
+msgid "Bank Name"
+msgstr "Bank Name"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Belong to Member"
+msgstr "Belong to Member"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_bonus
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Bonus"
+msgstr "Bonus"
+
+#. module: vit_mlm
+#: field:mlm.member_bonus,amount:0
+msgid "Bonus Amount"
+msgstr "Bonus Amount"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_bonus_development
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Bonus Development"
+msgstr "Bonus Development"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_bonus_leadership
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Bonus Leadership"
+msgstr "Bonus Leadership"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_bonus_level
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+#: view:mlm.mlm_plan:vit_mlm.view_mlm_plan_form
+msgid "Bonus Level"
+msgstr "Bonus Level"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,bonus_level:0
+msgid "Bonus Level Amount"
+msgstr "Bonus Level Amount"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,bonus_level_percent_decrease:0
+msgid "Bonus Level Percent Decrease"
+msgstr "Bonus Level Percent Decrease"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_bonus_pasangan
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+#: view:mlm.mlm_plan:vit_mlm.view_mlm_plan_form
+msgid "Bonus Pairing"
+msgstr "Bonus Pairing"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,bonus_pasangan:0
+msgid "Bonus Pairing Amount"
+msgstr "Bonus Pairing Amount"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,bonus_pasangan_percent_decrease:0
+msgid "Bonus Pairing Percent Decrease"
+msgstr "Bonus Pairing Percent Decrease"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Bonus Point Belanja"
+msgstr "Bonus Point Belanja"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+#: view:mlm.mlm_plan:vit_mlm.view_mlm_plan_form
+msgid "Bonus Sponsor"
+msgstr "Bonus Sponsor"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,bonus_sponsor:0
+msgid "Bonus Sponsor Amount"
+msgstr "Bonus Sponsor Amount"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,bonus_sponsor_percent_decrease:0
+msgid "Bonus Sponsor Percent Decrease"
+msgstr "Bonus Sponsor Percent Decrease"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_bonus_sponsor_today
+msgid "Bonus Sponsor Today"
+msgstr "Bonus Sponsor Today"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_bonus_type
+#: field:mlm.member_bonus,bonus_id:0
+msgid "Bonus Type"
+msgstr "Bonus Type"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_broadcast
+msgid "Broadcast"
+msgstr "Broadcast"
+
+#. module: vit_mlm
+#: field:mlm.paket,hak_usaha:0
+msgid "Business Package"
+msgstr "Business Package"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Cancel"
+msgstr "Cancel"
+
+#. module: vit_mlm
+#: field:mlm.paket,cashback:0
+msgid "Cashback"
+msgstr "Cashback"
+
+#. module: vit_mlm
+#: field:res.partner,paket_cashback:0
+msgid "Cashback Join"
+msgstr "Cashback Join"
+
+#. module: vit_mlm
+#: field:mlm.broadcast,channel:0
+msgid "Channel"
+msgstr "Channel"
+
+#. module: vit_mlm
+#: field:mlm.ads,partner_id:0
+msgid "Client"
+msgstr "Client"
+
+#. module: vit_mlm
+#: field:mlm.bonus,code:0
+#: field:mlm.mlm_plan,code:0
+#: field:mlm.paket,code:0
+msgid "Code"
+msgstr "Code"
+
+#. module: vit_mlm
+#: model:ir.model,name:vit_mlm.model_res_company
+msgid "Companies"
+msgstr "Sociétés"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_mlm_master
+msgid "Configuration"
+msgstr "Configuration"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Confirm"
+msgstr "Confirm"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Confirms to see member's tree"
+msgstr "Confirms to see member's tree"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_res_partner_filter_mahasiswa
+msgid "Country"
+msgstr "Pays"
+
+#. module: vit_mlm
+#: field:mlm.ads,user_id:0
+msgid "Created By"
+msgstr "Created By"
+
+#. module: vit_mlm
+#: field:mlm.ads,create_uid:0
+#: field:mlm.bonus,create_uid:0
+#: field:mlm.broadcast,create_uid:0
+#: field:mlm.history.join,create_uid:0
+#: field:mlm.member_bonus,create_uid:0
+#: field:mlm.member_paket_produk,create_uid:0
+#: field:mlm.mlm_plan,create_uid:0
+#: field:mlm.paket,create_uid:0
+#: field:mlm.paket_produk,create_uid:0
+#: field:mlm.paket_produk_detail,create_uid:0
+msgid "Created by"
+msgstr "Created by"
+
+#. module: vit_mlm
+#: field:mlm.ads,create_date:0
+#: field:mlm.bonus,create_date:0
+#: field:mlm.broadcast,create_date:0
+#: field:mlm.history.join,create_date:0
+#: field:mlm.member_bonus,create_date:0
+#: field:mlm.member_paket_produk,create_date:0
+#: field:mlm.mlm_plan,create_date:0
+#: field:mlm.paket,create_date:0
+#: field:mlm.paket_produk,create_date:0
+#: field:mlm.paket_produk_detail,create_date:0
+msgid "Created on"
+msgstr "Created on"
+
+#. module: vit_mlm
+#: field:mlm.history.join,date:0
+msgid "Date"
+msgstr "Date"
+
+#. module: vit_mlm
+#: field:mlm.member_bonus,description:0
+#: field:mlm.paket,description:0
+#: field:mlm.paket_produk,description:0
+msgid "Description"
+msgstr "Description"
+
+#. module: vit_mlm
+#: field:mlm.ads,display_name:0
+#: field:mlm.bonus,display_name:0
+#: field:mlm.broadcast,display_name:0
+#: field:mlm.history.join,display_name:0
+#: field:mlm.member_bonus,display_name:0
+#: field:mlm.member_paket_produk,display_name:0
+#: field:mlm.mlm_plan,display_name:0
+#: field:mlm.paket,display_name:0
+#: field:mlm.paket_produk,display_name:0
+#: field:mlm.paket_produk_detail,display_name:0
+msgid "Display Name"
+msgstr "Display Name"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Downlines"
+msgstr "Downlines"
+
+#. module: vit_mlm
+#: selection:res.partner,state:0
+msgid "Draft"
+msgstr "Draft"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Eliminate"
+msgstr "Eliminate"
+
+#. module: vit_mlm
+#: sql_constraint:res.partner:0
+msgid "Email already exists !"
+msgstr "Email already exists !"
+
+#. module: vit_mlm
+#: field:mlm.ads,date_end:0
+msgid "End Date"
+msgstr "End Date"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,full_level:0
+msgid "Force Full Level?"
+msgstr "Force Full Level?"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Group By..."
+msgstr "Group By..."
+
+#. module: vit_mlm
+#: selection:res.partner,state:0
+msgid "Guest"
+msgstr "Guest"
+
+#. module: vit_mlm
+#: field:mlm.paket,harga:0
+#: field:mlm.paket_produk_detail,harga:0
+msgid "Harga"
+msgstr "Harga"
+
+#. module: vit_mlm
+#: field:res.partner,history_join_ids:0
+msgid "History Join"
+msgstr "History Join"
+
+#. module: vit_mlm
+#: field:mlm.ads,id:0
+#: field:mlm.bonus,id:0
+#: field:mlm.broadcast,id:0
+#: field:mlm.history.join,id:0
+#: field:mlm.member_bonus,id:0
+#: field:mlm.member_paket_produk,id:0
+#: field:mlm.mlm_plan,id:0
+#: field:mlm.paket,id:0
+#: field:mlm.paket_produk,id:0
+#: field:mlm.paket_produk_detail,id:0
+msgid "ID"
+msgstr "ID"
+
+#. module: vit_mlm
+#: field:res.partner,id_number:0
+msgid "ID Card No"
+msgstr "ID Card No"
+
+#. module: vit_mlm
+#: sql_constraint:res.partner:0
+msgid "ID Card already used !"
+msgstr "ID Card already used !"
+
+#. module: vit_mlm
+#: field:mlm.ads,image:0
+msgid "Image"
+msgstr "Image"
+
+#. module: vit_mlm
+#: model:ir.model,name:vit_mlm.model_account_invoice
+msgid "Invoice"
+msgstr "Facture"
+
+#. module: vit_mlm
+#: field:res.partner,invoice_join_paid:0
+msgid "Invoice Join Paid"
+msgstr "Invoice Join Paid"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+#: field:mlm.member_bonus,is_transfered:0
+msgid "Is Transfered"
+msgstr "Is Transfered"
+
+#. module: vit_mlm
+#: help:res.partner,sale_order_exists:0
+msgid "Is the Partner has Sales Order?"
+msgstr "Is the Partner has Sales Order?"
+
+#. module: vit_mlm
+#: help:mlm.paket,is_upgradable:0
+msgid "Is upgradeable, for example from 1 to 3 business packages"
+msgstr "Is upgradeable, for example from 1 to 3 business packages"
+
+#. module: vit_mlm
+#: field:res.partner,paket_id:0
+msgid "Join Package"
+msgstr "Join Package"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_paket
+msgid "Joining Package"
+msgstr "Joining Package"
+
+#. module: vit_mlm
+#: field:mlm.ads,__last_update:0
+#: field:mlm.bonus,__last_update:0
+#: field:mlm.broadcast,__last_update:0
+#: field:mlm.history.join,__last_update:0
+#: field:mlm.member_bonus,__last_update:0
+#: field:mlm.member_paket_produk,__last_update:0
+#: field:mlm.mlm_plan,__last_update:0
+#: field:mlm.paket,__last_update:0
+#: field:mlm.paket_produk,__last_update:0
+#: field:mlm.paket_produk_detail,__last_update:0
+msgid "Last Modified on"
+msgstr "Last Modified on"
+
+#. module: vit_mlm
+#: field:mlm.ads,write_uid:0
+#: field:mlm.bonus,write_uid:0
+#: field:mlm.broadcast,write_uid:0
+#: field:mlm.history.join,write_uid:0
+#: field:mlm.member_bonus,write_uid:0
+#: field:mlm.member_paket_produk,write_uid:0
+#: field:mlm.mlm_plan,write_uid:0
+#: field:mlm.paket,write_uid:0
+#: field:mlm.paket_produk,write_uid:0
+#: field:mlm.paket_produk_detail,write_uid:0
+msgid "Last Updated by"
+msgstr "Last Updated by"
+
+#. module: vit_mlm
+#: field:mlm.ads,write_date:0
+#: field:mlm.bonus,write_date:0
+#: field:mlm.broadcast,write_date:0
+#: field:mlm.history.join,write_date:0
+#: field:mlm.member_bonus,write_date:0
+#: field:mlm.member_paket_produk,write_date:0
+#: field:mlm.mlm_plan,write_date:0
+#: field:mlm.paket,write_date:0
+#: field:mlm.paket_produk,write_date:0
+#: field:mlm.paket_produk_detail,write_date:0
+msgid "Last Updated on"
+msgstr "Last Updated on"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,bonus_level:0
+msgid "Level bonus amount, fill with 0 for no level bonus"
+msgstr "Level bonus amount, fill with 0 for no level bonus"
+
+#. module: vit_mlm
+#: view:mlm.paket_produk:vit_mlm.view_paket_produk_form
+msgid "Lines"
+msgstr "Lines"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_ads_android
+msgid "List Advertising"
+msgstr "List Advertising"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_broadcast_android
+msgid "List Android Broadcast"
+msgstr "List Android Broadcast"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_bonus_development
+msgid "List Bonus Development"
+msgstr "List Bonus Development"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_bonus_leadership
+msgid "List Bonus Leadership"
+msgstr "List Bonus Leadership"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_bonus_level
+msgid "List Bonus Level"
+msgstr "List Bonus Level"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_bonus_pasangan
+msgid "List Bonus Pairing"
+msgstr "List Bonus Pairing"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_bonus_sponsor_today
+msgid "List Bonus Sponsor Today"
+msgstr "List Bonus Sponsor Today"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_bonus_type_list
+msgid "List Bonus Type"
+msgstr "List Bonus Type"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_ads
+msgid "List Iklan"
+msgstr "List Iklan"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_paket_type_list
+msgid "List Joining Package"
+msgstr "List Joining Package"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_mlm_plan_list
+msgid "List MLM Plan"
+msgstr "List MLM Plan"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_member_list_today
+msgid "List Member Today"
+msgstr "List Member Today"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_paket_produk_list
+msgid "List Product Package"
+msgstr "List Product Package"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_broadcast_sms
+msgid "List SMS Broadcast"
+msgstr "List SMS Broadcast"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_mlm_top
+#: view:res.company:vit_mlm.view_company_form_with_pad
+msgid "MLM"
+msgstr "MLM"
+
+#. module: vit_mlm
+#: model:res.groups,name:vit_mlm.group_mlm_manager
+msgid "MLM / Back Office"
+msgstr "MLM / Back Office"
+
+#. module: vit_mlm
+#: model:res.groups,name:vit_mlm.group_mlm_user
+msgid "MLM / Member"
+msgstr "MLM / Member"
+
+#. module: vit_mlm
+#: model:res.groups,name:vit_mlm.group_mlm_stockist
+msgid "MLM / Stockist"
+msgstr "MLM / Stockist"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_mlm_plan
+#: field:res.company,mlm_plan_id:0
+msgid "MLM Plan"
+msgstr "MLM Plan"
+
+#. module: vit_mlm
+#: view:mlm.mlm_plan:vit_mlm.view_mlm_plan_form
+msgid "MLM Plan Name"
+msgstr "MLM Plan Name"
+
+#. module: vit_mlm
+#: model:ir.actions.server,name:vit_mlm.action_make_invoice
+msgid "Make Invoice"
+msgstr "Make Invoice"
+
+#. module: vit_mlm
+#: field:mlm.member_bonus,match_member_id:0
+msgid "Matched Member"
+msgstr "Matched Member"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,max_bonus_level_level:0
+msgid "Max Bonus Level Depth"
+msgstr "Max Bonus Level Depth"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,max_bonus_pasangan_level:0
+msgid "Max Bonus Pairing Depth"
+msgstr "Max Bonus Pairing Depth"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,max_bonus_sponsor_level:0
+msgid "Max Bonus Sponsor Depth (Up)"
+msgstr "Max Bonus Sponsor Depth (Up)"
+
+#. module: vit_mlm
+#: field:mlm.mlm_plan,max_downline:0
+msgid "Max Downline"
+msgstr "Max Downline"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+#: field:mlm.member_bonus,member_id:0
+#: field:mlm.member_paket_produk,member_id:0
+msgid "Member"
+msgstr "Member"
+
+#. module: vit_mlm
+#: field:res.partner,member_bonus_ids:0
+msgid "Member Bonuses"
+msgstr "Member Bonuses"
+
+#. module: vit_mlm
+#: field:res.partner,code:0
+msgid "Member ID"
+msgstr "Member ID"
+
+#. module: vit_mlm
+#: model:ir.actions.act_window,name:vit_mlm.action_member_tree
+#: model:ir.ui.menu,name:vit_mlm.menu_member_tree
+msgid "Member Tree"
+msgstr "Member Tree"
+
+#. module: vit_mlm
+#: field:mlm.history.join,member_id:0
+msgid "Member_id"
+msgstr "Member_id"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_today
+#: view:res.partner:vit_mlm.view_member_tree
+#: model:res.partner.category,name:vit_mlm.member_categ
+msgid "Members"
+msgstr "Members"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_membership
+msgid "Membership"
+msgstr "Membership"
+
+#. module: vit_mlm
+#: field:mlm.ads,message:0
+#: field:mlm.broadcast,message:0
+msgid "Message"
+msgstr "Message"
+
+#. module: vit_mlm
+#: field:mlm.bonus,name:0
+#: field:mlm.mlm_plan,name:0
+#: field:mlm.paket,name:0
+#: field:mlm.paket_produk,name:0
+msgid "Name"
+msgstr "Name"
+
+#. module: vit_mlm
+#: selection:res.partner,state:0
+msgid "Non Active"
+msgstr "Non Active"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Not Transfered"
+msgstr "Not Transfered"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,max_bonus_sponsor_level:0
+msgid "Number of level (up) where the Upline still get the Sponsor Bonus , fill with 0 for unlimited"
+msgstr "Number of level (up) where the Upline still get the Sponsor Bonus , fill with 0 for unlimited"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,max_bonus_level_level:0
+msgid "Number of level depth where the bonus level is triggered, fill with for unlimited"
+msgstr "Number of level depth where the bonus level is triggered, fill with for unlimited"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,max_bonus_pasangan_level:0
+msgid "Number of level depth where the pairing bonus is triggered, fill with for unlimited"
+msgstr "Number of level depth where the pairing bonus is triggered, fill with for unlimited"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,max_downline:0
+msgid "Number of maximum downlines per node, fill with 0 for unlimited"
+msgstr "Number of maximum downlines per node, fill with 0 for unlimited"
+
+#. module: vit_mlm
+#: help:mlm.paket,is_affiliate:0
+msgid "Only get the sponsor bonus"
+msgstr "Only get the sponsor bonus"
+
+#. module: vit_mlm
+#: field:mlm.history.join,paket_id:0
+msgid "Package"
+msgstr "Package"
+
+#. module: vit_mlm
+#: field:res.partner,paket_harga:0
+msgid "Package Price"
+msgstr "Package Price"
+
+#. module: vit_mlm
+#: field:mlm.paket,paket_product_id:0
+msgid "Package Product Ref"
+msgstr "Package Product Ref"
+
+#. module: vit_mlm
+#: help:mlm.member_bonus,match_member_id:0
+msgid "Paired Member"
+msgstr "Paired Member"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,bonus_pasangan:0
+msgid "Pairing bonus amount, fill with 0 for no pairing bonus"
+msgstr "Pairing bonus amount, fill with 0 for no pairing bonus"
+
+#. module: vit_mlm
+#: field:account.invoice,paket_id:0
+#: view:mlm.paket:vit_mlm.view_paket_form
+#: view:res.partner:vit_mlm.view_res_partner_filter_mahasiswa
+#: field:sale.order,paket_id:0
+msgid "Paket"
+msgstr "Paket"
+
+#. module: vit_mlm
+#: view:mlm.paket:vit_mlm.view_paket_form
+msgid "Paket Ref"
+msgstr "Paket Ref"
+
+#. module: vit_mlm
+#: model:ir.model,name:vit_mlm.model_res_partner
+msgid "Partner"
+msgstr "Partenaire"
+
+#. module: vit_mlm
+#: field:res.partner,path:0
+msgid "Path"
+msgstr "Path"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,bonus_level_percent_decrease:0
+msgid "Percent decrease of the Level Bonus for each up level. Fill with 0.0-1.0. Value of 1.0 means no decrease"
+msgstr "Percent decrease of the Level Bonus for each up level. Fill with 0.0-1.0. Value of 1.0 means no decrease"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,bonus_pasangan_percent_decrease:0
+msgid "Percent decrease of the Pairing Bonus for each up level. Fill with 0.0-1.0. Value of 1.0 means no decrease"
+msgstr "Percent decrease of the Pairing Bonus for each up level. Fill with 0.0-1.0. Value of 1.0 means no decrease"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,bonus_sponsor_percent_decrease:0
+msgid "Percent decrease of the Sponsor Bonus for each up level. Fill with 0.0-1.0. Value of 1.0 means no decrease"
+msgstr "Percent decrease of the Sponsor Bonus for each up level. Fill with 0.0-1.0. Value of 1.0 means no decrease"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_member_list
+msgid "Pre-Registration All"
+msgstr "Pre-Registration All"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_member_list_today
+msgid "Pre-Registration Today"
+msgstr "Pre-Registration Today"
+
+#. module: vit_mlm
+#: selection:res.partner,state:0
+msgid "Pre-registration"
+msgstr "Pre-registration"
+
+#. module: vit_mlm
+#: field:mlm.paket_produk_detail,product_id:0
+msgid "Product"
+msgstr "Product"
+
+#. module: vit_mlm
+#: field:mlm.member_paket_produk,paket_produk_id:0
+#: field:mlm.paket_produk,paket_produk_detail_ids:0
+msgid "Product Detail"
+msgstr "Product Detail"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_paket_produk
+#: view:res.partner:vit_mlm.view_member_form
+#: field:res.partner,paket_produk_ids:0
+msgid "Product Package"
+msgstr "Product Package"
+
+#. module: vit_mlm
+#: field:mlm.paket_produk_detail,paket_produk_id:0
+msgid "Product Package ID"
+msgstr "Product Package ID"
+
+#. module: vit_mlm
+#: view:mlm.paket_produk:vit_mlm.view_paket_produk_form
+msgid "Product Package Name"
+msgstr "Product Package Name"
+
+#. module: vit_mlm
+#: view:mlm.member_paket_produk:vit_mlm.view_member_paket_produk_tree
+msgid "Product Package Pendaftaran"
+msgstr "Product Package Pendaftaran"
+
+#. module: vit_mlm
+#: field:mlm.member_paket_produk,qty:0
+#: field:mlm.paket_produk_detail,qty:0
+msgid "Qty"
+msgstr "Qty"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Reject"
+msgstr "Reject"
+
+#. module: vit_mlm
+#: selection:res.partner,state:0
+msgid "Rejected"
+msgstr "Rejected"
+
+#. module: vit_mlm
+#: field:mlm.bonus,coa_id:0
+msgid "Related COA"
+msgstr "Related COA"
+
+#. module: vit_mlm
+#: help:mlm.bonus,coa_id:0
+msgid "Related invoicing COA/ AP to members"
+msgstr "Related invoicing COA/ AP to members"
+
+#. module: vit_mlm
+#: selection:mlm.broadcast,channel:0
+msgid "SMS"
+msgstr "SMS"
+
+#. module: vit_mlm
+#: model:ir.ui.menu,name:vit_mlm.menu_broadcast_sms
+msgid "SMS Users"
+msgstr "SMS Users"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Sale Order Joining Package"
+msgstr "Sale Order Joining Package"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Sale Order Upgrade"
+msgstr "Sale Order Upgrade"
+
+#. module: vit_mlm
+#: model:ir.model,name:vit_mlm.model_sale_order
+msgid "Sales Order"
+msgstr "Bon de vente"
+
+#. module: vit_mlm
+#: field:res.partner,sale_order_exists:0
+msgid "Sales Order Ada"
+msgstr "Sales Order Ada"
+
+#. module: vit_mlm
+#: field:mlm.broadcast,scheduled_date:0
+msgid "Scheduled Date"
+msgstr "Scheduled Date"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Search Bonus"
+msgstr "Search Bonus"
+
+#. module: vit_mlm
+#: view:mlm.paket:vit_mlm.view_paket_form
+msgid "Settings"
+msgstr "Settings"
+
+#. module: vit_mlm
+#: field:res.partner,cek_state:0
+msgid "Show/hide buttons"
+msgstr "Show/hide buttons"
+
+#. module: vit_mlm
+#: help:res.partner,cek_state:0
+msgid "Show/hide buttons."
+msgstr "Show/hide buttons."
+
+#. module: vit_mlm
+#: field:res.partner,signature:0
+msgid "Signature"
+msgstr "Signature"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_res_partner_filter_mahasiswa
+msgid "Sponsor"
+msgstr "Sponsor"
+
+#. module: vit_mlm
+#: field:res.partner,sponsor_id:0
+msgid "Sponsor ID"
+msgstr "Sponsor ID"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,bonus_sponsor:0
+msgid "Sponsor bonus amount, fill with 0 for no sponsor bonus"
+msgstr "Sponsor bonus amount, fill with 0 for no sponsor bonus"
+
+#. module: vit_mlm
+#: field:mlm.ads,date_start:0
+msgid "Start Date"
+msgstr "Start Date"
+
+#. module: vit_mlm
+#: field:res.partner,start_join:0
+msgid "Start Join"
+msgstr "Start Join"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_res_partner_filter_mahasiswa
+msgid "State"
+msgstr "Statut"
+
+#. module: vit_mlm
+#: field:res.partner,state:0
+msgid "Status"
+msgstr "Status"
+
+#. module: vit_mlm
+#: field:mlm.paket,is_submember:0
+msgid "Sub-member ?"
+msgstr "Sub-member ?"
+
+#. module: vit_mlm
+#: help:mlm.mlm_plan,full_level:0
+msgid "The Level Bonus is triggered when the level number of nodes is Full or minimal 1 at left and right side"
+msgstr "The Level Bonus is triggered when the level number of nodes is Full or minimal 1 at left and right side"
+
+#. module: vit_mlm
+#: field:res.partner,total_bonus:0
+#: field:res.partner,total_bonus_transfered:0
+msgid "Total Bonus"
+msgstr "Total Bonus"
+
+#. module: vit_mlm
+#: field:res.partner,total_bonus_level:0
+#: field:res.partner,total_bonus_level_transfered:0
+msgid "Total Bonus Level"
+msgstr "Total Bonus Level"
+
+#. module: vit_mlm
+#: field:res.partner,total_bonus_belanja:0
+#: field:res.partner,total_bonus_belanja_transfered:0
+msgid "Total Bonus Order"
+msgstr "Total Bonus Order"
+
+#. module: vit_mlm
+#: field:res.partner,total_bonus_pasangan:0
+#: field:res.partner,total_bonus_pasangan_transfered:0
+msgid "Total Bonus Pairing"
+msgstr "Total Bonus Pairing"
+
+#. module: vit_mlm
+#: field:res.partner,total_bonus_sponsor:0
+#: field:res.partner,total_bonus_sponsor_transfered:0
+msgid "Total Bonus Sponsor"
+msgstr "Total Bonus Sponsor"
+
+#. module: vit_mlm
+#: field:mlm.paket,price:0
+#: field:mlm.paket_produk,harga:0
+msgid "Total Price"
+msgstr "Total Price"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+msgid "Trans. Date"
+msgstr "Trans. Date"
+
+#. module: vit_mlm
+#: field:mlm.member_bonus,trans_date:0
+msgid "Transaction Date"
+msgstr "Transaction Date"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_filter
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Transfered"
+msgstr "Transfered"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Tree"
+msgstr "Tree"
+
+#. module: vit_mlm
+#: field:res.partner,tree_url:0
+msgid "Tree URL"
+msgstr "Tree URL"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "True"
+msgstr "True"
+
+#. module: vit_mlm
+#: field:mlm.ads,url:0
+msgid "URL"
+msgstr "URL"
+
+#. module: vit_mlm
+#: field:mlm.paket_produk_detail,uom_id:0
+msgid "Unit of Measure"
+msgstr "Unit of Measure"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Untransfered"
+msgstr "Untransfered"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_member_form
+msgid "Upgrade"
+msgstr "Upgrade"
+
+#. module: vit_mlm
+#: field:mlm.paket,is_upgradable:0
+msgid "Upgrade-able ?"
+msgstr "Upgrade-able ?"
+
+#. module: vit_mlm
+#: selection:res.partner,state:0
+msgid "Verification"
+msgstr "Verification"
+
+#. module: vit_mlm
+#: help:mlm.paket,is_submember:0
+msgid "When upgraded, this status is used at the new member from the upgrade process"
+msgstr "When upgraded, this status is used at the new member from the upgrade process"
+
+#. module: vit_mlm
+#: view:res.partner:vit_mlm.view_partner_tree_mlm
+msgid "blue:state=='draft'; grey:state=='nonaktif'"
+msgstr "blue:state=='draft'; grey:state=='nonaktif'"
+
+#. module: vit_mlm
+#: view:mlm.ads:vit_mlm.view_ads_tree
+msgid "list ads"
+msgstr "list ads"
+
+#. module: vit_mlm
+#: view:mlm.broadcast:vit_mlm.view_broadcast_tree
+msgid "list broadcast"
+msgstr "list broadcast"
+
+#. module: vit_mlm
+#: view:mlm.member_bonus:vit_mlm.view_member_bonus_tree
+msgid "list member_bonus"
+msgstr "list member_bonus"
+
+#. module: vit_mlm
+#: view:mlm.mlm_plan:vit_mlm.view_mlm_plan_tree
+msgid "list mlm_plan"
+msgstr "list mlm_plan"
+
+#. module: vit_mlm
+#: view:mlm.paket:vit_mlm.view_paket_tree
+msgid "list paket"
+msgstr "list paket"
+
+#. module: vit_mlm
+#: view:mlm.paket_produk:vit_mlm.view_paket_produk_tree
+msgid "list paket_produk"
+msgstr "list paket_produk"
+
+#. module: vit_mlm
+#: view:mlm.mlm_plan:vit_mlm.view_mlm_plan_form
+msgid "mlm_plan form"
+msgstr "mlm_plan form"
+
+#. module: vit_mlm
+#: view:mlm.paket_produk:vit_mlm.view_paket_produk_form
+msgid "paket produk form"
+msgstr "paket produk form"
+
+#. module: vit_mlm
+#: view:mlm.member_paket_produk:vit_mlm.view_member_paket_produk_form
+msgid "paket produk pendaftaran form"
+msgstr "paket produk pendaftaran form"
+
