@@ -16,6 +16,7 @@
                     <button name="action_preaktif" type="object"
                         class="oe_highlight"
                         states="pre"
+                        groups="base.group_erp_manager"
                         string="Activate"/>
                 </button>
 

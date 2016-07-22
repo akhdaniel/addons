@@ -61,10 +61,11 @@
                             states="open"
                             string="Reject"/>
 
-                        <button name="action_aktif" type="object" 
-                            class="oe_highlight"
-                            string="Activate"
-                            attrs="{'invisible': ['|',('invoice_join_paid', '!=', True),('cek_state', '!=', '2baktif')]}" />
+                        <!--<button name="action_aktif" type="object"-->
+                            <!--class="oe_highlight"-->
+                            <!--string="Activate"-->
+                                <!--groups="base.group_erp_manager"-->
+                             <!--attrs="{'invisible': ['|',('invoice_join_paid', '!=', True),('cek_state', '!=', '2baktif')]}" />-->
                         
                         <button string="Sale Order Joining Package" type="object" 
                              name="action_create_sale_order"
