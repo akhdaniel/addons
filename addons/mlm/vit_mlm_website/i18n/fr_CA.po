@@ -89,9 +89,9 @@ msgstr "Membre associé indépendant."
 #. module: website
 #: view:website:website.member_list
 msgid "Member List"
-msgstr "Membre List"
+msgstr "Liste des membres"
 
 #. module: website
 #: view:website:website.member_list
 msgid "Create a New Invitation"
-msgstr "Create a New Invitation"
+msgstr "Créer une invitation"
