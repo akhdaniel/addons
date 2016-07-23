@@ -20,7 +20,7 @@ class Member(http.Controller):
 	@http.route('/mlm/member/tree/',  auth='public', website=True)
 	def tree(self, **kw):
 		Members = http.request.env['res.partner']
-		return http.request.render('website.tree', {
+		return http.request.render('vit_mlm_website.tree', {
 			'members': Members.search([('parent_id','=',False),('path','<>',False)])
 		})
 
@@ -31,7 +31,7 @@ class Member(http.Controller):
 		my_member_ids = self._cari_users_members(request.cr, request.uid, request.uid, request.context)
 		my_members = Partners.search([('id','in',my_member_ids)])
 		member_count_by_status = self._cari_member_count_by_status(request.cr, request.uid, my_members, request.context)
-		return http.request.render('website.member_list', {
+		return http.request.render('vit_mlm_website.member_list', {
 			'members': my_members,
 			'member_count_by_status': member_count_by_status,
 			'lang':lang,
@@ -46,7 +46,7 @@ class Member(http.Controller):
 		# Country = http.request.env['res.country']
 		# Products  = http.request.env['mlm.paket_produk']
 		langs = http.request.env['res.lang'].search_read([('code','=',member.lang)])
-		return http.request.render('website.member_view', {
+		return http.request.render('vit_mlm_website.member_view', {
 			'member': member,
 			'products': member.paket_produk_ids,
 			'member_lang': langs[0]['name']
@@ -66,7 +66,7 @@ class Member(http.Controller):
 	def stockist(self, **kw):
 		Members = http.request.env['res.partner']
 		members = Members.search([('is_stockist','=',True)])
-		return http.request.render('website.member_list', {
+		return http.request.render('vit_mlm_website.member_list', {
 			'members': members
 		})
 
@@ -111,7 +111,7 @@ class Member(http.Controller):
 			'languages': languages,
 
 		})
-		return http.request.render('website.member_create', values)
+		return http.request.render('vit_mlm_website.member_create', values)
 
 	def create_partner(self, request, values, kwargs):
 		""" Allow to be overrided """
@@ -119,7 +119,7 @@ class Member(http.Controller):
 		return request.registry['res.partner'].browse(request.cr, SUPERUSER_ID, pid, request.context )
 
 	def add_partner_response(self, values, kwargs):
-		return request.website.render(kwargs.get("view_callback", "website.add_member_thanks"), values)
+		return request.website.render(kwargs.get("view_callback", "vit_mlm_website.add_member_thanks"), values)
 
 	@http.route('/mlm/member/add',  auth='user', method=['POST'], website=True)
 	def add_member(self, **kwargs):
@@ -157,7 +157,7 @@ class Member(http.Controller):
 
 		if error:
 			values = dict(values, error=error, kwargs=kwargs.items())
-			return request.website.render(kwargs.get("view_from", "website.member_create"), values)
+			return request.website.render(kwargs.get("view_from", "vit_mlm_website.member_create"), values)
 
 		if post_description:
 			values['description'] += dict_to_str(_("Custom Fields: "), post_description)
@@ -191,7 +191,7 @@ class Member(http.Controller):
 		langs = http.request.env['res.lang'].search([])
 		languages = [(language.code, language.name) for language in langs]
 
-		return http.request.render('website.member_edit', {
+		return http.request.render('vit_mlm_website.member_edit', {
 			'member': member,
 			'default_parent': member.parent_id,
 			'members': Member.search([]),
@@ -220,13 +220,13 @@ class Member(http.Controller):
 		Partner_ids = Partner.search(cr, uid, domain, context=context)
 		Partners = Partner.browse(cr, uid, Partner_ids, context=context)
 
-		return http.request.render('website.member_list', {
+		return http.request.render('vit_mlm_website.member_list', {
 			'members': Partners,
 		})
 
 	@http.route('/mlm/member/tree/<model("res.partner"):member>',  auth='user', website=True)
 	def tree(self,member):
-		return http.request.render('website.d3_member_tree', {
+		return http.request.render('vit_mlm_website.d3_member_tree', {
 			'member': member,
 		})
 
