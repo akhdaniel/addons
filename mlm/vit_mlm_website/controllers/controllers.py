@@ -28,9 +28,12 @@ class Member(http.Controller):
 	def list(self, **kw):
 		lang = request.context['lang']
 		Partners = http.request.env['res.partner']
-		Mymembers = self._cari_users_members(request.cr, request.uid, request.uid, request.context)
+		my_member_ids = self._cari_users_members(request.cr, request.uid, request.uid, request.context)
+		my_members = Partners.search([('id','in',my_member_ids)])
+		member_count_by_status = self._cari_member_count_by_status(request.cr, request.uid, my_members, request.context)
 		return http.request.render('website.member_list', {
-			'members': Partners.search([('id','in',Mymembers)]),
+			'members': my_members,
+			'member_count_by_status': member_count_by_status,
 			'lang':lang,
 
 		}) 
@@ -264,3 +267,9 @@ class Member(http.Controller):
 		else:
 			return "true"
 
+
+	def _cari_member_count_by_status(self, cr, uid, my_members, context=None):
+		res = {'draft':0, 'aktif':0, 'open':0, 'invited':0, 'pre':0, }
+		for member in my_members:
+			res[member.state] +=1
+		return res
