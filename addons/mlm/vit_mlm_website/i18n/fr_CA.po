@@ -189,12 +189,12 @@ msgstr "Is Transferd"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Language"
-msgstr "Language"
+msgstr "Langue"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Language..."
-msgstr "Language..."
+msgstr "Langue..."
 
 #. module: vit_mlm_website
 #: model:website.menu,name:vit_mlm_website.mlm_menu
@@ -344,12 +344,12 @@ msgstr "Sponsor..."
 #: view:website:vit_mlm_website.member_form
 #: view:website:vit_mlm_website.member_list
 msgid "State"
-msgstr "État"
+msgstr "Province/État"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State..."
-msgstr "Status..."
+msgstr "Province/État..."
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
@@ -369,7 +369,7 @@ msgstr "Rue"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Street 2"
-msgstr "Rue 2"
+msgstr "Rue (Suite)"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.add_member_thanks
@@ -394,7 +394,7 @@ msgstr "Invité par"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Upline ID"
-msgstr "Invité par ID"
+msgstr "Invité par"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
@@ -404,4 +404,4 @@ msgstr "Invité par..."
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "ZIP"
-msgstr "ZIP"
+msgstr "Code postal"
