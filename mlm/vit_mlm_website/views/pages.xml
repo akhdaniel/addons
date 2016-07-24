@@ -20,7 +20,7 @@
 				 "parent":"<t t-esc="child.name" />",
 				 "type":"<t t-esc="stroke"/>",
 				 "children":[
-					<t t-call="website.member_children">
+					<t t-call="vit_mlm_website.member_children">
 						<t t-set="member" t-value="child2"/>
 					</t>	
 	    			]
@@ -45,7 +45,7 @@
 				"parent":"null",
 				"type":"<t t-esc="stroke"/>",
 				"children":[
-					<t t-call="website.member_children">
+					<t t-call="vit_mlm_website.member_children">
 						<t t-set="member" t-value="member"/>
 					</t>			
 				]
@@ -247,9 +247,9 @@
                         <div class="row">
                              <div class="col-md-12">
                                  <h3><span>Draft:</span> <b><span t-esc="member_count_by_status['draft']" /></b>,
-                                      <span>Active:</span> <b><span t-esc="member_count_by_status['aktif']" /></b>,
                                       <span>Invited:</span> <b><span t-esc="member_count_by_status['invited']" /></b>,
-                                      <span>Pre-Registered:</span> <b><span t-esc="member_count_by_status['pre']" /></b>
+                                      <span>Pre-Registered:</span> <b><span t-esc="member_count_by_status['pre']" /></b>,
+                                      <span>Active:</span> <b><span t-esc="member_count_by_status['aktif']" /></b>
                                  </h3>
                           </div>
                         </div>
@@ -314,7 +314,7 @@
 					</div>
 				</div>
 
-				<t t-call="website.datatable" />
+				<t t-call="vit_mlm_website.datatable" />
 			</section>
 		</div>
         <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
@@ -515,7 +515,8 @@
 	<div t-attf-class="form-group required" id="form_group_email">
 		<label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
 		<div class="col-md-7 col-sm-8">
-			<input type="email" class="form-control" name="email" id="email" required="required"
+			<input type="email" class="form-control"
+                   name="email" id="email" required="required"
 				 t-attf-readonly="#{True if readonly==1 else False}"
 				 t-attf-value="#{member and member.email or ''}"/>
 		</div>
@@ -680,7 +681,7 @@
 					<h2 t-esc="member.state"/>
 
 					<div class="form-horizontal mt32">
-						<t t-call="website.member_form">
+						<t t-call="vit_mlm_website.member_form">
 							<t t-set="readonly" t-value="1"/>
 							<t t-set="member" t-value="member"/>
 							<t t-set="parent" t-value="member.parent_id"/>
@@ -725,7 +726,7 @@
 							</div>
 
 							<div role="tabpanel" class="tab-pane" id="tree">
-								<t t-call="website.member_tree">
+								<t t-call="vit_mlm_website.member_tree">
 									<t t-set="member" t-value="member"/>
 								</t>
 							</div>
@@ -770,25 +771,26 @@
 <template id="validation" name="Validation Script" >
     <script src="/web/static/lib/jquery/jquery.js"/>
     <script src="/vit_mlm_website/static/src/js/validator/jquery.validate.min.js" type="text/javascript"></script>
+    <script t-attf-src="/vit_mlm_website/static/src/js/validator/localization/messages_#{lang}.min.js"
+            type="text/javascript"></script>
 
     <script type="text/javascript">
         $('#member_form2').validate({
-          rules: {
-            email: {
-              required: true,
-              email: true,
-              remote: {
-                    url: "/mlm/member/check_email",
-					type: "POST",
-					data: {
-					  partner_id: function() {
-						return $("#partner_id").val();
-					  }
-					},
-				}
-            }
-          },
-			messages:{email:'This email address (and this person therefore) is already registered. [en] <br/>Cette adresse courriel (et cette personne par conséquent) est déjà enregistré. [fr]'},
+            rules: {
+                email: {
+                    required: true,
+                    email: true,
+                    remote: {
+                        url: "/mlm/member/check_email",
+                        type: "POST",
+                        data: {
+                          partner_id: function() {
+                            return $("#partner_id").val();
+                          }
+                        },
+                    }
+                }
+            },
         });
     </script>
 </template>
@@ -807,7 +809,7 @@
 							  class="form-horizontal mt32"
 							  enctype="multipart/form-data" >
 
-							<t t-call="website.member_form">
+							<t t-call="vit_mlm_website.member_form">
 								<t t-set="readonly" t-value="0"/>
 								<t t-set="member" t-value="member"/>
 								<t t-set="members" t-value="members"/>
@@ -829,7 +831,7 @@
 					</div>
 				</div>
 
-				<t t-call="website.validation" />
+				<t t-call="vit_mlm_website.validation" />
 			</section>
 		</div>
         <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
@@ -851,7 +853,7 @@
 					<form id="member_form2" action="/mlm/member/update" method="post"
 						  class="form-horizontal mt32" enctype="multipart/form-data">
 
-						<t t-call="website.member_form">
+						<t t-call="vit_mlm_website.member_form">
 							<t t-set="readonly" t-value="0"/>
 							<t t-set="member" t-value="member"/>
 							<t t-set="members" t-value="members"/>
@@ -873,7 +875,7 @@
 				</div>
 				</section>
 			</div>
-			<t t-call="website.validation" />
+			<t t-call="vit_mlm_website.validation" />
 		</div>
         <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
     </t>
@@ -996,7 +998,7 @@
     <!-- <div class="oe_structure">
         <div class="container"> -->
 		    <div id="tree">
-		    	<t t-call="website.member_tree">
+		    	<t t-call="vit_mlm_website.member_tree">
                     <t t-set="member" t-value="member"/>
 		    	</t>
 		    </div>
