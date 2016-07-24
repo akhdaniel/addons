@@ -6,16 +6,70 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0-20160628\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-23 07:29+0000\n"
-"PO-Revision-Date: 2016-07-23 14:35+0700\n"
+"POT-Creation-Date: 2016-07-24 23:02+0000\n"
+"PO-Revision-Date: 2016-07-25 06:03+0700\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
-"Language: fr_CA\n"
+"Language: fr\n"
 "X-Generator: Poedit 1.8.8\n"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"\",\n"
+"\t\t\t\t \"children\":["
+msgstr ""
+"\",\n"
+"\t\t\t\t \"children\":["
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"\",\n"
+"\t\t\t\t \"parent\":\""
+msgstr ""
+"\",\n"
+"\t\t\t\t \"parent\":\""
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"\",\n"
+"\t\t\t\t \"type\":\""
+msgstr ""
+"\",\n"
+"\t\t\t\t \"type\":\""
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"\",\n"
+"\t\t \"children\":["
+msgstr ""
+"\",\n"
+"\t\t \"children\":["
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"\",\n"
+"\t\t \"parent\":\""
+msgstr ""
+"\",\n"
+"\t\t \"parent\":\""
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"\",\n"
+"\t\t \"type\":\""
+msgstr ""
+"\",\n"
+"\t\t \"type\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
@@ -122,7 +176,7 @@ msgstr "Pays..."
 #: view:website:vit_mlm_website.member_form
 #: view:website:vit_mlm_website.member_list
 msgid "Create Date"
-msgstr "Créé le"
+msgstr "Create Date"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_create
@@ -342,7 +396,6 @@ msgstr "Sponsor..."
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
-#: view:website:vit_mlm_website.member_list
 msgid "State"
 msgstr "Province/État"
 
@@ -350,6 +403,11 @@ msgstr "Province/État"
 #: view:website:vit_mlm_website.member_form
 msgid "State..."
 msgstr "Province/État..."
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_list
+msgid "Status"
+msgstr "Statut"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
@@ -405,3 +463,30 @@ msgstr "Invité par..."
 #: view:website:vit_mlm_website.member_form
 msgid "ZIP"
 msgstr "Code postal"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"]\n"
+"\t\t\t  \t},"
+msgstr ""
+"]\n"
+"\t\t\t  \t},"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"{\n"
+"\t\t\t\t \"name\":\""
+msgstr ""
+"{\n"
+"\t\t\t\t \"name\":\""
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_children
+msgid ""
+"{\n"
+"\t\t \"name\":\""
+msgstr ""
+"{\n"
+"\t\t \"name\":\""
