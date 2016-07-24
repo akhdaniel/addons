@@ -4,6 +4,7 @@ from openerp.http import request
 import base64
 import simplejson
 from openerp.addons.website.models.website import slug
+from openerp.tools.translate import _
 
 
 class Member(http.Controller):
@@ -98,6 +99,8 @@ class Member(http.Controller):
 			if kwargs.get(field):
 				values[field] = kwargs.pop(field)
 		values.update(kwargs=kwargs.items())
+
+		msg ={'email_exists' :_("email exists")}
 		values.update({
 			'default_parent' : parent,
 			'member' : None, # new member
@@ -109,6 +112,7 @@ class Member(http.Controller):
 			'default_country_id': default_country_id[0].id,
 			'products': Products.search([]),
 			'languages': languages,
+			'msg': msg,
 
 		})
 		return http.request.render('vit_mlm_website.member_create', values)

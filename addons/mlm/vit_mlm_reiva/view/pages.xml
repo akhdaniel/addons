@@ -2,7 +2,7 @@
     <data>
 
         <!-- override the main website menu -->
-        <template id="member_view2" inherit_id="website.member_view">
+        <template id="member_view2" inherit_id="vit_mlm_website.member_view">
             <xpath expr="//a[@id='mlm_member_edit']" position="after">
                 <t t-if="member.state == 'draft'">
                     <a t-attf-href="/mlm/member/invite/{{ slug(member) }}"
@@ -86,7 +86,7 @@
         </template>
 
         <!-- override member registration form -->
-        <template id="website.member_form2" inherit_id="website.member_form">
+        <template id="member_form2" inherit_id="vit_mlm_website.member_form">
 
 
             <xpath expr="//div[@id='form_group_parent_id']" position="replace">
@@ -162,7 +162,7 @@
 
 
         <!-- override tree -->
-        <template id="website.member_list2" inherit_id="website.member_list">
+        <template id="member_list2" inherit_id="vit_mlm_website.member_list">
             <xpath expr="//th[@id='th_sponsor']" position="replace"/>
             <xpath expr="//td[@id='td_sponsor']" position="replace"/>
         </template>
