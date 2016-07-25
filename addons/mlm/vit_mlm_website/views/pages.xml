@@ -282,10 +282,10 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <t t-esc="member.parent_id.name or '' "/>
+                                            <span t-field="member.parent_id"/>
                                         </td>
                                         <td id="td_sponsor">
-                                            <t t-esc="member.sponsor_id.name or '' "/>
+                                            <span t-field="member.sponsor_id"/>
                                         </td>
                                         <td>
                                             <t t-esc="member.street"/>
@@ -360,9 +360,7 @@
                     });
             }
         </script>
-
-
-
+        
         <div t-attf-class="form-group required #{error and 'name' in error and 'has-error' or ''}" id="form_group_name">
             <label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
             <div class="col-md-7 col-sm-8">
@@ -454,7 +452,6 @@
                      t-attf-value="#{member and member.street2 or ''}"/>
             </div>
         </div>
-
 
         <div t-attf-class="form-group" id="form_group_city">
             <label class="col-md-3 col-sm-4 control-label" for="city">City</label>
