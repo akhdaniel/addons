@@ -921,7 +921,7 @@
         <t t-call="website.layout">
             <!-- sediakan kontainer untuk dicustom (admin:set di setting) -->
             <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
-            <div class="oe_structure">
+            <div class="oe_structure" id="mlm_iconic_menu">
 
                 <section class="mt16 mb16">
                     <div class="container">
