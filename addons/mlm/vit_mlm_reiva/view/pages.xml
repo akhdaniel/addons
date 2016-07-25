@@ -237,7 +237,14 @@
                   </div>
                 </div>
                 </section>
+
             </xpath>
+
+            <xpath expr="//div[@id='mlm_iconic_menu']" position="replace">
+                <div id="mlm_iconic_menu" style="display:none"></div>
+            </xpath>
+
+
         </template>
 
         <!-- override member registration form -->
