@@ -29,7 +29,7 @@ class Member(http.Controller):
 	def list(self, **kw):
 		lang = request.context['lang']
 		Partners = http.request.env['res.partner']
-		my_member_ids = self._cari_users_members(request.cr, request.uid, request.uid, request.context)
+		my_member_ids = self._cari_users_members(request.cr, SUPERUSER_ID, request.uid, request.context)
 		my_members = Partners.search([('id','in',my_member_ids)])
 		member_count_by_status = self._cari_member_count_by_status(request.cr, request.uid, my_members, request.context)
 		return http.request.render('vit_mlm_website.member_list', {
