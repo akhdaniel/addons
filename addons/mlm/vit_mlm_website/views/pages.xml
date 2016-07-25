@@ -1,7 +1,7 @@
 <openerp>
 <data>
 
-<template id="member_children">
+    <template id="member_children">
     <t t-foreach="member.child_ids" t-as="child">
 		<t t-set="stroke" t-value="'#B6BCBE'"/>
 		<t t-if="child.paket_id.is_affiliate==True and child.state=='aktif'"><t t-set="stroke" t-value="'#FF7373'"/></t>
@@ -22,989 +22,990 @@
 				 "children":[
 					<t t-call="vit_mlm_website.member_children">
 						<t t-set="member" t-value="child2"/>
-					</t>	
+					</t>
 	    			]
 			  	},
-	        </t>				
+	        </t>
 		 ]
 		},
-    </t>	
-</template>
-
-<template id="member_tree" name="Member Tree" page="True">
-	<h1>Member Tree</h1>
-	<link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
-	<!-- load the d3.js library -->	
-	<script src="/vit_mlm_website/static/src/js/d3.min.js"></script>
-	<script>
-		<t t-set="stroke" t-value="'#B6BCBE'"/>
-		<t t-if="member.state=='aktif'"><t t-set="stroke" t-value="'#4DBD33'"/></t>
-		<t t-if="member.paket_id.is_affiliate==True"><t t-set="stroke" t-value="'#FF7373'"/></t>
-		var treeData = [
-			{"name": "<t t-esc="member.name"/>",
-				"parent":"null",
-				"type":"<t t-esc="stroke"/>",
-				"children":[
-					<t t-call="vit_mlm_website.member_children">
-						<t t-set="member" t-value="member"/>
-					</t>			
-				]
-			}
-		];
-	var margin = {top: 40, right: 120, bottom: 20, left: 120},
-		width = 960 - margin.right - margin.left,
-		height = 800 - margin.top - margin.bottom;
-		
-	var i = 0,
-		duration = 650,
-		root;
-
-	var tree = d3.layout.tree()
-		.size([height, width]);
-
-	var diagonal = d3.svg.diagonal()
-		.projection(function(d) { return [d.x, d.y]; });
-
-	var svg = d3.select("#tree").append("svg")
-		.attr("width", width + margin.right + margin.left)
-		.attr("height", height + margin.top + margin.bottom)
-		.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-	root = treeData[0];
-	update(root);
-
-
-	function update(source) {
-
-		// Compute the new tree layout.
-		// node adalah object tree node lengkap: x, y, x0,y0, depth, id, parent, name
-		var nodes = tree.nodes(root).reverse(),
-					links = tree.links(nodes);
-
-		// Normalize for fixed-depth.
-		nodes.forEach(function(d) { d.y = d.depth * 80; });
-
-		/*
-		// Update the nodes
-		We then declare the variable / function node so that when we call it 
-		later it will know to select the appropriate object (a node) 
-		with the appropriate .id.*/
-
-		var node = svg.selectAll("g.node")
-			.data(nodes, function(d) { return d.id || (d.id = ++i); });
-
-		/*
-		// Enter any new nodes at the parent's previous position.
-		The next block of code assigns the variable / function nodeEnter 
-		to the action of appending a node to a particular position.
-		*/
-		var nodeEnter = node.enter().append("g")
-			.attr("class", "node")
-		      .attr("transform", function(d) { return "translate(" + source.x0 + "," + source.y0 + ")"; })
-			.on("click", click);
-
-		/*
-		Then we get to the piece of code that appends the circle that 
-		comprises the node (using nodeEnter).
-		*/
-
-		/* styled below
-		nodeEnter.append("circle")
-			.attr("r", 1)
-			.style("fill", 
-				function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-		*/
-
-		nodeEnter.append("circle")
-			.attr("r", function(d) { return d.value; })
-			.style("stroke", function(d) { return d.type; });
-
-		/*
-		And we add in the text for each node
-		*/
-		nodeEnter.append("text")
-			.attr("x", function(d) { 
-				return d.children || d._children ? -10 : 10; })
-			.attr("dy", ".35em")
-			.attr("text-anchor", 
-				function(d) { return d.children || d._children ? "end" : "start"; })
-			.text(function(d) { return d.name; })
-			.style("fill-opacity", 1e-6);
-
-		// Transition nodes to their new position.
-		var nodeUpdate = node.transition()
-			.duration(duration)
-			.attr("transform", 
-				function(d) { return "translate(" + d.x + "," + d.y	 + ")"; });
-
-		nodeUpdate.select("circle")
-			.attr("r", 8.5)
-			.style("fill", 
-				function(d) { return d._children ? "lightsteelblue" : "#fff"; });
-
-		nodeUpdate.select("text")
-			.style("fill-opacity", 1);
-
-		// Transition exiting nodes to the parent's new position.
-		var nodeExit = node.exit().transition()
-			.duration(duration)
-			.attr("transform", 
-				function(d) { return "translate(" + source.x + "," + source.y + ")"; })
-			.remove();
-
-		nodeExit.select("circle")
-			.attr("r", 1e-6);
-
-		nodeExit.select("text")
-			.style("fill-opacity", 1e-6);
-
-		// Update the links…
-		var link = svg.selectAll("path.link")
-			.data(links, function(d) { return d.target.id; });
-
-		// Enter any new links at the parent's previous position.
-		link.enter().insert("path", "g")
-			.attr("class", "link")
-			.attr("d", function(d) {
-				var o = {x: source.x0, y: source.y0};
-				return diagonal({source: o, target: o});
-			});
-
-		// Transition links to their new position.
-		link.transition()
-			.duration(duration)
-			.attr("d", diagonal);
-
-		// Transition exiting nodes to the parent's new position.
-		link.exit().transition()
-			.duration(duration)
-			.attr("d", function(d) {
-				var o = {x: source.x, y: source.y};
-				return diagonal({source: o, target: o});
-			})
-			.remove();
-
-		// Stash the old positions for transition.
-		nodes.forEach(function(d) {
-			d.x0 = d.x;
-			d.y0 = d.y;
-		});
-	}
-
-
-		// Toggle children on click.
-		function click(d) {
-			if (d.children) {
-				d._children = d.children;
-				d.children = null;
-			} else {
-				d.children = d._children;
-				d._children = null;
-			}
-			update(d);
-
-
-		}
-	</script>
-</template>
-
-<template id="datatable">
-    <script src="/web/static/lib/jquery/jquery.js"/>
-
-    <script>
-        $(document).ready(function(){
-            $("#member_list_table").DataTable({
-				language: {
-					url: '/vit_mlm_website/static/src/js/datatables/js/<t t-esc="lang"/>.js'
-				}
-			});
-        })
-    </script>
-</template>
-
-<template id="member_list" name="Member List" page="True">
-    <t t-call="website.layout">
-		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
-		<div class="oe_structure">
-			<section class="mt16 mb16">
-				<t t-set="title">Member List</t>
-				<div class="oe_structure">
-
-					<div class="container">
-					  <div class="row">
-						  <div class="col-md-6">
-							<h1>Member List</h1>
-						  </div>
-						  <div class="col-md-6">
-							  <span class="pull-right">
-								<h1>
-									<a t-attf-href="/mlm/member/create" class="btn btn-primary" id="mlm_member_add">Create a New Invitation</a>
-								</h1>
-							  </span>
-						  </div>
-					  </div>
-                        <div class="row">
-                             <div class="col-md-12">
-                                 <h3><span>Draft:</span> <b><span t-esc="member_count_by_status['draft']" /></b>,
-                                      <span>Invited:</span> <b><span t-esc="member_count_by_status['invited']" /></b>,
-                                      <span>Pre-Registered:</span> <b><span t-esc="member_count_by_status['pre']" /></b>,
-                                      <span>Active:</span> <b><span t-esc="member_count_by_status['aktif']" /></b>
-                                 </h3>
-                          </div>
-                        </div>
-					</div>
-
-					<div class="container">
-						<t t-set="i" t-value="1"/>
-						<table class="table table-striped display" id="member_list_table">
-							<thead>
-								<tr>
-									<th>No.</th>
-									<th>Member Name</th>
-									<th>Upline</th>
-									<th id="th_sponsor">Sponsor</th>
-									<th>Address</th>
-									<th>Mobile</th>
-									<th>Email</th>
-									<th>Create Date</th>
-									<th>Status</th>
-								</tr>
-							</thead>
-							<tbody>
-							<t t-foreach="members or []" t-as="member">
-								<tr>
-									<td><span t-esc="i"/></td>
-									<td>
-										<a t-attf-href="/mlm/member/view/{{ slug(member) }}">
-											<t t-esc="member.name"/>
-										</a>
-									</td>
-									<td>
-										<t t-esc="member.parent_id.name or '' "/>
-									</td>
-									<td id="td_sponsor">
-										<t t-esc="member.sponsor_id.name or '' "/>
-									</td>
-									<td>
-										<t t-esc="member.street"/>
-										<t t-esc="member.street2"/>,
-										<t t-esc="member.city"/>
-										<span t-esc="member.state_id.code or ''"/>,
-										<span t-esc="member.country_id.name or ''"/>
-										<span t-esc="member.zip or ''"/>
-									</td>
-									<td>
-										<t t-esc="member.mobile"/>
-									</td>
-									<td>
-										<t t-esc="member.email"/>
-									</td>
-									<td>
-										<t t-esc="member.create_date"/><br/>
-									</td>
-									<td>
-										<t t-esc="member.state"/><br/>
-									</td>
-								</tr>
-								<t t-set="i" t-value="i+1"/>
-							</t>
-							</tbody>
-						</table>
-					</div>
-				</div>
-
-				<t t-call="vit_mlm_website.datatable" />
-			</section>
-		</div>
-        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
-
     </t>
 </template>
 
-<template id="add_member_thanks" name="Member Add Thank You"
-	page="True">
-    <t t-call="website.layout">
-        <t t-set="title">Member Added</t>
-        <div class="oe_structure">
-            <div class="container">
-            	<p>Thanks !</p>
-            </div>
-        </div>
-    </t>			
-</template>
-
-<template id="member_form" name="Member Form" page="True">
-	<script>
-		function changestate() {
-			var e = document.getElementById("country_id");
-			var countryID = e.options[e.selectedIndex].value;
-			console.log(countryID);
-			$.ajax("/mlm/member/create/json/"+countryID, {
-				type: "POST",
-				dataType: "json",
-				data: JSON.stringify({
-					"id" : countryID
-				}),
-				success: function(data) {
-					var res = '<option value="">- Choose State -</option>';
-					$.each(JSON.parse(data.result), function(key,val) {
-						res += '<option value="'+ key +'">'+ val+'</option>';
-					});
-
-					/*replace exiting html in state with this one*/
-					$('#state_id').html(res);			
-					},
-				contentType: "application/json",
-				}); 
-		}
-	</script>
-
-
-
-	<div t-attf-class="form-group required #{error and 'name' in error and 'has-error' or ''}" id="form_group_name">
-		<label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="name"
-				 required="required"
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.name or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group required" id="form_group_parent_id">
-		<label class="col-md-3 col-sm-4 control-label" for="parent_id">Upline ID</label>
-		<div class="col-md-7 col-sm-8">
-
-			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="parent_id" 
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">Upline...</option>
-				    <t t-foreach="members or []" t-as="m">
-				        <option t-att-value="m.id"
-								t-attf-selected="#{m.id == default_parent.id}">
-				        	<t t-esc="m.name"/>
-				        </option>
-				    </t>
-				</select>
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control" readonly="true"
-                       t-attf-value="#{member and member.parent_id and member.parent_id.name or ''}" />
-			</t>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_sponsor_id">
-		<label class="col-md-3 col-sm-4 control-label" for="sponsor_id">Sponsor ID</label>
-		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="sponsor_id" 
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">Sponsor...</option>
-				    <t t-foreach="members or []" t-as="sponsor">
-				        <option t-att-value="sponsor.id" t-attf-selected="#{member and member.sponsor_id.id == sponsor.id}">
-				        	<t t-esc="sponsor.name"/>
-				        </option>
-				    </t>
-				</select>		
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true" t-attf-value="#{member and member.sponsor_id and member.sponsor_id.name or ''}" />
-			</t>					 
-		</div>
-	</div>
-
-	<div t-attf-class="form-group required" id="form_group_paket_id">
-		<label class="col-md-3 col-sm-4 control-label" for="paket_id">Package</label>
-		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="paket_id" 
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">Paket...</option>
-				    <t t-foreach="pakets or []" t-as="paket">
-				        <option t-att-value="paket.id"
-                                t-attf-selected="#{member and member.paket_id.id == paket.id or default_paket}">
-                            <t t-esc="paket.name"/></option>
-				    </t>
-				</select>
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true"
-                       t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
-			</t>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_street">
-		<label class="col-md-3 col-sm-4 control-label" for="street">Street</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="street" id="street" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.street or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_street2">
-		<label class="col-md-3 col-sm-4 control-label" for="street2">Street 2</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="street2" id="street2" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.street2 or ''}"/>
-		</div>
-	</div>
-
-
-	<div t-attf-class="form-group" id="form_group_city">
-		<label class="col-md-3 col-sm-4 control-label" for="city">City</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="city" id="city" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.city or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_state_id">
-		<label class="col-md-3 col-sm-4 control-label" for="state_id">State</label>
-		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
-				<select class="form-control" name="state_id" id="state_id"
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">State...</option>
-				    <t t-foreach="states or []" t-as="state">
-				        <option t-att-value="state.id" t-attf-selected="#{member and member.state_id.id == state.id}"><t t-esc="state.name"/></option>
-				    </t>
-				</select>
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true"
-                       t-attf-value="#{member and member.state_id and member.state_id.name or ''}" />
-			</t>				
-		</div>
-	</div>
-
-	<div t-attf-class="form-group required" id="form_group_country_id">
-		<label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
-		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="country_id" id="country_id"
-						onchange="changestate();"
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">Country...</option>
-				    <t t-foreach="countrys or []" t-as="country">
-				        <option t-att-value="country.id"
-								t-attf-selected="#{member and member.country_id.id == country.id or default_country_id==country.id}"><t t-esc="country.name"/></option>
-				    </t>
-				</select>
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true" t-attf-value="#{member and member.country_id and member.country_id.name or ''}" />
-			</t>
-		</div>
-	</div>
-
-    <div t-attf-class="form-group" id="form_group_zip">
-		<label class="col-md-3 col-sm-4 control-label" for="zip">ZIP</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="zip" id="zip"
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.zip or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group required" id="form_group_email">
-		<label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="email" class="form-control"
-                   name="email" id="email" required="required"
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.email or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_bbm">
-		<label class="col-md-3 col-sm-4 control-label" for="bbm">BBM</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="bbm" id="bbm"
-				 t-attf-readonly="#{True if readonly==1 else False}"
-			 	 t-attf-value="#{member and member.bbm or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_phone">
-		<label class="col-md-3 col-sm-4 control-label" for="phone">Phone</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="phone" id="phone" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.phone or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_fax">
-		<label class="col-md-3 col-sm-4 control-label" for="fax">Fax</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="fax" id="fax" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.fax or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_mobile">
-		<label class="col-md-3 col-sm-4 control-label" for="mobile">Mobile</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="mobile" id="mobile" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.mobile or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_bank_no">
-		<label class="col-md-3 col-sm-4 control-label" for="bank_no">Bank Account Number</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="bank_no" id="bank_no" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.bank_no or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_bank_account_name">
-		<label class="col-md-3 col-sm-4 control-label" for="bank_account_name">Bank Account Name</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="bank_account_name" id="bank_account_name" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.bank_account_name or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_bank_name">
-		<label class="col-md-3 col-sm-4 control-label" for="bank_name">Bank Name</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="bank_name" id="bank_name" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.bank_name or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_bank_branch">
-		<label class="col-md-3 col-sm-4 control-label" for="bank_branch">Bank Branch</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="bank_branch" id="bank_branch" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.bank_branch or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_id_number">
-		<label class="col-md-3 col-sm-4 control-label" for="id_number">ID Card Number</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" name="id_number" id="id_number" 
-				 t-attf-readonly="#{True if readonly==1 else False}"
-				 t-attf-value="#{member and member.id_number or ''}"/>
-		</div>
-	</div>
-
-	<div t-attf-class="form-group" id="form_group_signature">
-		<label class="col-md-3 col-sm-4 control-label" for="signature">Signature</label>
-		<div class="col-md-7 col-sm-8">
-            <input class="input-file" id="signature" type="file" name="signature"/>
-        </div>
-	</div>
-            <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
-
-	<div t-attf-class="form-group" id="form_group_products">
-        <t t-foreach="products or []" t-as="product">	
-        	<div t-attf-class="form-group">	    		
-				<label class="col-md-3 col-sm-4 control-label">Qty <t t-esc="member and product.paket_produk_id.name or product.name"/></label>
-				<div class="col-md-7 col-sm-8">
-					<input type="text" class="form-control"
-					 t-attf-readonly="#{True if readonly==1 else False}"
-					 t-attf-value="#{member and member.paket_produk_ids[product_index].qty or 0}"
-					 t-attf-name="paket_produk_ids[#{product.id}]">
-					</input>
-				</div>
-			</div>
-        </t>
-    </div>
-
-
-	<div t-attf-class="form-group" id="form_group_lang">
-		<label class="col-md-3 col-sm-4 control-label" for="lang">Language</label>
-		<div class="col-md-7 col-sm-8">
-			<t t-if="readonly==0">
-				<select class="form-control" required="True" name="lang"
-					 t-attf-readonly="#{True if readonly==1 else False}">
-				    <option value="">Language...</option>
-				    <t t-foreach="languages or []" t-as="lang">
-				        <option t-att-value="lang[0]" t-attf-selected="#{member and member.lang == lang[0]}">
-				        	<t t-esc="lang[1]"/>
-				        </option>
-				    </t>
-				</select>
-			</t>
-			<t t-if="readonly==1">
-				<input class="form-control"  readonly="true"
-					   t-attf-value="#{member and member_lang  or ''}" />
-			</t>
-		</div>
-	</div>
-	
-	<div t-attf-class="form-group" id="form_group_create_date">
-		<label class="col-md-3 col-sm-4 control-label" for="create_date">Create Date</label>
-		<div class="col-md-7 col-sm-8">
-			<input type="text" class="form-control" id="create_date"
-				 t-attf-readonly="readonly"
-				 t-attf-value="#{member and member.create_date or ''}"/>
-		</div>
-	</div>
-
-</template>
-
-<template id="member_view" name="Member View" page="True">
-	<t t-call="website.layout">
-		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
-		<div class="oe_structure">
-			<section class="mt16 mb16">
-
-			<t t-set="title">Member View</t>
-			<div class="oe_structure"/>
-
-			<div class="oe_structure">
-				<div class="container">
-
-					<div class="oe_structure"/>
-
-					<a id="mlm_member_edit" t-attf-href="/mlm/member/edit/{{ slug(member) }}" class="btn btn-primary" >Edit</a>
-
-					<div class="oe_structure"/>
-
-					<h1 t-esc="member.name"/>
-					<h2 t-esc="member.state"/>
-
-					<div class="form-horizontal mt32">
-						<t t-call="vit_mlm_website.member_form">
-							<t t-set="readonly" t-value="1"/>
-							<t t-set="member" t-value="member"/>
-							<t t-set="parent" t-value="member.parent_id"/>
-						</t>
-					</div>
-
-					<div class="oe_structure"/>
-
-					<div role="tabpanel">
-
-					  <!-- Nav tabs -->
-					  <ul class="nav nav-tabs" role="tablist">
-							<li id="tab_downlines" role="presentation" class="active"><a href="#downlines" aria-controls="downlines" role="tab" data-toggle="tab">Downlines</a></li>
-							<li id="tab_tree" role="presentation"><a href="#tree" aria-controls="tree" role="tab" data-toggle="tab">Tree</a></li>
-
-							<li id="tab_bonus" role="presentation"><a href="#bonus" aria-controls="bonus" role="tab" data-toggle="tab">Bonus</a></li>
-					  </ul>
-
-					  <!-- Tab panes -->
-					  <div class="tab-content">
-							<div role="tabpanel" class="tab-pane active" id="downlines">
-								<table class="table table-striped">
-									<tr>
-										<th>Name</th>
-										<th>Code</th>
-										<th>Phone</th>
-										<th>Mobile</th>
-										<th>Email</th>
-										<th>BBM</th>
-									</tr>
-								<t t-foreach="member.child_ids or []" t-as="child">
-									<tr>
-										<td t-esc="child.name" />
-										<td t-esc="child.code" />
-										<td t-esc="child.phone" />
-										<td t-esc="child.mobile" />
-										<td t-esc="child.email" />
-										<td t-esc="child.bbm" />
-									</tr>
-								</t>
-								</table>
-							</div>
-
-							<div role="tabpanel" class="tab-pane" id="tree">
-								<t t-call="vit_mlm_website.member_tree">
-									<t t-set="member" t-value="member"/>
-								</t>
-							</div>
-
-							<div role="tabpanel" class="tab-pane" id="bonus">
-								<table class="table table-striped">
-									<tr>
-										<th>New Member</th>
-										<th>At Level</th>
-										<th>Amount</th>
-										<th>Trans. Date</th>
-										<th>Bonus Name</th>
-										<th>Description</th>
-										<th>Is Transferd</th>
-									</tr>
-								<t t-foreach="member.member_bonus_ids or []" t-as="b">
-									<tr>
-										<td t-esc="b.new_member_id.name" />
-										<td t-esc="b.level" />
-										<td t-esc="b.amount" />
-										<td t-esc="b.trans_date" />
-										<td t-esc="b.bonus_id.name" />
-										<td t-esc="b.description" />
-										<td t-esc="b.is_transfered" />
-									</tr>
-								</t>
-								</table>
-							</div>
-					  </div>
-					</div>
-
-				</div>
-			</div>
-			<div class="oe_structure"/>
-		</section>
-		</div>
-        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
-
-    </t>			
-</template>	
-
-<template id="validation" name="Validation Script" >
-    <script src="/web/static/lib/jquery/jquery.js"/>
-    <script src="/vit_mlm_website/static/src/js/validator/jquery.validate.min.js" type="text/javascript"></script>
-    <script t-attf-src="/vit_mlm_website/static/src/js/validator/localization/messages_#{lang}.min.js"
-            type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $('#member_form2').validate({
-            rules: {
-                email: {
-                    required: true,
-                    email: true,
-                    remote: {
-                        url: "/mlm/member/check_email",
-                        type: "POST",
-                        data: {
-                          partner_id: function() {
-                            return $("#partner_id").val();
-                          }
-                        },
-                    }
+    <template id="member_tree" name="Member Tree" page="True">
+        <h1>Member Tree</h1>
+        <link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
+        <!-- load the d3.js library -->
+        <script src="/vit_mlm_website/static/src/js/d3.min.js"></script>
+        <script>
+            <t t-set="stroke" t-value="'#B6BCBE'"/>
+            <t t-if="member.state=='aktif'"><t t-set="stroke" t-value="'#4DBD33'"/></t>
+            <t t-if="member.paket_id.is_affiliate==True"><t t-set="stroke" t-value="'#FF7373'"/></t>
+            var treeData = [
+                {"name": "<t t-esc="member.name"/>",
+                    "parent":"null",
+                    "type":"<t t-esc="stroke"/>",
+                    "children":[
+                        <t t-call="vit_mlm_website.member_children">
+                            <t t-set="member" t-value="member"/>
+                        </t>
+                    ]
                 }
-            },
-        });
-    </script>
-</template>
+            ];
+        var margin = {top: 40, right: 120, bottom: 20, left: 120},
+            width = 960 - margin.right - margin.left,
+            height = 800 - margin.top - margin.bottom;
 
-<template id="member_create" name="Create Member" page="True">
-    <t t-call="website.layout">
-		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
-		<div class="oe_structure">
-			<section class="mt16 mb16">
-				<t t-set="title">Create New Member</t>
-				<div class="oe_structure">
-					<div class="container">
-						<h1 t-esc="default_parent.name"/>
+        var i = 0,
+            duration = 650,
+            root;
 
-						<form id="member_form2" action="/mlm/member/add" method="post"
-							  class="form-horizontal mt32"
-							  enctype="multipart/form-data" >
+        var tree = d3.layout.tree()
+            .size([height, width]);
 
-							<t t-call="vit_mlm_website.member_form">
-								<t t-set="readonly" t-value="0"/>
-								<t t-set="member" t-value="member"/>
-								<t t-set="members" t-value="members"/>
-								<t t-set="parent" t-value="parent"/>
-								<t t-set="pakets" t-value="pakets"/>
-								<t t-set="paket_produk_id" t-value="paket_produk_id"/>
-							</t>
+        var diagonal = d3.svg.diagonal()
+            .projection(function(d) { return [d.x, d.y]; });
 
-							<div class="form-group">
-								<div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-									<button class="btn btn-primary btn-lg">Confirm</button>
-								</div>
-							</div>
+        var svg = d3.select("#tree").append("svg")
+            .attr("width", width + margin.right + margin.left)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-							<t t-foreach="kwargs" t-as="kwarg">
-								<input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-							</t>
-						</form>
-					</div>
-				</div>
-
-				<t t-call="vit_mlm_website.validation" />
-			</section>
-		</div>
-        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
-	</t>
-</template>
+        root = treeData[0];
+        update(root);
 
 
+        function update(source) {
 
-<template id="member_edit" name="Edit Member" page="True">
-    <t t-call="website.layout">
-		<div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
-		<div class="oe_structure">
-			<t t-set="title">Edit Member</t>
-			<div class="oe_structure">
-				<section class="mt16 mb16">
-					<div class="container">
-					<h1 t-esc="member.name"/>
+            // Compute the new tree layout.
+            // node adalah object tree node lengkap: x, y, x0,y0, depth, id, parent, name
+            var nodes = tree.nodes(root).reverse(),
+                        links = tree.links(nodes);
 
-					<form id="member_form2" action="/mlm/member/update" method="post"
-						  class="form-horizontal mt32" enctype="multipart/form-data">
+            // Normalize for fixed-depth.
+            nodes.forEach(function(d) { d.y = d.depth * 80; });
 
-						<t t-call="vit_mlm_website.member_form">
-							<t t-set="readonly" t-value="0"/>
-							<t t-set="member" t-value="member"/>
-							<t t-set="members" t-value="members"/>
-							<t t-set="parent" t-value="parent"/>
-							<t t-set="pakets" t-value="pakets"/>
-						</t>
+            /*
+            // Update the nodes
+            We then declare the variable / function node so that when we call it
+            later it will know to select the appropriate object (a node)
+            with the appropriate .id.*/
 
-						<div class="form-group">
-							<div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
-								<button class="btn btn-primary btn-lg">Save</button>
-							</div>
-						</div>
+            var node = svg.selectAll("g.node")
+                .data(nodes, function(d) { return d.id || (d.id = ++i); });
 
-						<input type="hidden" name="id" id="partner_id" t-att-value="member.id"/>
-						<t t-foreach="kwargs" t-as="kwarg">
-							<input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-						</t>
-					</form>
-				</div>
-				</section>
-			</div>
-			<t t-call="vit_mlm_website.validation" />
-		</div>
-        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
-    </t>
-</template>
+            /*
+            // Enter any new nodes at the parent's previous position.
+            The next block of code assigns the variable / function nodeEnter
+            to the action of appending a node to a particular position.
+            */
+            var nodeEnter = node.enter().append("g")
+                .attr("class", "node")
+                  .attr("transform", function(d) { return "translate(" + source.x0 + "," + source.y0 + ")"; })
+                .on("click", click);
+
+            /*
+            Then we get to the piece of code that appends the circle that
+            comprises the node (using nodeEnter).
+            */
+
+            /* styled below
+            nodeEnter.append("circle")
+                .attr("r", 1)
+                .style("fill",
+                    function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+            */
+
+            nodeEnter.append("circle")
+                .attr("r", function(d) { return d.value; })
+                .style("stroke", function(d) { return d.type; });
+
+            /*
+            And we add in the text for each node
+            */
+            nodeEnter.append("text")
+                .attr("x", function(d) {
+                    return d.children || d._children ? -10 : 10; })
+                .attr("dy", ".35em")
+                .attr("text-anchor",
+                    function(d) { return d.children || d._children ? "end" : "start"; })
+                .text(function(d) { return d.name; })
+                .style("fill-opacity", 1e-6);
+
+            // Transition nodes to their new position.
+            var nodeUpdate = node.transition()
+                .duration(duration)
+                .attr("transform",
+                    function(d) { return "translate(" + d.x + "," + d.y	 + ")"; });
+
+            nodeUpdate.select("circle")
+                .attr("r", 8.5)
+                .style("fill",
+                    function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+
+            nodeUpdate.select("text")
+                .style("fill-opacity", 1);
+
+            // Transition exiting nodes to the parent's new position.
+            var nodeExit = node.exit().transition()
+                .duration(duration)
+                .attr("transform",
+                    function(d) { return "translate(" + source.x + "," + source.y + ")"; })
+                .remove();
+
+            nodeExit.select("circle")
+                .attr("r", 1e-6);
+
+            nodeExit.select("text")
+                .style("fill-opacity", 1e-6);
+
+            // Update the links…
+            var link = svg.selectAll("path.link")
+                .data(links, function(d) { return d.target.id; });
+
+            // Enter any new links at the parent's previous position.
+            link.enter().insert("path", "g")
+                .attr("class", "link")
+                .attr("d", function(d) {
+                    var o = {x: source.x0, y: source.y0};
+                    return diagonal({source: o, target: o});
+                });
+
+            // Transition links to their new position.
+            link.transition()
+                .duration(duration)
+                .attr("d", diagonal);
+
+            // Transition exiting nodes to the parent's new position.
+            link.exit().transition()
+                .duration(duration)
+                .attr("d", function(d) {
+                    var o = {x: source.x, y: source.y};
+                    return diagonal({source: o, target: o});
+                })
+                .remove();
+
+            // Stash the old positions for transition.
+            nodes.forEach(function(d) {
+                d.x0 = d.x;
+                d.y0 = d.y;
+            });
+        }
 
 
+            // Toggle children on click.
+            function click(d) {
+                if (d.children) {
+                    d._children = d.children;
+                    d.children = null;
+                } else {
+                    d.children = d._children;
+                    d._children = null;
+                }
+                update(d);
 
 
-<record id="mlm_menu" model="website.menu">
-	<field name="name">MLM</field>
-	<field name="url">/mlm</field>
-	<field name="parent_id" ref="website.main_menu"/>
-	<field name="sequence" type="int">15</field>
-</record>
+            }
+        </script>
+    </template>
 
-<record id="action_open_mlm" model="ir.actions.act_url">
-	<field name="name">MLM Homepage</field>
-	<field name="target">self</field>
-	<field name="url">/mlm</field>
-</record>
+    <template id="datatable">
+        <script src="/web/static/lib/jquery/jquery.js"/>
 
-<record id="member_menu" model="website.menu">
-	<field name="name">Member</field>
-	<field name="url">/mlm/member/list</field>
-	<field name="parent_id" ref="website.main_menu"/>
-	<field name="sequence" type="int">20</field>
-</record>
+        <script>
+            $(document).ready(function(){
+                $("#member_list_table").DataTable({
+                    language: {
+                        url: '/vit_mlm_website/static/src/js/datatables/js/<t t-esc="lang"/>.js'
+                    }
+                });
+            })
+        </script>
+    </template>
 
+    <template id="member_list" name="Member List" page="True">
+        <t t-call="website.layout">
+            <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
 
-<template id="dummy_theme_asset" name="website asset for mlm app" inherit_id="website.assets_frontend">
-	<xpath expr="." position="inside">
-		<link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
-		<link rel="stylesheet" href="/vit_mlm_website/static/src/js/datatables/css/jquery.dataTables.min.css"/>
+            <div class="oe_structure">
+                <section class="mt16 mb16">
+                    <t t-set="title">Member List</t>
+                    <div class="oe_structure">
 
-		<script src="/vit_mlm_website/static/src/js/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
-		<!--<script src="/vit_mlm_website/static/src/js/validator/jquery.validate.min.js" type="text/javascript"></script>-->
-	</xpath>
-</template>	
-
-<!-- Inherit homepage dan insert 5 kolom -->
-<template id="mlm_homepage" name="MLM Homepage" page="True">
-    <t t-call="website.layout">
-    	<!-- sediakan kontainer untuk dicustom (admin:set di setting) -->
-        <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
-        <div class="oe_structure">
-
-            <section class="mt16 mb16">
-                <div class="container">
-
-					<t t-if="message_error">
-						<br />
-						<div class="alert alert-danger">
-							<t t-esc="message_error"/>
-							<button type="button" class="close" data-dismiss="alert">&amp;times;</button>
-						</div>
-					</t>
-
-					<t t-if="message_success">
-						<br />
-						<div class="alert alert-success">
-							<t t-esc="message_success"/>
-							<button type="button" class="close" data-dismiss="alert">&amp;times;</button>
-						</div>
-					</t>
-
-					<t t-if="message">
-						<br />
-						<div class="alert alert-info">
-							<t t-esc="message"/>
-							<button type="button" class="close" data-dismiss="alert">&amp;times;</button>
-						</div>
-					</t>
-
-                    <div class="row">
-                        <div id="mlm_new_member" class="col-md-4 text-center">
-                        	<span class="fa fa-user fa-5x"/>
-                            <h4 class="mt16">
-                                <a t-attf-href="/mlm/member/create/">Add Member</a>
-                            </h4>
-                          <p>Add new member.</p>
+                        <div class="container">
+                          <div class="row">
+                              <div class="col-md-6">
+                                <h1>Member List</h1>
+                              </div>
+                              <div class="col-md-6">
+                                  <span class="pull-right">
+                                    <h1>
+                                        <a t-attf-href="/mlm/member/create" class="btn btn-primary" id="mlm_member_add">Create a New Invitation</a>
+                                    </h1>
+                                  </span>
+                              </div>
+                          </div>
+                            <div class="row">
+                                 <div class="col-md-12">
+                                     <h3><span>Draft:</span> <b><span t-esc="member_count_by_status['draft']" /></b>,
+                                          <span>Invited:</span> <b><span t-esc="member_count_by_status['invited']" /></b>,
+                                          <span>Pre-Registered:</span> <b><span t-esc="member_count_by_status['pre']" /></b>,
+                                          <span>Active:</span> <b><span t-esc="member_count_by_status['aktif']" /></b>
+                                     </h3>
+                              </div>
+                            </div>
                         </div>
-                        <div id="mlm_list_member" class="col-md-4 text-center">
-                        	<span class="fa fa-users fa-5x"/>
-                            <h4 class="mt16">
-                                <a t-attf-href="/mlm/member/list">Members</a>
-                            </h4>
-                          <p>Member list.</p>
-                        </div>
-                        <div id="mlm_stockist_member" class="col-md-4 text-center">
-                        	<span class="fa fa-suitcase fa-5x"/>
-                            <h4 class="mt16">
-                                <a t-attf-href="/mlm/member/stockist">Stockist</a>
-                            </h4>
-                          <p>Stokist member.</p>
-                        </div>
-                        <div id="mlm_shop" class="col-md-4 text-center">
-                        	<span class="fa fa-shopping-cart fa-5x"/>
-                            <h4 class="mt16">
-                                <a t-attf-href="/shop">Shop</a>
-                            </h4>
-                          <p>Products and sales.</p>
-                        </div>
-                        <div id="mlm_blog" class="col-md-4 text-center">
-                        	<span class="fa fa-pencil-square fa-5x"/>
-                            <h4 class="mt16">
-                                <a t-attf-href="/blog">Blog</a>
-                            </h4>
-                          <p>See latest posts.</p>
+
+                        <div class="container">
+                            <t t-set="i" t-value="1"/>
+                            <table class="table table-striped display" id="member_list_table">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Member Name</th>
+                                        <th>Upline</th>
+                                        <th id="th_sponsor">Sponsor</th>
+                                        <th>Address</th>
+                                        <th>Mobile</th>
+                                        <th>Email</th>
+                                        <th>Create Date</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <t t-foreach="members or []" t-as="member">
+                                    <tr>
+                                        <td><span t-esc="i"/></td>
+                                        <td>
+                                            <a t-attf-href="/mlm/member/view/{{ slug(member) }}">
+                                                <t t-esc="member.name"/>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <t t-esc="member.parent_id.name or '' "/>
+                                        </td>
+                                        <td id="td_sponsor">
+                                            <t t-esc="member.sponsor_id.name or '' "/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="member.street"/>
+                                            <t t-esc="member.street2"/>,
+                                            <t t-esc="member.city"/>
+                                            <span t-esc="member.state_id.code or ''"/>,
+                                            <span t-esc="member.country_id.name or ''"/>
+                                            <span t-esc="member.zip or ''"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="member.mobile"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="member.email"/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="member.create_date"/><br/>
+                                        </td>
+                                        <td>
+                                            <t t-esc="member.state"/><br/>
+                                        </td>
+                                    </tr>
+                                    <t t-set="i" t-value="i+1"/>
+                                </t>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
-            </section>
-        </div>
-        <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
-    </t>
-</template>
 
-<template id="d3_member_tree" name="d3 Member View" page="True">
-    <t t-set="title">Member d3 Tree</t>        
-    <!-- <div class="oe_structure">
-        <div class="container"> -->
-		    <div id="tree">
-		    	<t t-call="vit_mlm_website.member_tree">
-                    <t t-set="member" t-value="member"/>
-		    	</t>
-		    </div>
-		<!-- </div>
-	</div> -->
-</template>
+                    <t t-call="vit_mlm_website.datatable" />
+                </section>
+            </div>
+            <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+
+        </t>
+    </template>
+
+    <template id="add_member_thanks" name="Member Add Thank You"
+        page="True">
+        <t t-call="website.layout">
+            <t t-set="title">Member Added</t>
+            <div class="oe_structure">
+                <div class="container">
+                    <p>Thanks !</p>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="member_form" name="Member Form" page="True">
+        <script>
+            function changestate() {
+                var e = document.getElementById("country_id");
+                var countryID = e.options[e.selectedIndex].value;
+                console.log(countryID);
+                $.ajax("/mlm/member/create/json/"+countryID, {
+                    type: "POST",
+                    dataType: "json",
+                    data: JSON.stringify({
+                        "id" : countryID
+                    }),
+                    success: function(data) {
+                        var res = '<option value="">- Choose State -</option>';
+                        $.each(JSON.parse(data.result), function(key,val) {
+                            res += '<option value="'+ key +'">'+ val+'</option>';
+                        });
+
+                        /*replace exiting html in state with this one*/
+                        $('#state_id').html(res);
+                        },
+                    contentType: "application/json",
+                    });
+            }
+        </script>
+
+
+
+        <div t-attf-class="form-group required #{error and 'name' in error and 'has-error' or ''}" id="form_group_name">
+            <label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="name"
+                     required="required"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.name or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group required" id="form_group_parent_id">
+            <label class="col-md-3 col-sm-4 control-label" for="parent_id">Upline ID</label>
+            <div class="col-md-7 col-sm-8">
+
+                <t t-if="readonly==0">
+                    <select class="form-control" required="True" name="parent_id"
+                         t-attf-readonly="#{True if readonly==1 else False}">
+                        <option value="">Upline...</option>
+                        <t t-foreach="members or []" t-as="m">
+                            <option t-att-value="m.id"
+                                    t-attf-selected="#{m.id == default_parent.id}">
+                                <t t-esc="m.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </t>
+                <t t-if="readonly==1">
+                    <input class="form-control" readonly="true"
+                           t-attf-value="#{member and member.parent_id and member.parent_id.name or ''}" />
+                </t>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_sponsor_id">
+            <label class="col-md-3 col-sm-4 control-label" for="sponsor_id">Sponsor ID</label>
+            <div class="col-md-7 col-sm-8">
+                <t t-if="readonly==0">
+                    <select class="form-control" required="True" name="sponsor_id"
+                         t-attf-readonly="#{True if readonly==1 else False}">
+                        <option value="">Sponsor...</option>
+                        <t t-foreach="members or []" t-as="sponsor">
+                            <option t-att-value="sponsor.id" t-attf-selected="#{member and member.sponsor_id.id == sponsor.id}">
+                                <t t-esc="sponsor.name"/>
+                            </option>
+                        </t>
+                    </select>
+                </t>
+                <t t-if="readonly==1">
+                    <input class="form-control"  readonly="true" t-attf-value="#{member and member.sponsor_id and member.sponsor_id.name or ''}" />
+                </t>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group required" id="form_group_paket_id">
+            <label class="col-md-3 col-sm-4 control-label" for="paket_id">Package</label>
+            <div class="col-md-7 col-sm-8">
+                <t t-if="readonly==0">
+                    <select class="form-control" required="True" name="paket_id"
+                         t-attf-readonly="#{True if readonly==1 else False}">
+                        <option value="">Paket...</option>
+                        <t t-foreach="pakets or []" t-as="paket">
+                            <option t-att-value="paket.id"
+                                    t-attf-selected="#{member and member.paket_id.id == paket.id or default_paket}">
+                                <t t-esc="paket.name"/></option>
+                        </t>
+                    </select>
+                </t>
+                <t t-if="readonly==1">
+                    <input class="form-control"  readonly="true"
+                           t-attf-value="#{member and member.paket_id and member.paket_id.name or ''}" />
+                </t>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_street">
+            <label class="col-md-3 col-sm-4 control-label" for="street">Street</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="street" id="street"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.street or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_street2">
+            <label class="col-md-3 col-sm-4 control-label" for="street2">Street 2</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="street2" id="street2"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.street2 or ''}"/>
+            </div>
+        </div>
+
+
+        <div t-attf-class="form-group" id="form_group_city">
+            <label class="col-md-3 col-sm-4 control-label" for="city">City</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="city" id="city"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.city or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_state_id">
+            <label class="col-md-3 col-sm-4 control-label" for="state_id">State</label>
+            <div class="col-md-7 col-sm-8">
+                <t t-if="readonly==0">
+                    <select class="form-control" name="state_id" id="state_id"
+                         t-attf-readonly="#{True if readonly==1 else False}">
+                        <option value="">State...</option>
+                        <t t-foreach="states or []" t-as="state">
+                            <option t-att-value="state.id" t-attf-selected="#{member and member.state_id.id == state.id}"><t t-esc="state.name"/></option>
+                        </t>
+                    </select>
+                </t>
+                <t t-if="readonly==1">
+                    <input class="form-control"  readonly="true"
+                           t-attf-value="#{member and member.state_id and member.state_id.name or ''}" />
+                </t>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group required" id="form_group_country_id">
+            <label class="col-md-3 col-sm-4 control-label" for="country_id">Country</label>
+            <div class="col-md-7 col-sm-8">
+                <t t-if="readonly==0">
+                    <select class="form-control" required="True" name="country_id" id="country_id"
+                            onchange="changestate();"
+                         t-attf-readonly="#{True if readonly==1 else False}">
+                        <option value="">Country...</option>
+                        <t t-foreach="countrys or []" t-as="country">
+                            <option t-att-value="country.id"
+                                    t-attf-selected="#{member and member.country_id.id == country.id or default_country_id==country.id}"><t t-esc="country.name"/></option>
+                        </t>
+                    </select>
+                </t>
+                <t t-if="readonly==1">
+                    <input class="form-control"  readonly="true" t-attf-value="#{member and member.country_id and member.country_id.name or ''}" />
+                </t>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_zip">
+            <label class="col-md-3 col-sm-4 control-label" for="zip">ZIP</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="zip" id="zip"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.zip or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group required" id="form_group_email">
+            <label class="col-md-3 col-sm-4 control-label" for="email">Email</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="email" class="form-control"
+                       name="email" id="email" required="required"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.email or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_bbm">
+            <label class="col-md-3 col-sm-4 control-label" for="bbm">BBM</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="bbm" id="bbm"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.bbm or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_phone">
+            <label class="col-md-3 col-sm-4 control-label" for="phone">Phone</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="phone" id="phone"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.phone or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_fax">
+            <label class="col-md-3 col-sm-4 control-label" for="fax">Fax</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="fax" id="fax"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.fax or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_mobile">
+            <label class="col-md-3 col-sm-4 control-label" for="mobile">Mobile</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="mobile" id="mobile"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.mobile or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_bank_no">
+            <label class="col-md-3 col-sm-4 control-label" for="bank_no">Bank Account Number</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="bank_no" id="bank_no"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.bank_no or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_bank_account_name">
+            <label class="col-md-3 col-sm-4 control-label" for="bank_account_name">Bank Account Name</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="bank_account_name" id="bank_account_name"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.bank_account_name or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_bank_name">
+            <label class="col-md-3 col-sm-4 control-label" for="bank_name">Bank Name</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="bank_name" id="bank_name"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.bank_name or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_bank_branch">
+            <label class="col-md-3 col-sm-4 control-label" for="bank_branch">Bank Branch</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="bank_branch" id="bank_branch"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.bank_branch or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_id_number">
+            <label class="col-md-3 col-sm-4 control-label" for="id_number">ID Card Number</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" name="id_number" id="id_number"
+                     t-attf-readonly="#{True if readonly==1 else False}"
+                     t-attf-value="#{member and member.id_number or ''}"/>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_signature">
+            <label class="col-md-3 col-sm-4 control-label" for="signature">Signature</label>
+            <div class="col-md-7 col-sm-8">
+                <input class="input-file" id="signature" type="file" name="signature"/>
+            </div>
+        </div>
+                <!-- <span t-if="error.get('signfile')">Please send again your resume.</span> -->
+
+        <div t-attf-class="form-group" id="form_group_products">
+            <t t-foreach="products or []" t-as="product">
+                <div t-attf-class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label">Qty <t t-esc="member and product.paket_produk_id.name or product.name"/></label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control"
+                         t-attf-readonly="#{True if readonly==1 else False}"
+                         t-attf-value="#{member and member.paket_produk_ids[product_index].qty or 0}"
+                         t-attf-name="paket_produk_ids[#{product.id}]">
+                        </input>
+                    </div>
+                </div>
+            </t>
+        </div>
+
+
+        <div t-attf-class="form-group" id="form_group_lang">
+            <label class="col-md-3 col-sm-4 control-label" for="lang">Language</label>
+            <div class="col-md-7 col-sm-8">
+                <t t-if="readonly==0">
+                    <select class="form-control" required="True" name="lang"
+                         t-attf-readonly="#{True if readonly==1 else False}">
+                        <option value="">Language...</option>
+                        <t t-foreach="languages or []" t-as="lang">
+                            <option t-att-value="lang[0]" t-attf-selected="#{member and member.lang == lang[0]}">
+                                <t t-esc="lang[1]"/>
+                            </option>
+                        </t>
+                    </select>
+                </t>
+                <t t-if="readonly==1">
+                    <input class="form-control"  readonly="true"
+                           t-attf-value="#{member and member_lang  or ''}" />
+                </t>
+            </div>
+        </div>
+
+        <div t-attf-class="form-group" id="form_group_create_date">
+            <label class="col-md-3 col-sm-4 control-label" for="create_date">Create Date</label>
+            <div class="col-md-7 col-sm-8">
+                <input type="text" class="form-control" id="create_date"
+                     t-attf-readonly="readonly"
+                     t-attf-value="#{member and member.create_date or ''}"/>
+            </div>
+        </div>
+
+    </template>
+
+    <template id="member_view" name="Member View" page="True">
+        <t t-call="website.layout">
+            <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+            <div class="oe_structure">
+                <section class="mt16 mb16">
+
+                <t t-set="title">Member View</t>
+                <div class="oe_structure"/>
+
+                <div class="oe_structure">
+                    <div class="container">
+
+                        <div class="oe_structure"/>
+
+                        <a id="mlm_member_edit" t-attf-href="/mlm/member/edit/{{ slug(member) }}" class="btn btn-primary" >Edit</a>
+
+                        <div class="oe_structure"/>
+
+                        <h1 t-esc="member.name"/>
+                        <h2 t-esc="member.state"/>
+
+                        <div class="form-horizontal mt32">
+                            <t t-call="vit_mlm_website.member_form">
+                                <t t-set="readonly" t-value="1"/>
+                                <t t-set="member" t-value="member"/>
+                                <t t-set="parent" t-value="member.parent_id"/>
+                            </t>
+                        </div>
+
+                        <div class="oe_structure"/>
+
+                        <div role="tabpanel">
+
+                          <!-- Nav tabs -->
+                          <ul class="nav nav-tabs" role="tablist">
+                                <li id="tab_downlines" role="presentation" class="active"><a href="#downlines" aria-controls="downlines" role="tab" data-toggle="tab">Downlines</a></li>
+                                <li id="tab_tree" role="presentation"><a href="#tree" aria-controls="tree" role="tab" data-toggle="tab">Tree</a></li>
+
+                                <li id="tab_bonus" role="presentation"><a href="#bonus" aria-controls="bonus" role="tab" data-toggle="tab">Bonus</a></li>
+                          </ul>
+
+                          <!-- Tab panes -->
+                          <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane active" id="downlines">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Code</th>
+                                            <th>Phone</th>
+                                            <th>Mobile</th>
+                                            <th>Email</th>
+                                            <th>BBM</th>
+                                        </tr>
+                                    <t t-foreach="member.child_ids or []" t-as="child">
+                                        <tr>
+                                            <td t-esc="child.name" />
+                                            <td t-esc="child.code" />
+                                            <td t-esc="child.phone" />
+                                            <td t-esc="child.mobile" />
+                                            <td t-esc="child.email" />
+                                            <td t-esc="child.bbm" />
+                                        </tr>
+                                    </t>
+                                    </table>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="tree">
+                                    <t t-call="vit_mlm_website.member_tree">
+                                        <t t-set="member" t-value="member"/>
+                                    </t>
+                                </div>
+
+                                <div role="tabpanel" class="tab-pane" id="bonus">
+                                    <table class="table table-striped">
+                                        <tr>
+                                            <th>New Member</th>
+                                            <th>At Level</th>
+                                            <th>Amount</th>
+                                            <th>Trans. Date</th>
+                                            <th>Bonus Name</th>
+                                            <th>Description</th>
+                                            <th>Is Transferd</th>
+                                        </tr>
+                                    <t t-foreach="member.member_bonus_ids or []" t-as="b">
+                                        <tr>
+                                            <td t-esc="b.new_member_id.name" />
+                                            <td t-esc="b.level" />
+                                            <td t-esc="b.amount" />
+                                            <td t-esc="b.trans_date" />
+                                            <td t-esc="b.bonus_id.name" />
+                                            <td t-esc="b.description" />
+                                            <td t-esc="b.is_transfered" />
+                                        </tr>
+                                    </t>
+                                    </table>
+                                </div>
+                          </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </section>
+            </div>
+            <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+
+        </t>
+    </template>
+
+    <template id="validation" name="Validation Script" >
+        <script src="/web/static/lib/jquery/jquery.js"/>
+        <script src="/vit_mlm_website/static/src/js/validator/jquery.validate.min.js" type="text/javascript"></script>
+        <script t-attf-src="/vit_mlm_website/static/src/js/validator/localization/messages_#{lang}.min.js"
+                type="text/javascript"></script>
+
+        <script type="text/javascript">
+            $('#member_form2').validate({
+                rules: {
+                    email: {
+                        required: true,
+                        email: true,
+                        remote: {
+                            url: "/mlm/member/check_email",
+                            type: "POST",
+                            data: {
+                              partner_id: function() {
+                                return $("#partner_id").val();
+                              }
+                            },
+                        }
+                    }
+                },
+            });
+        </script>
+    </template>
+
+    <template id="member_create" name="Create Member" page="True">
+        <t t-call="website.layout">
+            <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+            <div class="oe_structure">
+                <section class="mt16 mb16">
+                    <t t-set="title">Create New Member</t>
+                    <div class="oe_structure">
+                        <div class="container">
+                            <h1 t-esc="default_parent.name"/>
+
+                            <form id="member_form2" action="/mlm/member/add" method="post"
+                                  class="form-horizontal mt32"
+                                  enctype="multipart/form-data" >
+
+                                <t t-call="vit_mlm_website.member_form">
+                                    <t t-set="readonly" t-value="0"/>
+                                    <t t-set="member" t-value="member"/>
+                                    <t t-set="members" t-value="members"/>
+                                    <t t-set="parent" t-value="parent"/>
+                                    <t t-set="pakets" t-value="pakets"/>
+                                    <t t-set="paket_produk_id" t-value="paket_produk_id"/>
+                                </t>
+
+                                <div class="form-group">
+                                    <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                        <button class="btn btn-primary btn-lg">Confirm</button>
+                                    </div>
+                                </div>
+
+                                <t t-foreach="kwargs" t-as="kwarg">
+                                    <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                                </t>
+                            </form>
+                        </div>
+                    </div>
+
+                    <t t-call="vit_mlm_website.validation" />
+                </section>
+            </div>
+            <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+        </t>
+    </template>
+
+
+
+    <template id="member_edit" name="Edit Member" page="True">
+        <t t-call="website.layout">
+            <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+            <div class="oe_structure">
+                <t t-set="title">Edit Member</t>
+                <div class="oe_structure">
+                    <section class="mt16 mb16">
+                        <div class="container">
+                        <h1 t-esc="member.name"/>
+
+                        <form id="member_form2" action="/mlm/member/update" method="post"
+                              class="form-horizontal mt32" enctype="multipart/form-data">
+
+                            <t t-call="vit_mlm_website.member_form">
+                                <t t-set="readonly" t-value="0"/>
+                                <t t-set="member" t-value="member"/>
+                                <t t-set="members" t-value="members"/>
+                                <t t-set="parent" t-value="parent"/>
+                                <t t-set="pakets" t-value="pakets"/>
+                            </t>
+
+                            <div class="form-group">
+                                <div class="col-md-offset-3 col-sm-offset-4 col-sm-8 col-md-7">
+                                    <button class="btn btn-primary btn-lg">Save</button>
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" id="partner_id" t-att-value="member.id"/>
+                            <t t-foreach="kwargs" t-as="kwarg">
+                                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                            </t>
+                        </form>
+                    </div>
+                    </section>
+                </div>
+                <t t-call="vit_mlm_website.validation" />
+            </div>
+            <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+        </t>
+    </template>
+
+
+
+
+    <record id="mlm_menu" model="website.menu">
+        <field name="name">MLM</field>
+        <field name="url">/mlm</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">15</field>
+    </record>
+
+    <record id="action_open_mlm" model="ir.actions.act_url">
+        <field name="name">MLM Homepage</field>
+        <field name="target">self</field>
+        <field name="url">/mlm</field>
+    </record>
+
+    <record id="member_menu" model="website.menu">
+        <field name="name">Member</field>
+        <field name="url">/mlm/member/list</field>
+        <field name="parent_id" ref="website.main_menu"/>
+        <field name="sequence" type="int">20</field>
+    </record>
+
+
+    <template id="dummy_theme_asset" name="website asset for mlm app" inherit_id="website.assets_frontend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/vit_mlm_website/static/src/css/my.css"/>
+            <link rel="stylesheet" href="/vit_mlm_website/static/src/js/datatables/css/jquery.dataTables.min.css"/>
+
+            <script src="/vit_mlm_website/static/src/js/datatables/js/jquery.dataTables.min.js" type="text/javascript"></script>
+            <!--<script src="/vit_mlm_website/static/src/js/validator/jquery.validate.min.js" type="text/javascript"></script>-->
+        </xpath>
+    </template>
+
+    <!-- Inherit homepage dan insert 5 kolom -->
+    <template id="mlm_homepage" name="MLM Homepage" page="True">
+        <t t-call="website.layout">
+            <!-- sediakan kontainer untuk dicustom (admin:set di setting) -->
+            <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+            <div class="oe_structure">
+
+                <section class="mt16 mb16">
+                    <div class="container">
+
+                        <t t-if="message_error">
+                            <br />
+                            <div class="alert alert-danger">
+                                <t t-esc="message_error"/>
+                                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                            </div>
+                        </t>
+
+                        <t t-if="message_success">
+                            <br />
+                            <div class="alert alert-success">
+                                <t t-esc="message_success"/>
+                                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                            </div>
+                        </t>
+
+                        <t t-if="message">
+                            <br />
+                            <div class="alert alert-info">
+                                <t t-esc="message"/>
+                                <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                            </div>
+                        </t>
+
+                        <div class="row">
+                            <div id="mlm_new_member" class="col-md-4 text-center">
+                                <span class="fa fa-user fa-5x"/>
+                                <h4 class="mt16">
+                                    <a t-attf-href="/mlm/member/create/">Add Member</a>
+                                </h4>
+                              <p>Add new member.</p>
+                            </div>
+                            <div id="mlm_list_member" class="col-md-4 text-center">
+                                <span class="fa fa-users fa-5x"/>
+                                <h4 class="mt16">
+                                    <a t-attf-href="/mlm/member/list">Members</a>
+                                </h4>
+                              <p>Member list.</p>
+                            </div>
+                            <div id="mlm_stockist_member" class="col-md-4 text-center">
+                                <span class="fa fa-suitcase fa-5x"/>
+                                <h4 class="mt16">
+                                    <a t-attf-href="/mlm/member/stockist">Stockist</a>
+                                </h4>
+                              <p>Stokist member.</p>
+                            </div>
+                            <div id="mlm_shop" class="col-md-4 text-center">
+                                <span class="fa fa-shopping-cart fa-5x"/>
+                                <h4 class="mt16">
+                                    <a t-attf-href="/shop">Shop</a>
+                                </h4>
+                              <p>Products and sales.</p>
+                            </div>
+                            <div id="mlm_blog" class="col-md-4 text-center">
+                                <span class="fa fa-pencil-square fa-5x"/>
+                                <h4 class="mt16">
+                                    <a t-attf-href="/blog">Blog</a>
+                                </h4>
+                              <p>See latest posts.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div id="mlm_custum_wrap_after" class="oe_structure oe_editable"/>
+        </t>
+    </template>
+
+    <template id="d3_member_tree" name="d3 Member View" page="True">
+        <t t-set="title">Member d3 Tree</t>
+        <!-- <div class="oe_structure">
+            <div class="container"> -->
+                <div id="tree">
+                    <t t-call="vit_mlm_website.member_tree">
+                        <t t-set="member" t-value="member"/>
+                    </t>
+                </div>
+            <!-- </div>
+        </div> -->
+    </template>
 
 </data>
 </openerp>
