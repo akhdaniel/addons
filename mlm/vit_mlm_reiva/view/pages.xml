@@ -150,94 +150,183 @@
                 </div>
             </xpath>
 
+            <!--<xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">-->
+                <!--<t t-call="vit_mlm_reiva.icon_menu"/>-->
+                <!--<section class="s_title_small">-->
+                <!--<div class="container">-->
+                  <!--<div class="row">-->
+                    <!--<div class="col-md-12 text-center mb32">-->
+                      <!--<h2>Les outils de développement de votre équipe Reïva</h2>-->
+                      <!--<h3 class="text-muted"/>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--</section>-->
+                <!--<section class="s_color_blocks_2">-->
+                <!--<div class="container-fluid">-->
+                  <!--<div class="row">-->
+                    <!--<div class="col-md-6 s_color_blocks_2_block bg-alpha text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;);">-->
+                      <!--<font class="text-white">-->
+                        <!--<font class="bg-white">-->
+                          <!--<span class="center-block fa fa-envelope-o fa-5x" style=""/>-->
+                        <!--</font>-->
+                      <!--</font>-->
+                      <!--<h2 class="text-center">-->
+                        <!--<font class="text-white">Faire une invitation&amp;nbsp;</font>-->
+                      <!--</h2>-->
+                      <!--<h3 class="text-center text-muted mb16"/>-->
+                      <!--<p class="text-justify mb32">-->
+                        <!--<font class="text-white">-->
+                          <!--<span style="line-height: 25.7143px; text-align: center;">Invitez les personnes parmi vos contacts qui sont susceptibles d'être intéressées par l'opporutnité d'affaires REIVA, puis à se joindre à votre équipe. &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;</span>-->
+                        <!--</font>-->
+                      <!--</p>-->
+                      <!--<a class="btn btn-primary" href="/mlm/member/create/">-->
+                        <!--<i class="fa fa-cog"/>-->
+                        <!--<font class="text-stone">&amp;nbsp;</font>-->
+                        <!--<strong>-->
+                          <!--<font class="text-white"> </font>-->
+                        <!--</strong>-->
+                        <!--<strong>-->
+                          <!--<strong>-->
+                            <!--<font class="text-white"> Inviter une personne</font>-->
+                          <!--</strong>-->
+                        <!--</strong>-->
+                        <!--<font class="text-stone"/>-->
+                      <!--</a>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6 s_color_blocks_2_block bg-gamma text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/410_741181d/datas&quot;);">-->
+                      <!--<span class="center-block fa fa-check-square-o fa-5x" style=""/>-->
+                      <!--<h2 class="text-center">Liste de vos invités</h2>-->
+                      <!--<h3 class="text-center text-muted mb16"/>-->
+                      <!--<p class="text-justify mb32" style="text-align: center;">-->
+                        <!--<span style="line-height: 25.7143px; text-align: center;">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Pre-Registration &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; </span>-->
+                      <!--</p>-->
+                      <!--<p>-->
+                        <!--<a class="btn btn-warning" href="/mlm/member/list"><i class="fa fa-cog"/>&amp;nbsp;<strong>Consulter</strong></a>-->
+                      <!--</p>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--</section>-->
+                <!--<section class="s_color_blocks_2">-->
+                <!--<div class="container-fluid">-->
+                  <!--<div class="row">-->
+                    <!--<div class="col-md-6 s_color_blocks_2_block bg-alpha text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/410_741181d/datas&quot;);">-->
+                      <!--<span class="center-block fa fa-money fa-5x" style=""/>-->
+                      <!--<h2 class="text-center">-->
+                        <!--<font class="text-white">Plan de rémunération</font>-->
+                      <!--</h2>-->
+                      <!--<h3 class="text-center text-muted mb16"/>-->
+                      <!--<p class="text-justify mb32">-->
+                        <!--<font class="text-white">-->
+                          <!--<span style="line-height: 25.7143px; text-align: center;">Découvrez en primeur le plan de rémunération de REÏVA et les avantages uniques dont bénéficieront ses associés indépendants.</span>-->
+                        <!--</font>-->
+                      <!--</p>-->
+                      <!--<a class="btn btn-warning" href="/page/compensation-plan"><i class="fa fa-cog"/>&amp;nbsp;<strong>Voir le plan</strong></a>-->
+                    <!--</div>-->
+                    <!--<div class="col-md-6 s_color_blocks_2_block bg-gamma text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;);">-->
+                      <!--<span class="fa fa-cube fa-5x center-block"/>-->
+                      <!--<h2 class="text-center">Donner votre opinion</h2>-->
+                      <!--<h3 class="text-center text-muted mb16"/>-->
+                      <!--<p class="text-justify mb32"><span style="line-height: 25.7143px; text-align: center;">Veuillez prendre 15 secondes pour répondre à ce court sondage sur votre intérêt envers REÏVA.</span>.&amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</p>-->
+                      <!--<a class="btn btn-primary" href="/survey/start/votre-opinion-svp-2">-->
+                        <!--<i class="fa fa-cog"/>-->
+                        <!--<strong>Répondre au sondage</strong>-->
+                      <!--</a>-->
+                    <!--</div>-->
+                  <!--</div>-->
+                <!--</div>-->
+                <!--</section>-->
+
+            <!--</xpath>-->
+
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
                 <t t-call="vit_mlm_reiva.icon_menu"/>
                 <section class="s_title_small">
-                <div class="container">
-                  <div class="row">
-                    <div class="col-md-12 text-center mb32">
-                      <h2>Les outils de développement de votre équipe Reïva</h2>
-                      <h3 class="text-muted"/>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12 text-center mb32">
+                        <h2>Les outils de développement de votre équipe Reïva</h2>
+                        <h3 class="text-muted"/>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </section>
                 <section class="s_color_blocks_2">
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-6 s_color_blocks_2_block bg-alpha text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;);">
-                      <font class="text-white">
-                        <font class="bg-white">
-                          <span class="center-block fa fa-envelope-o fa-5x" style=""/>
-                        </font>
-                      </font>
-                      <h2 class="text-center">
-                        <font class="text-white">Faire une invitation&amp;nbsp;</font>
-                      </h2>
-                      <h3 class="text-center text-muted mb16"/>
-                      <p class="text-justify mb32">
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-6 s_color_blocks_2_block bg-alpha text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;);">
                         <font class="text-white">
-                          <span style="line-height: 25.7143px; text-align: center;">Invitez les personnes parmi vos contacts qui sont susceptibles d'être intéressées par l'opporutnité d'affaires REIVA, puis à se joindre à votre équipe. &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;</span>
+                          <font class="bg-white">
+                            <span class="center-block fa fa-envelope-o fa-5x" style=""/>
+                          </font>
                         </font>
-                      </p>
-                      <a class="btn btn-primary" href="/mlm/member/create/">
-                        <i class="fa fa-cog"/>
-                        <font class="text-stone">&amp;nbsp;</font>
-                        <strong>
-                          <font class="text-white"> </font>
-                        </strong>
-                        <strong>
+                        <h2 class="text-center">
+                          <font class="text-white">Faire une invitation&amp;nbsp;</font>
+                        </h2>
+                        <h3 class="text-center text-muted mb16"/>
+                        <p class="text-justify mb32" style="text-align: center;">
+                          <font class="text-white">
+                            <span style="line-height: 25.7143px; text-align: center;">Invitez les personnes parmi vos contacts qui sont susceptibles d'être intéressées&amp;nbsp;par l'opporutnité d'affaires REIVA et qui pourraient se joindre à votre équipe.&amp;nbsp;</span>
+                          </font>
+                        </p>
+                        <a class="btn btn-primary" href="/mlm/member/create/">
+                          <i class="fa fa-cog"/>
+                          <font class="text-stone">&amp;nbsp;</font>
                           <strong>
-                            <font class="text-white"> Inviter une personne</font>
+                            <font class="text-white"> </font>
                           </strong>
-                        </strong>
-                        <font class="text-stone"/>
-                      </a>
-                    </div>
-                    <div class="col-md-6 s_color_blocks_2_block bg-gamma text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/410_741181d/datas&quot;);">
-                      <span class="center-block fa fa-check-square-o fa-5x" style=""/>
-                      <h2 class="text-center">Liste de vos invités</h2>
-                      <h3 class="text-center text-muted mb16"/>
-                      <p class="text-justify mb32" style="text-align: center;">
-                        <span style="line-height: 25.7143px; text-align: center;">&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Pre-Registration &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; </span>
-                      </p>
-                      <p>
-                        <a class="btn btn-warning" href="/mlm/member/list"><i class="fa fa-cog"/>&amp;nbsp;<strong>Consulter</strong></a>
-                      </p>
+                          <strong>
+                            <strong>
+                              <font class="text-white"> Inviter une personne</font>
+                            </strong>
+                          </strong>
+                          <font class="text-stone"/>
+                        </a>
+                      </div>
+                      <div class="col-md-6 s_color_blocks_2_block bg-gamma text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/410_741181d/datas&quot;);">
+                        <span class="center-block fa fa-check-square-o fa-5x" style=""/>
+                        <h2 class="text-center">Liste de vos invités</h2>
+                        <h3 class="text-center text-muted mb16"/>
+                        <p class="text-justify mb32" style="text-align: center;">
+                          <span style="line-height: 25.7143px; text-align: center;">&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;Vous pouvez consulter ici les résultats de vos invitations : la liste de vos invités&amp;nbsp;et ceux qui ont répondu&amp;nbsp;à votre invitation.</span>
+                        </p>
+                        <p>
+                          <a class="btn btn-warning" href="/mlm/member/list"><i class="fa fa-cog"/>&amp;nbsp;<strong>Consulter</strong></a>
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </section>
                 <section class="s_color_blocks_2">
-                <div class="container-fluid">
-                  <div class="row">
-                    <div class="col-md-6 s_color_blocks_2_block bg-alpha text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/410_741181d/datas&quot;);">
-                      <span class="center-block fa fa-money fa-5x" style=""/>
-                      <h2 class="text-center">
-                        <font class="text-white">Plan de rémunération</font>
-                      </h2>
-                      <h3 class="text-center text-muted mb16"/>
-                      <p class="text-justify mb32">
-                        <font class="text-white">
-                          <span style="line-height: 25.7143px; text-align: center;">Découvrez en primeur le plan de rémunération de REÏVA et les avantages uniques dont bénéficieront ses associés indépendants.</span>
-                        </font>
-                      </p>
-                      <a class="btn btn-warning" href="/page/compensation-plan"><i class="fa fa-cog"/>&amp;nbsp;<strong>Voir le plan</strong></a>
-                    </div>
-                    <div class="col-md-6 s_color_blocks_2_block bg-gamma text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;);">
-                      <span class="fa fa-cube fa-5x center-block"/>
-                      <h2 class="text-center">Donner votre opinion</h2>
-                      <h3 class="text-center text-muted mb16"/>
-                      <p class="text-justify mb32"><span style="line-height: 25.7143px; text-align: center;">Veuillez prendre 15 secondes pour répondre à ce court sondage sur votre intérêt envers REÏVA.</span>.&amp;nbsp;&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;</p>
-                      <a class="btn btn-primary" href="/survey/start/votre-opinion-svp-2">
-                        <i class="fa fa-cog"/>
-                        <strong>Répondre au sondage</strong>
-                      </a>
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="col-md-6 s_color_blocks_2_block bg-alpha text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/410_741181d/datas&quot;);">
+                        <span class="center-block fa fa-money fa-5x" style=""/>
+                        <h2 class="text-center">
+                          <font class="text-white">Plan de rémunération</font>
+                        </h2>
+                        <h3 class="text-center text-muted mb16"/>
+                        <p class="text-justify mb32" style="text-align: center;">
+                          <font class="text-white">
+                            <span style="line-height: 25.7143px; text-align: center;">Découvrez en primeur le PLAN de RÉMUNÉRATION REÏVA&amp;nbsp;avant même son prélancement</span>
+                          </font>
+                        </p>
+                        <a class="btn btn-warning" href="/page/compensation-plan"><i class="fa fa-cog"/>&amp;nbsp;<strong>Voir le plan</strong></a>
+                      </div>
+                      <div class="col-md-6 s_color_blocks_2_block bg-gamma text-center oe_custom_bg oe_img_bg" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;);">
+                        <span class="fa fa-cube fa-5x center-block"/>
+                        <h2 class="text-center">Donnez votre opinion</h2>
+                        <h3 class="text-center text-muted mb16"/>
+                        <p class="text-justify mb32" style="text-align: center;"><span style="line-height: 25.7143px; text-align: center;">Veuillez prendre 15 secondes pour répondre à ce court sondage sur votre intérêt envers REÏVA</span>&amp;nbsp; &amp;nbsp;</p>
+                        <a class="btn btn-primary" href="/survey/start/votre-opinion-svp-2">
+                          <i class="fa fa-cog"/>
+                          <strong>Répondre au sondage</strong>
+                        </a>
+                      </div>
                     </div>
                   </div>
-                </div>
                 </section>
-
             </xpath>
 
             <xpath expr="//div[@id='mlm_iconic_menu']" position="replace">
