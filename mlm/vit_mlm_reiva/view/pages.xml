@@ -2,71 +2,72 @@
     <data>
         <!-- main mlm home pages iconic menu -->
         <template id="icon_menu">
-         <section class="s_big_icon_circle oe_custom_bg oe_img_bg mt0" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;); height: 208px; overflow: hidden;">
-            <div class="container">
-              <div class="row mb64">
-                <div class="col-sm-12 mt16 mb32 col-md-2 col-md-offset-1">
-                  <div class="s_big_icon_circle_box">
-                    <div class="s_big_icon_circle_icon col-md-4">
-                    <a href="/">
-                      <span class="fa fa-home" style="transition: none 0s ease 0s ;"/>
-                      </a>
-                      <h5>Accueil</h5>
+            <section class="s_big_icon_circle oe_custom_bg oe_img_bg mt0" style="background-image: url(&quot;/website/image/ir.attachment/244_63d68f4/datas&quot;); height: 208px; overflow: hidden;">
+                <div class="container">
+                  <div class="row mb64">
+                    <div class="col-sm-12 mt16 mb32 col-md-2 col-md-offset-1">
+                      <div class="s_big_icon_circle_box">
+                        <div class="s_big_icon_circle_icon col-md-4">
+                        <a href="/">
+                          <span class="fa fa-home" style="transition: none 0s ease 0s ;"/>
+                          </a>
+                          <h5>Accueil</h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12 mt16 mb32">
+                      <div class="s_big_icon_circle_box">
+                        <div class="s_big_icon_circle_icon col-md-4 o_animate" style="animation-play-state: paused;">
+                          <a href="/mlm/member/create/">
+                            <span class="fa fa-envelope-o" style="transition: none 0s ease 0s ;"/>
+                          </a>
+                          <h5>
+                            <font class="text-white">
+                              <a href="/mlm/member/create/" style="text-decoration: none">Faire une Invitation</a>
+                            </font>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12 mt16 mb32">
+                      <div class="s_big_icon_circle_box o_animate" style="animation-play-state: paused;">
+                        <div class="s_big_icon_circle_icon col-md-4 o_animate" style="animation-play-state: paused;">
+                          <a href="/mlm/member/list">
+                            <span class="fa fa-check-square-o" style="transition: none 0s ease 0s ;"/>
+                          </a>
+                          <h5>
+                            <a href="/mlm/member/list/" style="text-decoration: none">Liste de vos invités</a>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12 mt16 mb32">
+                      <div class="s_big_icon_circle_box">
+                        <div class="s_big_icon_circle_icon col-md-4">
+                          <a href="/page/compensation-plan">
+                            <span class="fa fa-money" style="transition: none 0s ease 0s ;"/>
+                          </a>
+                          <h5>
+                            <a href="/page/compensation-plan" style="text-decoration: none">Plan de <sub>Rémunération</sub></a>
+                          </h5>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2 col-sm-12 mt16 mb32">
+                      <div class="s_big_icon_circle_box">
+                        <div class="s_big_icon_circle_icon col-md-4">
+                        <a href="/survey/start/votre-opinion-svp-2">
+                          <span class="fa fa-pencil-square" style="transition: none 0s ease 0s ;"/>
+                          </a>
+                          <h5>Votre opinion svp</h5>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-2 col-sm-12 mt16 mb32">
-                  <div class="s_big_icon_circle_box">
-                    <div class="s_big_icon_circle_icon col-md-4 o_animate" style="animation-play-state: paused;">
-                      <a href="/mlm/member/create/">
-                        <span class="fa fa-envelope-o" style="transition: none 0s ease 0s ;"/>
-                      </a>
-                      <h5>
-                        <font class="text-white">
-                          <a href="/mlm/member/create/" style="text-decoration: none">Faire une Invitation</a>
-                        </font>
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-2 col-sm-12 mt16 mb32">
-                  <div class="s_big_icon_circle_box o_animate" style="animation-play-state: paused;">
-                    <div class="s_big_icon_circle_icon col-md-4 o_animate" style="animation-play-state: paused;">
-                      <a href="/mlm/member/list">
-                        <span class="fa fa-check-square-o" style="transition: none 0s ease 0s ;"/>
-                      </a>
-                      <h5>
-                        <a href="/mlm/member/list/" style="text-decoration: none">Liste de vos invités</a>
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-2 col-sm-12 mt16 mb32">
-                  <div class="s_big_icon_circle_box">
-                    <div class="s_big_icon_circle_icon col-md-4">
-                      <a href="/page/compensation-plan">
-                        <span class="fa fa-money" style="transition: none 0s ease 0s ;"/>
-                      </a>
-                      <h5>
-                        <a href="/page/compensation-plan" style="text-decoration: none">Plan de <sub>Rémunération</sub></a>
-                      </h5>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-md-2 col-sm-12 mt16 mb32">
-                  <div class="s_big_icon_circle_box">
-                    <div class="s_big_icon_circle_icon col-md-4">
-                    <a href="/survey/start/votre-opinion-svp-2">
-                      <span class="fa fa-pencil-square" style="transition: none 0s ease 0s ;"/>
-                      </a>
-                      <h5>Votre opinion svp</h5>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-      </section>
-    </template>
+            </section>
+            <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
+        </template>
 
         <!-- override the main website menu -->
         <template id="member_view2" inherit_id="vit_mlm_website.member_view">
@@ -152,7 +153,6 @@
 
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
                 <t t-call="vit_mlm_reiva.icon_menu"/>
-                <div id="mlm_custum_wrap_before" class="oe_structure oe_editable"/>
                 <section class="s_title_small">
                   <div class="container">
                     <div class="row">
