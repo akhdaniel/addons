@@ -247,11 +247,12 @@
                           </div>
                             <div class="row">
                                  <div class="col-md-12">
-                                     <h3><span>Draft:</span> <b><span t-esc="member_count_by_status['draft']" /></b>,
-                                          <span>Invited:</span> <b><span t-esc="member_count_by_status['invited']" /></b>,
-                                          <span>Pre-Registered:</span> <b><span t-esc="member_count_by_status['pre']" /></b>,
-                                          <span>Active:</span> <b><span t-esc="member_count_by_status['aktif']" /></b>
-                                     </h3>
+                                       <h3 style="background-color: rgb(140,140,140); color: white; text-align: center">
+                                          <span style="font-size: 65%; color: #913634">Draft: </span><b><span t-esc="member_count_by_status['draft']"/></b>&#160;&#160;
+                                          <span style="font-size: 65%; color: #913634">Invited: </span><b><span t-esc="member_count_by_status['invited']"/></b>&#160;&#160;
+                                          <span style="font-size: 65%; color: #913634">Pre-Registered: </span><b><span t-esc="member_count_by_status['pre']"/></b>&#160;&#160;
+                                          <span style="font-size: 65%; color: #913634;">Active: </span><b><span t-esc="member_count_by_status['aktif']" style="color: #D3D3D3;"/></b>
+                                       </h3>
                               </div>
                             </div>
                         </div>
