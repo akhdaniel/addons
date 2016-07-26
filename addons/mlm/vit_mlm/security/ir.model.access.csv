@@ -13,3 +13,5 @@ access_mlm_paket_produk,access_mlm_paket_produk,model_mlm_paket_produk,,1,1,1,1
 access_mlm_paket_produk_detail,access_mlm_paket_produk_detail,model_mlm_paket_produk_detail,,1,1,1,1
 access_mlm_member_paket_produk,access_mlm_member_paket_produk,model_mlm_member_paket_produk,,1,1,1,1
 access_mlm_history_join,access_mlm_history_join,model_mlm_history_join,,1,1,1,1
+
+access_ir_ui_menu,access_ir_ui_menu,base.model_ir_ui_menu,group_mlm_user,1,0,0,0

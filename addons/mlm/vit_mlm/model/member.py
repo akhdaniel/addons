@@ -831,15 +831,15 @@ class member(osv.osv):
         group_partner_manager_id = grp_ref and grp_ref[1] or False,
 
         #'Portal'
-        grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_portal')
-        group_portal_id = grp_ref and grp_ref[1] or False,
+        # grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_portal')
+        # group_portal_id = grp_ref and grp_ref[1] or False,
 
         #'MLM / Member'
         grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_mlm', 'group_mlm_user')
         group_mlm_user_id = grp_ref and grp_ref[1] or False,
 
         gids =group.search(cr, SUPERUSER_ID, [('id','in',[group_user_id,group_partner_manager_id,
-            group_portal_id,group_mlm_user_id
+            group_mlm_user_id
             ])], context=context)
 
         for gid in gids:
