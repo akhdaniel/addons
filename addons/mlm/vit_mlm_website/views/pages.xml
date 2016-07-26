@@ -360,7 +360,7 @@
                     });
             }
         </script>
-        
+
         <div t-attf-class="form-group required #{error and 'name' in error and 'has-error' or ''}" id="form_group_name">
             <label class="col-md-3 col-sm-4 control-label" for="name">Name</label>
             <div class="col-md-7 col-sm-8">
