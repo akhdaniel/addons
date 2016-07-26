@@ -823,8 +823,8 @@ class member(osv.osv):
         group =  self.pool.get('res.groups')
 
         #employee
-        grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_user')
-        group_user_id = grp_ref and grp_ref[1] or False,
+        # grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_user')
+        # group_user_id = grp_ref and grp_ref[1] or False,
 
         #'Contact Creation'
         grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'base', 'group_partner_manager')
@@ -838,7 +838,8 @@ class member(osv.osv):
         grp_ref = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'vit_mlm', 'group_mlm_user')
         group_mlm_user_id = grp_ref and grp_ref[1] or False,
 
-        gids =group.search(cr, SUPERUSER_ID, [('id','in',[group_user_id,group_partner_manager_id,
+        gids =group.search(cr, SUPERUSER_ID, [('id','in',[
+            group_partner_manager_id,
             group_mlm_user_id
             ])], context=context)
 
