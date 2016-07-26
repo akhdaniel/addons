@@ -176,7 +176,7 @@ msgstr "Pays..."
 #: view:website:vit_mlm_website.member_form
 #: view:website:vit_mlm_website.member_list
 msgid "Create Date"
-msgstr "Create Date"
+msgstr "Créé le"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_create
