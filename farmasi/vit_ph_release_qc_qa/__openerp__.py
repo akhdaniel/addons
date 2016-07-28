@@ -20,7 +20,7 @@ isinya adalah data Work Order khusus untuk proses QC: workcenter_id = QC
     'data': [
         # 'security/ir.model.access.csv',
         'release.xml',
-        "data/stock.warehouse.csv"
+        # "data/stock.warehouse.csv"
     ],
     'demo': [
     ],
