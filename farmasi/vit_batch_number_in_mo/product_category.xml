@@ -1,0 +1,16 @@
+<openerp>
+	<data>
+		<record model="ir.ui.view" id="product_category_view_mrp_location">
+		    <field name="name">product_category_view_mrp_location</field>
+		    <field name="model">product.category</field>
+		    <field name="inherit_id" ref="product.product_category_form_view"/>
+		    <field name="arch" type="xml">
+		    	<field name="type" position="after">
+		    		<field name="mrp_location_id"/>
+		    		<field name="wo_start_no_stock"/>
+		    	</field>
+		   	</field>
+		</record>
+
+	</data>
+</openerp>
