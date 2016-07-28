@@ -15,7 +15,7 @@ from openerp.tools.float_utils import float_round, float_compare
 
 
 class product_template(osv.osv):
-    _inherit = "product.template"     
+    _inherit = "product.template"
 
     def get_detail_total_avail(self, cr, uid, ids, field, arg, context=None):
         stock_move      = self.pool.get('stock.move')
