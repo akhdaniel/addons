@@ -894,10 +894,10 @@ class member(osv.osv):
         #########################################################################
         # cek upline sudah state aktif?
         #########################################################################
+        _logger.warning(upline.state)
         if upline and upline.state not in ['open','aktif','pre']:
-            _logger.warning(upline.state)
             raise osv.except_osv(_('Warning'),
-                "Cannot confirm member %s, upline %s is not Open"%(new_member.name,upline.name) )
+                "Cannot confirm member %s, upline %s is not Open/Active/Pre-Registered"%(new_member.name,upline.name) )
 
         #########################################################################
         # cek max downline si upline
