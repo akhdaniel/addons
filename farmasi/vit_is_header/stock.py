@@ -39,7 +39,7 @@ class stock_move(osv.osv):
     _inherit = "stock.move"
 
     _columns = {
-        'qty_available'	: fields.float('Qty Available',readonly=True),# diisi dari module vit_batch_number_in_mo
+        'qty_available'	: fields.float('Qty Available',digits_compute=dp.get_precision('Product Unit of Measure'), readonly=True),# diisi dari module vit_batch_number_in_mo
         'alert_date': fields.related('restrict_lot_id','alert_date',type='date',string='Expired Date'),
         'ref_lot_id': fields.related('restrict_lot_id','ref',type='char',string='Nomor Analisa'),
     }
