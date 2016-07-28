@@ -1,1 +1,2 @@
-update product_template pp set 	parent_id=(select id from product_template where name=substr(pp.name,1,position(',' in pp.name )-1) limit 1) where  position(',' in pp.name )>0
+update product_template set name = concat(rtrim(name),', manufacturer') where position(',' in name )=0 and is_header=False and categ_id in (select id from product_category where name in('Bahan Awal Aktif','Bahan Awal Pembantu','Bahan Pengemas'));
+update product_template pp set 	parent_id=(select id from product_template where name=substr(pp.name,1,position(',' in pp.name )-1) limit 1) where  position(',' in pp.name )>0;
