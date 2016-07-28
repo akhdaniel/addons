@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="LucasDjayaData.wh_gba" model="stock.warehouse">
+            <field name="name">Gudang Bahan Awal</field>
+            <field name="code">GBA</field>
+            <field name="reception_steps">two_steps</field>
+        </record>
+
+
+    </data>
+</openerp>
