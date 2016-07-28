@@ -12,10 +12,17 @@
                 </field>
                 <field name="origin" position="after">
                     <field name="sediaan_id"/>
+                    <field name="wo_start_ok"/>
                 </field>
                 <field name="location_src_id" position="before">
                     <field name="allow_batch" attrs="{'invisible':[('allow_batch','=',False)]}"/>
                 </field>
+
+                <field name="location_src_id" position="attributes">
+                  <attribute name="invisible">1</attribute>
+                </field>
+
+
 
             </field>
         </record>

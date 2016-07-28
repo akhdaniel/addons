@@ -43,6 +43,8 @@ class product_category(osv.osv):
         'end_of_life_days'	: fields.integer('End of Life Months'),
         'removal_days'		: fields.integer('Removal Months'),
         'alert_days' 		: fields.integer('Retest Months'),
+        'mrp_location_id'   : fields.many2one('stock.location', 'MRP Source Location'),
+        'wo_start_no_stock' : fields.boolean('WO can start with No Stock', help="The Work Order can start even though this product is not yet in stock")
     }
 product_category()
 
