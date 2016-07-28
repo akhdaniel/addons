@@ -1,0 +1,51 @@
+DEFAULTS
+======================================== :
+real width 95 chrs.
+separator: 
+-----------------------------------------------------------------------------------------------
+font: Courier New , 9
+
+
+E.g.:
+
+
+PT. LUCAS DJAJA
+JL. Ciwastra RT.07 RW.06 Buah Batu Bandung   Indonesia
+-----------------------------------------------------------------------------------------------------------------------------------------------
+			PURCHASE ORDER
+No.Order :	Order Date :		Validated By :			SETIA JAYA ERA UNGGUL PT
+PO00307		2016-02-01 04:43:18	Iim Imroatul A         	Jl. Jalan1 Jalan2 Bandung
+									phone :  022-123456789 , fax :  022-987654321 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+Description					Taxes			Date Req.		Qty	Unit Price	Net Price
+-----------------------------------------------------------------------------------------------------------------------------------------------
+[BTA0020101] Tartaric Acid, Merck kgaA	Purchase Tax 10.00%	2016-02-19	250.0 g	Rp 2016.08	Rp 504020.0
+
+PT. LUCAS DJAJA
+JL. Ciwastra RT.07 RW.06 Buah Batu Bandung   Indonesia
+-----------------------------------------------------------------------------------------------
+			PURCHASE ORDER
+No.Order :	Order Date :		Validated By :			TOKO BIGBEN
+PO00313		2016-02-09 13:42:52	Administrator		  
+								phone :   , fax :   
+-----------------------------------------------------------------------------------------------
+Description			Taxes			Date Req.		Qty	Unit Price	Net Price
+-----------------------------------------------------------------------------------------------
+[WAR027] Jerigen kap. 10 L	Exempted Tax (Purchase)	2016-02-09	10.0 liter	Rp 5500.0	Rp 55000.0
+
+
+
+PARSE:
+
+Description              Taxes          Date Req.  Qty            Unit Price   Net Price       
+length________________24 length______14 length__10 length______14 length____12 length________16
+
+
+
+total length(int),start(arr),ends(arr),stringx(str),separator(1chr),align("l/r")
+
+
+
+
+
+lines(95,)

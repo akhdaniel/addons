@@ -1,0 +1,23 @@
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_purchase_requisition_form_barcode">
+            <field name="name">view.purchase.order.barcode</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <page string="Deliveries &amp; Invoices" position='after'>
+
+
+                    <page string="Printer Data">
+                        <button name="write_printer_data" string="Update Printer Data" type="object" icon="terp-stock_effects-object-colorize"/>
+
+                        <pre>
+                            <field name="printer_data" readonly='False'/>
+                        </pre>
+                    </page>
+
+                </page>
+            </field>
+        </record>       
+    </data>
+</openerp>
