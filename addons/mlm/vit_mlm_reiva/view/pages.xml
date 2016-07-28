@@ -152,6 +152,15 @@
             </xpath>
 
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
+                <section class="s_title_small">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <h2>BIENVENUE À TOUS NOS INVITÉS!</h2>
+                        </div>
+                      </div>
+                    </div>
+                </section>
                 <t t-call="vit_mlm_reiva.icon_menu"/>
                 <section class="s_title_small">
                   <div class="container">
@@ -237,6 +246,62 @@
                       </div>
                     </div>
                   </div>
+                </section>
+                <section class="s_process_step mt64">
+                  <div class="container">
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <h2>Vous pouvez démarrer dès maintenant et sans obligation</h2>
+                        <h3 class="text-muted"/>
+                      </div>
+                    </div>
+                  </div>
+                  <section style="">
+                    <div class="container s_process_step_steps">
+                      <div class="row">
+                        <div class="col-md-3 mb16">
+                          <h5>ÉTAPE&amp;nbsp; 1</h5>
+                          <a class="btn btn-primary o_animate" style="animation-play-state: paused;" type="button">
+                            <span class="fa fa-folder-open-o" style=""/>
+                          </a>
+                          <h4 class="text-muted">Découvrir l'opportunité</h4>
+                          <div class="s_process_step_content">
+                            <p>Découvrez le Plan de Rémunération Reïva au moyen d'une présentation sommaire et d'une présentation détaillée exposant son fonctionnement.</p>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <h5>ÉTAPE&amp;nbsp; 2</h5>
+                          <a class="btn btn-success o_animate" style="animation-play-state: paused;" type="button">
+                            <span class="fa fa-phone" style="transition: none 0s ease 0s"/>
+                          </a>
+                          <h4 class="text-muted">Partager</h4>
+                          <div class="s_process_step_content">
+                            <p>Contactez par téléphone les gens de votre entourage qui sont susceptibles d'être intéressés et mentionnez qu'ils recevront une invitation de votre part par courriel.</p>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <h5>ÉTAPE&amp;nbsp; 3</h5>
+                          <a class="btn btn-info" type="button">
+                            <span class="fa fa-envelope-o" style="transition: none;"/>
+                          </a>
+                          <h4 class="text-muted">Inviter</h4>
+                          <div class="s_process_step_content">
+                            <p>Lancez vos invitations : vos invités recevront un message avec un lien et pourront choisir un mot de passe pour se connecter ensuite à volonté afin de pouvoir consulter notre opportunité et faire leurs invitations.</p>
+                          </div>
+                        </div>
+                        <div class="col-md-3">
+                          <h5>ÉTAPE&amp;nbsp; 4</h5>
+                          <a class="btn btn-danger" type="button">
+                            <span class="fa fa-bar-chart-o fa-4x" style="transition: none 0s ease 0s ;"/>
+                          </a>
+                          <h4 class="text-muted">Vos résultats</h4>
+                          <div class="s_process_step_content">
+                            <p>Vous pourrez consulter les résultats de vos invitations et vous serez prévenu un peu avant notre pré-lancement afin de vous donner l’occasion, si vous le désirez, de prendre place en respectant l’ordre des invitations.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 </section>
             </xpath>
 
