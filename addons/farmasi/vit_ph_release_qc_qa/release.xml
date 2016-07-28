@@ -21,6 +21,7 @@
                     <field name="product_id"/>
                     <field name="picking_type_id"/>
                     <field name="group_id"/>
+                    <field name="origin"/>
 
                     <group expand="0" string="Group By">
                         <filter string="Status" icon="terp-stock_effects-object-colorize" domain="[]" context="{'group_by':'state'}"/>
