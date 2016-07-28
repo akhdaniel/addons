@@ -18,6 +18,8 @@
         'view_mrp.xml',
         'view_product_date.xml',
         'security/ir.model.access.csv',
+        'update_category.sql',
+        'product_category.xml',
     ],
     'installable': True,
     'auto_install': False,
