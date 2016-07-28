@@ -289,12 +289,7 @@
                                             <span t-field="member.sponsor_id"/>
                                         </td>
                                         <td>
-                                            <t t-esc="member.street"/>
-                                            <t t-esc="member.street2"/>,
-                                            <t t-esc="member.city"/>,
-                                            <span t-esc="member.state_id.code or ''"/>,
-                                            <span t-esc="member.country_id.name or ''"/>,
-                                            <span t-esc="member.zip or ''"/>
+                                            <t t-esc="member.street"/>,&amp;nbsp;<t t-esc="member.street2"/>,&amp;nbsp;<t t-esc="member.city"/>,&amp;nbsp;<span t-esc="member.state_id.code or ''"/>,&amp;nbsp;<span t-esc="member.country_id.name or ''"/>,&amp;nbsp;<span t-esc="member.zip or ''"/>
                                         </td>
                                         <td>
                                             <t t-esc="member.mobile"/>

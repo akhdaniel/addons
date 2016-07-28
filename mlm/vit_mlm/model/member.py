@@ -894,7 +894,7 @@ class member(osv.osv):
         #########################################################################
         # cek upline sudah state aktif?
         #########################################################################
-        if upline and upline.state not in ['open','aktif']:
+        if upline and upline.state not in ['open','aktif','pre']:
             raise osv.except_osv(_('Warning'),
                 "Cannot confirm member %s, upline %s is not Open"%(new_member.name,upline.name) )
 
