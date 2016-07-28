@@ -103,7 +103,7 @@ class forecast_product(osv.osv):
         """
         forecast = self.browse(cr,uid,ids[0],context=context)
 
-        month = ['Dec','Jan','Feb','Mar','Apr','May','Jun','jul','Aug','Sep','Oct','Nov']
+        month = ['Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov']
         
         for m,r in zip(month,range(1,13)):
             year = forecast.year
