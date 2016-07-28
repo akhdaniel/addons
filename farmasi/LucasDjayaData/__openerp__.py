@@ -64,7 +64,7 @@ data berikut ini akan otomatis diimport:
         'mrp.routing.csv',
         'mrp.routing.workcenter.csv',
         'product.uom.csv',
-        'vit.sediaan.csv',
+        # 'vit.sediaan.csv', pindah ke vit_sediaan
         'product.category.csv',
         'res.partner.category.csv',
         'stock.warehouse.csv',
