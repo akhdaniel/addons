@@ -797,7 +797,8 @@
                     <t t-set="title">Create New Member</t>
                     <div class="oe_structure">
                         <div class="container">
-                            <h1 t-esc="default_parent.name"/>
+                            <h2 style="color: white; margin-left: 25%; color: rgb(200,200,200)"> Vous êtes identifié sous : </h2>
+                            <h1 t-esc="default_parent.name" style="color: white; margin-left: 25%;"/>
 
                             <form id="member_form2" action="/mlm/member/add" method="post"
                                   class="form-horizontal mt32"
