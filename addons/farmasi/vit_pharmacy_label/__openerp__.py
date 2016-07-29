@@ -14,7 +14,7 @@
     'data': [
         'karantina.xml',
         'penimbangan.xml',
-        'lulus.xml'
+        'lulus.xml',
     ],
     'demo': [
     ],
