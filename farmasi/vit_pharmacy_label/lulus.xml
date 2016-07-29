@@ -67,6 +67,7 @@
                             Nama Produk/Bahan
                         </td>
                         <td colspan="4">
+                           <span t-field="l.product_id.code"/>
                            <span t-field="l.product_id.name"/>
                         </td>
                     </tr>
