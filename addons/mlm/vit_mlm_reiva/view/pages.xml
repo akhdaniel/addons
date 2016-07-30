@@ -410,6 +410,8 @@
             </xpath>
         </template>
 
-
+        <record id="vit_mlm_website.member_menu" model="website.menu">
+            <field name="parent_id" eval="False"/>
+        </record>
     </data>
 </openerp>
