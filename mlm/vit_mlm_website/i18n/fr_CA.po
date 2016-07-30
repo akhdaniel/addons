@@ -283,7 +283,7 @@ msgstr "Nom de l'invité"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_tree
 msgid "Member Tree"
-msgstr "Member Tree"
+msgstr "Arbre des invités"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
