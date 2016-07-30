@@ -301,7 +301,7 @@
                                             <t t-esc="member.create_date"/><br/>
                                         </td>
                                         <td>
-                                            <t t-esc="member.state"/><br/>
+                                            <span t-field="member.state"/><br/>
                                         </td>
                                     </tr>
                                     <t t-set="i" t-value="i+1"/>

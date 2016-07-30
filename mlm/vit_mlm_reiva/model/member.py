@@ -13,9 +13,10 @@ def now(**kwargs):
     dt = datetime.now() + timedelta(**kwargs)
     return dt.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
 
-MEMBER_STATES = [('draft', 'Draft'), ('open', 'Verification'), ('reject', 'Rejected'),
-                 ('aktif', 'Active'), ('nonaktif', 'Non Active'),
-                 ('invited','Guest'), ('pre','Pre-registration')]
+MEMBER_STATES = [('draft', _('Draft')), ('open', _('Verification')),
+                 ('reject', _('Rejected')),
+                 ('aktif', _('Active')), ('nonaktif', _('Non Active')),
+                 ('invited',_('Guest')), ('pre',_('Pre-registration'))]
 
 class member(osv.osv):
     _name = "res.partner"
