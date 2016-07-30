@@ -673,7 +673,7 @@
                         <div class="oe_structure"/>
 
                         <h1 t-esc="member.name"/>
-                        <h2 t-esc="member.state"/>
+                        <h2><span t-field="member.state"/></h2>
 
                         <div class="form-horizontal mt32">
                             <t t-call="vit_mlm_website.member_form">
