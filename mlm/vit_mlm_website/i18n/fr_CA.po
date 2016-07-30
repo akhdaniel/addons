@@ -253,7 +253,7 @@ msgstr "Langue..."
 #. module: vit_mlm_website
 #: model:website.menu,name:vit_mlm_website.mlm_menu
 msgid "MLM"
-msgstr "MLM"
+msgstr "Invités"
 
 #. module: vit_mlm_website
 #: model:ir.actions.act_url,name:vit_mlm_website.action_open_mlm
