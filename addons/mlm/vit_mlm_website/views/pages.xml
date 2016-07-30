@@ -215,6 +215,7 @@
         <script>
             $(document).ready(function(){
                 $("#member_list_table").DataTable({
+                    "aaSorting": [[6,'desc']],
                     language: {
                         url: '/vit_mlm_website/static/src/js/datatables/js/<t t-esc="lang"/>.js'
                     }

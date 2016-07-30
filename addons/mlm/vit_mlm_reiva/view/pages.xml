@@ -71,6 +71,18 @@
 
         <!-- override the main website menu -->
         <template id="member_view2" inherit_id="vit_mlm_website.member_view">
+            <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
+                <section class="s_title">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <h2>GUEST SHEET</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
+                <t t-call="vit_mlm_reiva.icon_menu"/>
+            </xpath>
             <xpath expr="//a[@id='mlm_member_edit']" position="after">
                 <t t-if="member.state == 'draft'">
                     <a t-attf-href="/mlm/member/invite/{{ slug(member) }}"
@@ -392,6 +404,15 @@
             <xpath expr="//th[@id='th_sponsor']" position="replace"/>
             <xpath expr="//td[@id='td_sponsor']" position="replace"/>
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
+                  <section class="s_title_small">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <h2>YOUR INVITATIONS</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 <t t-call="vit_mlm_reiva.icon_menu"/>
             </xpath>
         </template>
@@ -399,6 +420,15 @@
         <!-- override crate-->
         <template id="member_create2" inherit_id="vit_mlm_website.member_create">
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
+                  <section class="s_title_small">
+                    <div class="container">
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <h2>SEND AN INVITATION</h2>
+                        </div>
+                      </div>
+                    </div>
+                  </section>
                 <t t-call="vit_mlm_reiva.icon_menu"/>
             </xpath>
         </template>
