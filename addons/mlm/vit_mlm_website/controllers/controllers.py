@@ -36,6 +36,7 @@ class Member(http.Controller):
 			'members': my_members,
 			'member_count_by_status': member_count_by_status,
 			'lang':lang,
+			
 
 		}) 
 

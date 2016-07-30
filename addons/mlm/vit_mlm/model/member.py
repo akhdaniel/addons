@@ -9,8 +9,10 @@ from datetime import datetime
 
 _logger = logging.getLogger(__name__)
 
-MEMBER_STATES =[('draft','Draft'),('open','Verification'), ('reject','Rejected'),
-                 ('aktif','Active'),('nonaktif','Non Active')]
+MEMBER_STATES = [('draft', _('Draft')), ('open', _('Verification')),
+                 ('reject', _('Rejected')),
+                 ('aktif', _('Active')), ('nonaktif', _('Non Active'))]
+
 BONUS_SPONSOR_CODE   = 1
 BONUS_PASANGAN_CODE  = 2
 BONUS_LEVEL_CODE     = 3
@@ -33,6 +35,7 @@ CREATE INDEX path_res_partner_idx ON res_partner USING btree(path_ltree);
 class member(osv.osv):
     _name 		= "res.partner"
     _inherit 	= "res.partner"
+
 
     def _auto_init(self, cr, context=None):
         sql="CREATE extension IF NOT EXISTS ltree"
