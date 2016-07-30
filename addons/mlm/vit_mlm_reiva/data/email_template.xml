@@ -21,7 +21,7 @@
 
         <!-- Email template for new users -->
         <record id="set_password_email_reiva" model="email.template">
-            <field name="name">Reiva-Odoo Enterprise Connection</field>
+            <field name="name">Reiva - Invitation Phase 1</field>
             <field name="model_id" ref="base.model_res_users"/>
             <!--<field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>-->
             <field name="email_from"><![CDATA[${object.partner_id.parent_id.name} <${(object.partner_id.parent_id.email)|safe}>]]></field>
