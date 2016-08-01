@@ -71,6 +71,17 @@
 
         <!-- override the main website menu -->
         <template id="member_view2" inherit_id="vit_mlm_website.member_view">
+            <xpath expr="//div[@class='oe_structure']" position="attributes">
+                <attribute name="style">background-color: gray;</attribute>
+            </xpath>
+
+            <xpath expr="//h1" position="attributes">
+                <attribute name="style">color: white;</attribute>
+            </xpath>
+            <xpath expr="//h2" position="attributes">
+                <attribute name="style">color: white;</attribute>
+            </xpath>
+
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
                 <section class="s_title">
                     <div class="container">
@@ -401,6 +412,15 @@
 
         <!-- override tree -->
         <template id="member_list2" inherit_id="vit_mlm_website.member_list">
+
+            <xpath expr="//div[@class='oe_structure']" position="attributes">
+                <attribute name="style">background-color: gray;</attribute>
+            </xpath>
+
+            <xpath expr="//h1" position="attributes">
+                <attribute name="style">color: white;</attribute>
+            </xpath>
+
             <xpath expr="//th[@id='th_sponsor']" position="replace"/>
             <xpath expr="//td[@id='td_sponsor']" position="replace"/>
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
@@ -419,6 +439,14 @@
 
         <!-- override crate-->
         <template id="member_create2" inherit_id="vit_mlm_website.member_create">
+            <xpath expr="//div[@class='oe_structure']" position="attributes">
+                <attribute name="style">background-color: gray;</attribute>
+            </xpath>
+
+            <xpath expr="//h1" position="attributes">
+                <attribute name="style">color: white;margin-left: 25%;</attribute>
+            </xpath>
+
             <xpath expr="//div[@id='mlm_custum_wrap_before']" position="after">
                   <section class="s_title_small">
                     <div class="container">
