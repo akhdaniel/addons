@@ -23,33 +23,57 @@
         <record id="set_password_email_reiva" model="email.template">
             <field name="name">Reiva - Invitation Phase 1</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <!--<field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>-->
-            <field name="email_from"><![CDATA[${object.partner_id.parent_id.name} <${(object.partner_id.parent_id.email)|safe}>]]></field>
+            <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
+            <field name="email_cc"><![CDATA[${object.partner_id.parent_id.name} <${(object.partner_id.parent_id.email)|safe}>]]></field>
+            <!--<field name="email_from"><![CDATA[${object.partner_id.parent_id.name} <${(object.partner_id.parent_id.email)|safe}>]]></field>-->
             <field name="email_to">${object.email|safe}</field>
-            <field name="subject"><![CDATA[${object.company_id.name} invitation to connect on Odoo]]></field>
+            <field name="subject"><![CDATA[A special invitation from ${object.partner_id.parent_id.name} and ${object.company_id.name}]]></field>
             <field name="body_html">
                 <![CDATA[
-                    <p>
-                        ${object.name},
-                    </p>
-                    <p>
-                        You have been invited to connect to "${object.company_id.name}" in order to get access to your documents in Odoo.
-                    </p>
-                    <p>
-                        To accept the invitation, click on the following link:
-                    </p>
-                    <ul>
-                        <li><a href="${object.signup_url}">Accept invitation to "${object.company_id.name}"</a></li>
-                    </ul>
-                    <p>
-                        Thanks,
-                    </p>
-                    <pre>
---
-${object.company_id.name or ''}
+<p>Hi ${object.name},</p>
+
+<p>${object.partner_id.parent_id.name} wishes to have you discover first-hand, a Business Opportunity to be launched in the next few weeks. &nbsp;It’s called&nbsp;<span style="font-weight: bold;">REÏVA International</span>, a Canadian Company based in Québec that offers an array of innovative health products and an outstanding Compensation Plan.</p>
+
+<p>When you get to the website by clicking on the link below, you will be asked to create a personal password to access information on the Company, its Products and Compensation Plan, information that is currently reserved for our invitees.</p>
+
+<p>If the project is of interest to you, you may then send out your own invitations to personal contacts that you believe might have an interest. &nbsp;You should be aware that answering this email message and/or sending out invitations will not put you or your invitees under any obligation whatsoever.</p>
+
+<p>When REÏVA is ready to announce its pre-launch date, all invitees that have answered will be informed of their privilege to confirm their position before the opportunity is opened to the public and the genealogy will respect the sequence of created positions in the order that they were received.</p>
+
+<ul>
+	<li><a href="${object.signup_url}">To access the section reserved for invitees, you must first create your password by clicking here.</a></li>
+	<li>You will then be directed to the section reserved for our invited guests.</li>
+	<li>Sélectionnez au besoin la langue de votre choix au bas de la page</li>
+	<li>For your future visits:</li>
+	<li>
+	<ol>
+		<li>go directly to <a href="http://www.reiva.ca">www.reiva.ca</a>;</li>
+		<li>simply click on the SIGN IN tab in the main menu;</li>
+		<li>Enter your email address and the password previously created, and click on the <span style="font-style: italic;">Log in</span>&nbsp;button. You will then be directed to the section reserved for our invited guests.</li>
+	</ol>
+	</li>
+</ul>
+
+
+<p>Thank you and enjoy the visit!</p>
+${object.partner_id.parent_id.name}
+<br>
+${object.partner_id.parent_id.email}
+<br>
+
+<br>
+and
+
+<pre>${object.company_id.name or ''}
 ${object.company_id.email or ''}
 ${object.company_id.phone or ''}
-                    </pre>
+</pre>
+
+
+<p><span style="font-style: italic;"></span></p>
+
+
+<p><span style="font-style: italic;">If you no longer wish to receive emails from REÏVA, please <a href="mailto:unsuscribe@reiva.net?cc=${object.partner_id.parent_id.email}&amp;subject=Unsuscribe me&amp;body=Please do not send me emails from REÏVA.">click here</a>.</span></p>
                 ]]>
             </field>
         </record>
