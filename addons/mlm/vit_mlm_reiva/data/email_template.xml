@@ -23,9 +23,9 @@
         <record id="set_password_email_reiva" model="email.template">
             <field name="name">Reiva - Invitation Phase 1</field>
             <field name="model_id" ref="base.model_res_users"/>
-            <field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>
+            <!--<field name="email_from"><![CDATA[${object.company_id.name} <${(object.company_id.email or user.email)|safe}>]]></field>-->
             <field name="email_cc"><![CDATA[${object.partner_id.parent_id.name} <${(object.partner_id.parent_id.email)|safe}>]]></field>
-            <!--<field name="email_from"><![CDATA[${object.partner_id.parent_id.name} <${(object.partner_id.parent_id.email)|safe}>]]></field>-->
+            <field name="email_from"><![CDATA[${object.partner_id.parent_id.name} <${(object.partner_id.parent_id.email)|safe}>]]></field>
             <field name="email_to">${object.email|safe}</field>
             <field name="subject"><![CDATA[A special invitation from ${object.partner_id.parent_id.name} and ${object.company_id.name}]]></field>
             <field name="body_html">
@@ -45,13 +45,11 @@
 	<li>You will then be directed to the section reserved for our invited guests.</li>
 	<li>Sélectionnez au besoin la langue de votre choix au bas de la page</li>
 	<li>For your future visits:</li>
-	<li>
 	<ol>
 		<li>go directly to <a href="http://www.reiva.ca">www.reiva.ca</a>;</li>
 		<li>simply click on the SIGN IN tab in the main menu;</li>
 		<li>Enter your email address and the password previously created, and click on the <span style="font-style: italic;">Log in</span>&nbsp;button. You will then be directed to the section reserved for our invited guests.</li>
 	</ol>
-	</li>
 </ul>
 
 
