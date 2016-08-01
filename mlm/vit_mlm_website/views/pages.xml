@@ -254,7 +254,7 @@
                                           <span style="font-size: 65%; color: #913634">Pre-Registered: </span><b><span t-esc="member_count_by_status['pre']"/></b>&#160;&#160;
                                           <span style="font-size: 65%; color: #913634;">Active: </span><b><span t-esc="member_count_by_status['aktif']" style="color: #D3D3D3;"/></b>
                                        </h3>
-                              </div>
+                                 </div>
                             </div>
                         </div>
 
@@ -675,7 +675,7 @@
                         <div class="oe_structure"/>
 
                         <h1 t-esc="member.name"/>
-                        <h2><span t-field="member.state"/></h2>
+                        <h2><span style="font-size:14pt">State: </span><span t-field="member.state"/></h2>
 
                         <div class="form-horizontal mt32">
                             <t t-call="vit_mlm_website.member_form">
