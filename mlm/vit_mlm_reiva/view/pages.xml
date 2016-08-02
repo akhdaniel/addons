@@ -103,6 +103,10 @@
             <li id="tab_bonus" position="replace"/>
             <xpath expr="//div[@id='downlines']/table/tr/th[contains(.,'BBM')]" position="replace" />
 
+            <xpath expr="//li[@id='tab_tree']" position="attributes">
+                <attribute name="style">display:none</attribute>
+            </xpath>
+
         </template>
 
         <!-- override the main website menu -->
