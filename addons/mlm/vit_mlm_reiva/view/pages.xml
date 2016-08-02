@@ -471,5 +471,12 @@
         <record id="vit_mlm_website.member_menu" model="website.menu">
             <field name="parent_id" eval="False"/>
         </record>
+
+
+        <template id="reiva_theme_asset" name="website asset for reiva mlm app" inherit_id="website.assets_frontend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/vit_mlm_reiva/static/css/reiva.css"/>
+            </xpath>
+        </template>
     </data>
 </openerp>
