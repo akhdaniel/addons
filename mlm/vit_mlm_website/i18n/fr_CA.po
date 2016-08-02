@@ -362,7 +362,7 @@ msgstr "Qty"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_edit
 msgid "Save"
-msgstr "Save"
+msgstr "Enregistrer"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
