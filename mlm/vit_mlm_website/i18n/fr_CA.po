@@ -1,80 +1,71 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* vit_mlm_website
+#	* vit_mlm_website
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 8.0-20160628\n"
+"Project-Id-Version: Odoo Server 8.0-20160609\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-07-24 23:02+0000\n"
-"PO-Revision-Date: 2016-07-25 06:03+0700\n"
+"POT-Creation-Date: 2016-08-04 14:27+0000\n"
+"PO-Revision-Date: 2016-08-04 14:27+0000\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-"Language: fr\n"
-"X-Generator: Poedit 1.8.8\n"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"\",\n"
-"\t\t\t\t \"children\":["
-msgstr ""
-"\",\n"
-"\t\t\t\t \"children\":["
+msgid "\",\n"
+"				 \"children\":["
+msgstr "\",\n"
+"				 \"children\":["
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"\",\n"
-"\t\t\t\t \"parent\":\""
-msgstr ""
-"\",\n"
-"\t\t\t\t \"parent\":\""
+msgid "\",\n"
+"				 \"parent\":\""
+msgstr "\",\n"
+"				 \"parent\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"\",\n"
-"\t\t\t\t \"type\":\""
-msgstr ""
-"\",\n"
-"\t\t\t\t \"type\":\""
+msgid "\",\n"
+"				 \"type\":\""
+msgstr "\",\n"
+"				 \"type\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"\",\n"
-"\t\t \"children\":["
-msgstr ""
-"\",\n"
-"\t\t \"children\":["
+msgid "\",\n"
+"		 \"children\":["
+msgstr "\",\n"
+"		 \"children\":["
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"\",\n"
-"\t\t \"parent\":\""
-msgstr ""
-"\",\n"
-"\t\t \"parent\":\""
+msgid "\",\n"
+"		 \"parent\":\""
+msgstr "\",\n"
+"		 \"parent\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"\",\n"
-"\t\t \"type\":\""
-msgstr ""
-"\",\n"
-"\t\t \"type\":\""
+msgid "\",\n"
+"		 \"type\":\""
+msgstr "\",\n"
+"		 \"type\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
 msgid "&times;"
 msgstr "&times;"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_list
+msgid ",&nbsp;"
+msgstr ",&nbsp;"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
@@ -102,6 +93,11 @@ msgid "Amount"
 msgstr "importation"
 
 #. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_tree
+msgid "Arbre des invités"
+msgstr "Arbre des invités"
+
+#. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
 msgid "At Level"
 msgstr "At Level"
@@ -111,6 +107,11 @@ msgstr "At Level"
 #: view:website:vit_mlm_website.member_view
 msgid "BBM"
 msgstr "BBM"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "BIENVENUE À TOUS NOS INVITÉS!"
+msgstr "BIENVENUE À TOUS NOS INVITÉS!"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
@@ -163,6 +164,11 @@ msgid "Confirm"
 msgstr "Valider"
 
 #. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Contactez par téléphone les gens de votre entourage qui sont susceptibles d'être intéressés et mentionnez qu'ils recevront une invitation de votre part par courriel."
+msgstr "Contactez par téléphone les gens de votre entourage qui sont susceptibles d'être intéressés et mentionnez qu'ils recevront une invitation de votre part par courriel."
+
+#. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Country"
 msgstr "Pays"
@@ -196,12 +202,22 @@ msgstr "Description"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
 msgid "Downlines"
-msgstr "Invités"
+msgstr "Downlines"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
 msgid "Draft:"
 msgstr "Brouillon:"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Découvrez le Plan de Rémunération Reïva au moyen d'une présentation sommaire et d'une présentation détaillée exposant son fonctionnement."
+msgstr "Découvrez le Plan de Rémunération Reïva au moyen d'une présentation sommaire et d'une présentation détaillée exposant son fonctionnement."
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Découvrir l'opportunité"
+msgstr "Découvrir l'opportunité"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
@@ -221,6 +237,11 @@ msgid "Email"
 msgstr "Courriel"
 
 #. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_edit
+msgid "Enregistrer"
+msgstr "Enregistrer"
+
+#. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Fax"
 msgstr "Fax"
@@ -236,19 +257,29 @@ msgid "Invited:"
 msgstr "Invité:"
 
 #. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Inviter"
+msgstr "Inviter"
+
+#. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
 msgid "Is Transferd"
 msgstr "Is Transferd"
 
 #. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Lancez vos invitations : vos invités recevront un message avec un lien et pourront choisir un mot de passe pour se connecter ensuite à volonté afin de pouvoir consulter notre opportunité et faire leurs invitations."
+msgstr "Lancez vos invitations : vos invités recevront un message avec un lien et pourront choisir un mot de passe pour se connecter ensuite à volonté afin de pouvoir consulter notre opportunité et faire leurs invitations."
+
+#. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Language"
-msgstr "Langue"
+msgstr "Language"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Language..."
-msgstr "Langue..."
+msgstr "Language..."
 
 #. module: vit_mlm_website
 #: model:website.menu,name:vit_mlm_website.mlm_menu
@@ -279,11 +310,6 @@ msgstr "Liste des membres"
 #: view:website:vit_mlm_website.member_list
 msgid "Member Name"
 msgstr "Nom de l'invité"
-
-#. module: vit_mlm_website
-#: view:website:vit_mlm_website.member_tree
-msgid "Member Tree"
-msgstr "Arbre des invités"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
@@ -339,6 +365,11 @@ msgid "Paket..."
 msgstr "Colis..."
 
 #. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Partager"
+msgstr "Partager"
+
+#. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 #: view:website:vit_mlm_website.member_view
 msgid "Phone"
@@ -357,12 +388,7 @@ msgstr "Produits et ventes."
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Qty"
-msgstr "Qty"
-
-#. module: vit_mlm_website
-#: view:website:vit_mlm_website.member_edit
-msgid "Save"
-msgstr "Enregistrer"
+msgstr "Qté"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
@@ -397,12 +423,17 @@ msgstr "Sponsor..."
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State"
-msgstr "Province/État"
+msgstr "État"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State..."
-msgstr "Province/État..."
+msgstr "Status..."
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_view
+msgid "State:"
+msgstr "Statut:"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
@@ -427,7 +458,7 @@ msgstr "Rue"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Street 2"
-msgstr "Rue (Suite)"
+msgstr "Rue 2"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.add_member_thanks
@@ -442,7 +473,7 @@ msgstr "Trans. Date"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
 msgid "Tree"
-msgstr "Arbre"
+msgstr "Tree"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
@@ -452,7 +483,7 @@ msgstr "Invité par"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Upline ID"
-msgstr "Invité par"
+msgstr "Invité par ID"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
@@ -460,33 +491,68 @@ msgid "Upline..."
 msgstr "Invité par..."
 
 #. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Vos résultats"
+msgstr "Vos résultats"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Vous pourrez consulter les résultats de vos invitations et vous serez prévenu un peu avant notre pré-lancement afin de vous donner l’occasion, si vous le désirez, de prendre place en respectant l’ordre des invitations."
+msgstr "Vous pourrez consulter les résultats de vos invitations et vous serez prévenu un peu avant notre pré-lancement afin de vous donner l’occasion, si vous le désirez, de prendre place en respectant l’ordre des invitations."
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "Vous pouvez démarrer dès maintenant et sans obligation"
+msgstr "Vous pouvez démarrer dès maintenant et sans obligation"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.member_create
+msgid "Vous êtes identifié sous :"
+msgstr "Vous êtes identifié sous :"
+
+#. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "ZIP"
-msgstr "Code postal"
+msgstr "ZIP"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"]\n"
-"\t\t\t  \t},"
-msgstr ""
-"]\n"
-"\t\t\t  \t},"
+msgid "]\n"
+"			  	},"
+msgstr "]\n"
+"			  	},"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"{\n"
-"\t\t\t\t \"name\":\""
-msgstr ""
-"{\n"
-"\t\t\t\t \"name\":\""
+msgid "{\n"
+"				 \"name\":\""
+msgstr "{\n"
+"				 \"name\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid ""
-"{\n"
-"\t\t \"name\":\""
-msgstr ""
-"{\n"
-"\t\t \"name\":\""
+msgid "{\n"
+"		 \"name\":\""
+msgstr "{\n"
+"		 \"name\":\""
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "ÉTAPE&nbsp; 1"
+msgstr "ÉTAPE&nbsp; 1"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "ÉTAPE&nbsp; 2"
+msgstr "ÉTAPE&nbsp; 2"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "ÉTAPE&nbsp; 3"
+msgstr "ÉTAPE&nbsp; 3"
+
+#. module: vit_mlm_website
+#: view:website:vit_mlm_website.mlm_homepage
+msgid "ÉTAPE&nbsp; 4"
+msgstr "ÉTAPE&nbsp; 4"
+
