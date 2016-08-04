@@ -759,7 +759,7 @@ msgstr "Pré-inscriptions"
 #. module: vit_mlm
 #: selection:res.partner,state:0
 msgid "Pre-registration"
-msgstr "Pré-inscription"
+msgstr "Pré-incript"
 
 #. module: vit_mlm
 #: field:mlm.paket_produk_detail,product_id:0
