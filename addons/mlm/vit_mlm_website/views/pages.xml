@@ -300,7 +300,7 @@
                                         </td>
                                         <td>
                                             <!--<t t-esc="member.create_date"/><br/>-->
-                                            <span t-esc="time.strftime('%Y-%m-%d',time.strptime(member.create_date,'%Y-%m-%d %H:%M:%S'))"/>
+                                            <span t-esc="time.strftime('%Y-%m-%d %H:%M',time.strptime(member.create_date,'%Y-%m-%d %H:%M:%S'))"/>
                                         </td>
                                         <td>
                                             <span t-field="member.state"/><br/>
@@ -649,7 +649,7 @@
             <div class="col-md-7 col-sm-8">
                 <input type="text" class="form-control" id="create_date"
                      t-attf-readonly="readonly"
-                     t-attf-value="#{time.strftime('%Y-%m-%d',time.strptime(member.create_date,'%Y-%m-%d %H:%M:%S')) if member and member.create_date else ''}"/>
+                     t-attf-value="#{time.strftime('%Y-%m-%d %H:%M',time.strptime(member.create_date,'%Y-%m-%d %H:%M:%S')) if member and member.create_date else ''}"/>
 
             </div>
         </div>
