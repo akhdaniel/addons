@@ -202,7 +202,7 @@ msgstr "Description"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
 msgid "Downlines"
-msgstr "Downlines"
+msgstr "Invités"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
@@ -473,7 +473,7 @@ msgstr "Trans. Date"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
 msgid "Tree"
-msgstr "Tree"
+msgstr "Arbre"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
