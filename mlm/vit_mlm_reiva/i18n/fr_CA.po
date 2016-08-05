@@ -398,7 +398,7 @@ msgstr "Sondage"
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.member_form
 msgid "Upline ID"
-msgstr "Invité par ID"
+msgstr "Invité par"
 
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.mlm_homepage

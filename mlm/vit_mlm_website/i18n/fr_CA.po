@@ -274,12 +274,12 @@ msgstr "Lancez vos invitations : vos invités recevront un message avec un lien 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Language"
-msgstr "Language"
+msgstr "Langue"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Language..."
-msgstr "Language..."
+msgstr "Langue..."
 
 #. module: vit_mlm_website
 #: model:website.menu,name:vit_mlm_website.mlm_menu
@@ -423,12 +423,12 @@ msgstr "Sponsor..."
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State"
-msgstr "État"
+msgstr "Province/État"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State..."
-msgstr "État..."
+msgstr "Province/État..."
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
@@ -483,7 +483,7 @@ msgstr "Invité par"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "Upline ID"
-msgstr "Invité par ID"
+msgstr "Invité par"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
@@ -513,7 +513,7 @@ msgstr "Vous êtes identifié sous :"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "ZIP"
-msgstr "ZIP"
+msgstr "Code postal"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
