@@ -428,7 +428,7 @@ msgstr "État"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State..."
-msgstr "Status..."
+msgstr "État..."
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
