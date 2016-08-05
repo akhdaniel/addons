@@ -402,12 +402,12 @@ msgstr "Sponsor..."
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State"
-msgstr "State"
+msgstr "Province/State"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_form
 msgid "State..."
-msgstr "State..."
+msgstr "Province/State..."
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
