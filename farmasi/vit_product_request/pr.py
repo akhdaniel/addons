@@ -28,7 +28,7 @@ class purchase_requisition_line(osv.osv):
 		return {'value': value}
 
 	_columns 	= {
-		'description' : fields.char('Description')
+		'description' : fields.char('Description'),
 	}
 
 
@@ -64,10 +64,36 @@ class purchase_requisition(osv.osv):
 		self.write(cr,uid,ids,{'approved_date': time.strftime('%Y-%m-%d')})
 		return super(purchase_requisition,self).tender_in_progress( cr, uid, ids, context=None)
 
+	def _get_confirmed_po(self, cr, uid, ids, fields, arg, context=None):
+		res = {}
+		# {
+		#	1: po1,
+		#	2: po2,
+		#	3: po3
+		# }
+
+		# list of record object: [ob1, ob2, ob3]
+		prs = self.browse(cr, uid, ids, context=context)
+
+		for pr in prs:
+			res[pr.id] = False
+			
+			for po in pr.purchase_ids:
+				if po.state == 'approved':
+					res[pr.id] = po
+		return res
+	
 	_columns 	= {
 		'product_names' : fields.function(_product_names, type='char', string="Products"),
 		'approved_date' : fields.date(string="approved date" , readonly=True,),
-		}
+		'confirmed_po_id': fields.function(_get_confirmed_po,
+								 method=True,
+								 string='Confirmed PO',
+								 type='many2one',
+								 relation="purchase.order",
+								 store=False,
+								 help = 'Confirmed PO'),
+	}
 		
 	_defaults = {
 		'approved_date': lambda *a: time.strftime('%Y-%m-%d'),
