@@ -301,7 +301,8 @@
                                         <td>
                                             <!--<t t-esc="member.create_date"/><br/>-->
                                             <!--<span t-esc="time.strftime('%Y-%m-%d %H:%M',time.strptime(member.create_date,'%Y-%m-%d %H:%M:%S'))"/>-->
-                                            <span t-field="member.create_date" t-field-options='{"format": "yyyy-MM-dd hh:mm"}'/>
+                                            <span t-field="member.create_date"
+                                                  t-field-options='{"format": "yyyy-MM-dd HH:mm"}'/>
 
                                         </td>
                                         <td>
@@ -655,7 +656,7 @@
                 <t t-if="member and member.create_date">
                     <span class="form-control"
                           style="background-color: #eee;"
-                          t-field="member.create_date" t-field-options='{"format": "yyyy-MM-dd hh:mm"}'/>
+                          t-field="member.create_date" t-field-options='{"format": "yyyy-MM-dd HH:mm"}'/>
                 </t>
 
             </div>
