@@ -15,6 +15,11 @@
                     attrs="{'readonly': [('state','not in',('draft'))]}"
                     domain="[('name','ilike','receipts')]"/>
             </field>
+
+            <field name="multiple_rfq_per_supplier" position="after">
+                <field name="confirmed_po_id"/>
+            </field>
+
 		</field>
 	</record>
 
@@ -26,6 +31,9 @@
         	<field name="name" position="after">
         		<field name="product_names"/>
         	</field>
+            <field name="origin" position="after">
+                <field name="confirmed_po_id"/>
+            </field>
 		</field>
 	</record>	
 </data>

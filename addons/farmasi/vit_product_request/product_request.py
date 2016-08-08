@@ -225,6 +225,8 @@ class product_request_line(osv.osv):
 		'date_required'  	: fields.date('Required Date'),
 		'state' 			: fields.selection(PR_LINE_STATES,'Status',readonly=True,required=True),
 		'purchase_requisition_id' : fields.many2one('purchase.requisition', 'Call for Bid',readonly=True),
+		'purchase_order_id' : fields.related('purchase_requisition_id', 'confirmed_po_id',
+			type="many2one", relation="purchase.order", string="RFQ/PO", store=False),
 	}
 	_defaults = {
 		'state'				: 'draft',

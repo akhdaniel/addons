@@ -202,31 +202,22 @@ class mrp_production(osv.osv):
 
         destination_location_id = production.product_id.property_stock_production.id
 
-        #search dulu product yang sama
-        # if product.default_code:
-        #     product_ref = product.default_code[:6]
-        # else:
-        #     raise osv.except_osv(_('Error!'), _('No Product code (%s) (%s)') % (product.default_code, product.name))
-
         lot_id = False
         qty_available = 0
         move_ids = [] # untuk semua actual products yang terambil
         deleted_move_ids = []
 
-        if product.default_code == 'CSP001':
-            print "CIN012"
-        if product.default_code == 'CIN012':
-            print "CIN012"
+        if product.default_code == 'AGS002':
+            print "AGS002"
 
 
         # cari produk yang is_header = false dan kode produknya 6 digit pertama sama
-        # same_product = self.pool.get('product.product').search(cr,uid,
-        #     [('default_code','ilike',str(product_ref+'%')),('is_header','=',False)])
+        # aka. cari child products
         same_product = self.pool.get('product.product').search(cr,uid,
             [('parent_id','=',product.product_tmpl_id.id),('is_header','=',False)])
 
         if not same_product:
-            raise osv.except_osv(_('error'),_("Product [%s] has no children. Child product name should contain comma eg '%s, manufacturer' and is_header = True") % (product.default_code, product.name) )
+            raise osv.except_osv(_('error'),_("Product '%s' has no children. Child product name should contain comma eg '%s, manufacturer' and is_header = True") % (product.display_name, product.name) )
 
         #- cek satu per satu di serial number yang produk_id nya sama,
         #   ambil yang ED nya paling dekat expired
@@ -462,23 +453,22 @@ class mrp_production(osv.osv):
             #looping scheduled product
             # for line in production.product_lines:
             for line in production.move_lines:
-                if line.product_id.code == 'CSH026':
+                if line.product_id.code == 'BME001':
                     print line.lot_ids, line.product_id.code, line.state
 
                 # skip kalau sudah terisi lot
                 # kalau sudah available: skip
                 if line.state =='assigned':
                     continue
-
-                # kalau sudah ada lot, tapi masih merah: tinggal assign
-                # if line.restrict_lot_id.id != False:
-                #     stock_moves.append(line.id)
-                #     # paksa;
-                #     # self.pool.get('stock.move').force_assign(cr, uid, [line.id], context=context)
-                #     continue
-
+                    
+                # jika sudah ada lot_id atau (bukan produk header dan state [confirmer,drfat] )
+                # maka create move baru yang masih draft utk produk ini dan delete yang lama
                 if (line.restrict_lot_id.id != False) or \
                         (line.product_id.is_header == False and (line.state == 'confirmed' or line.state == 'draft') ) :
+                    
+                    if not line.product_id.parent_id:
+                        raise osv.except_osv(_('error'),_("Product '%s' has no parent. Please set it up.") %(line.product_id.display_name) )
+
                     data = {
                         'name' : line.product_id.parent_id.name,
                         'product_id' : line.product_id.parent_id.id,
@@ -557,7 +547,7 @@ class mrp_production(osv.osv):
 
             result[mo.id] = res
             for mov in mo.move_lines:
-                if mov.state != 'assigned' and mov.product_id.categ_id.wo_start_no_stock == False:
+                if mov.state != 'assigned' and mov.product_id.categ_id.wo_start_no_stock is False:
                     res = False
                     break
 
