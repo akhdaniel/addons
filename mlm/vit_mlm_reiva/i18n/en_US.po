@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0-20160628\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-02 11:46+0000\n"
-"PO-Revision-Date: 2016-08-02 18:48+0700\n"
+"PO-Revision-Date: 2016-08-09 13:22-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -403,7 +403,7 @@ msgstr "Survey"
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.member_form
 msgid "Upline ID"
-msgstr "Upline ID"
+msgstr "Invited by"
 
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.mlm_homepage
@@ -466,19 +466,19 @@ msgstr "color: white;margin-left: 25%;"
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.mlm_homepage
 msgid "ÉTAPE&nbsp; 1"
-msgstr "ÉTAPE&nbsp; 1"
+msgstr "STEP&nbsp; 1"
 
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.mlm_homepage
 msgid "ÉTAPE&nbsp; 2"
-msgstr "ÉTAPE&nbsp; 2"
+msgstr "STEP&nbsp; 2"
 
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.mlm_homepage
 msgid "ÉTAPE&nbsp; 3"
-msgstr "ÉTAPE&nbsp; 3"
+msgstr "STEP&nbsp; 3"
 
 #. module: vit_mlm_reiva
 #: view:website:vit_mlm_website.mlm_homepage
 msgid "ÉTAPE&nbsp; 4"
-msgstr "ÉTAPE&nbsp; 4"
+msgstr "STEP&nbsp; 4"
