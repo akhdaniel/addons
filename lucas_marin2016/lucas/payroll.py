@@ -388,7 +388,8 @@ class hr_payslip(osv.osv):
 
                     for atendances in attendance_obj.browse(cr,uid,attendance_src) :
                         if atendances.keterlambatan != False :
-                            if float(atendances.keterlambatan) <= 0.15 and float(atendances.keterlambatan) > 0 : 
+                            _logger.warning("************ %s", float(atendances.keterlambatan) )
+                            if float(atendances.keterlambatan) <= 0.15 and float(atendances.keterlambatan) > 0.0 : 
                                 denda_keterlambatan['number_of_days'] += 1.0
                             elif float(atendances.keterlambatan) > 0.15 :
                                 denda_ketidakhadiran['number_of_days'] += 1.0
@@ -472,16 +473,24 @@ class hr_payslip(osv.osv):
             leave = [value for key,value in leave.items()]
             luar = [value for key,value in luar.items()]
 
-            if leaves == [] :
-                attendances['number_of_days'] = attendances['number_of_days'] - 0
-            else :    
-                attendances['number_of_days'] = attendances['number_of_days'] - leaves[0]['number_of_days']
 
-            #################################################################################
-            # menhitung potongan tunjangan
-            #################################################################################
-            potongan_tunjangan['number_of_days'] = attendances['number_of_days'] - presences['number_of_days']
-             
+            if leaves == [] :
+		_logger.info("leaves")
+		_logger.info(leaves)
+                attendances['number_of_days'] = attendances['number_of_days'] - 0
+                #################################################################################
+                # menhitung potongan tunjangan
+                #################################################################################
+                potongan_tunjangan['number_of_days'] = attendances['number_of_days'] - presences['number_of_days']
+
+            else :
+                attendances['number_of_days'] = attendances['number_of_days'] - leaves[0]['number_of_days']
+                #################################################################################
+                # menhitung potongan tunjangan
+                #################################################################################
+                potongan_tunjangan['number_of_days'] = attendances['number_of_days'] - presences['number_of_days']- leaves[0]['number_of_days']
+
+
             #################################################################################
             # denda ketidak hadiran
             #################################################################################
