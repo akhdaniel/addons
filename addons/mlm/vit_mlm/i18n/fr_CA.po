@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 8.0-20160628\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-07-16 10:28+0000\n"
-"PO-Revision-Date: 2016-07-21 23:47-0400\n"
+"PO-Revision-Date: 2016-08-09 13:29-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -244,7 +244,7 @@ msgstr "Client"
 #. module: vit_mlm
 #: field:mlm.bonus,code:0 field:mlm.mlm_plan,code:0 field:mlm.paket,code:0
 msgid "Code"
-msgstr "Code"
+msgstr "No."
 
 #. module: vit_mlm
 #: model:ir.model,name:vit_mlm.model_res_company
@@ -321,7 +321,7 @@ msgstr "Afficher le nom"
 #. module: vit_mlm
 #: view:res.partner:vit_mlm.view_member_form
 msgid "Downlines"
-msgstr "Descendance"
+msgstr "Invités"
 
 #. module: vit_mlm
 #: selection:res.partner,state:0
@@ -547,7 +547,7 @@ msgstr "MLM"
 #. module: vit_mlm
 #: model:res.groups,name:vit_mlm.group_mlm_manager
 msgid "MLM / Back Office"
-msgstr "MLM / Back Office"
+msgstr "MLM / Gestion"
 
 #. module: vit_mlm
 #: model:res.groups,name:vit_mlm.group_mlm_user
@@ -759,7 +759,7 @@ msgstr "Pré-inscriptions"
 #. module: vit_mlm
 #: selection:res.partner,state:0
 msgid "Pre-registration"
-msgstr "Pré-incript"
+msgstr "Pré-inscrit"
 
 #. module: vit_mlm
 #: field:mlm.paket_produk_detail,product_id:0
@@ -907,7 +907,7 @@ msgstr "Start Join"
 #. module: vit_mlm
 #: view:res.partner:vit_mlm.view_res_partner_filter_mahasiswa
 msgid "State"
-msgstr "État"
+msgstr "Province/État"
 
 #. module: vit_mlm
 #: field:res.partner,state:0

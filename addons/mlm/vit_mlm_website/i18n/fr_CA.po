@@ -1,61 +1,75 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-#	* vit_mlm_website
+# 	* vit_mlm_website
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 8.0-20160609\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2016-08-04 14:27+0000\n"
-"PO-Revision-Date: 2016-08-04 14:27+0000\n"
+"PO-Revision-Date: 2016-08-09 13:13-0400\n"
 "Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
+"Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: \n"
+"Language: fr_CA\n"
+"X-Generator: Poedit 1.8.8\n"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "\",\n"
-"				 \"children\":["
-msgstr "\",\n"
-"				 \"children\":["
+msgid ""
+"\",\n"
+"\t\t\t\t \"children\":["
+msgstr ""
+"\",\n"
+"\t\t\t\t \"children\":["
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "\",\n"
-"				 \"parent\":\""
-msgstr "\",\n"
-"				 \"parent\":\""
+msgid ""
+"\",\n"
+"\t\t\t\t \"parent\":\""
+msgstr ""
+"\",\n"
+"\t\t\t\t \"parent\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "\",\n"
-"				 \"type\":\""
-msgstr "\",\n"
-"				 \"type\":\""
+msgid ""
+"\",\n"
+"\t\t\t\t \"type\":\""
+msgstr ""
+"\",\n"
+"\t\t\t\t \"type\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "\",\n"
-"		 \"children\":["
-msgstr "\",\n"
-"		 \"children\":["
+msgid ""
+"\",\n"
+"\t\t \"children\":["
+msgstr ""
+"\",\n"
+"\t\t \"children\":["
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "\",\n"
-"		 \"parent\":\""
-msgstr "\",\n"
-"		 \"parent\":\""
+msgid ""
+"\",\n"
+"\t\t \"parent\":\""
+msgstr ""
+"\",\n"
+"\t\t \"parent\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "\",\n"
-"		 \"type\":\""
-msgstr "\",\n"
-"		 \"type\":\""
+msgid ""
+"\",\n"
+"\t\t \"type\":\""
+msgstr ""
+"\",\n"
+"\t\t \"type\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
@@ -156,7 +170,7 @@ msgstr "Ville"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_view
 msgid "Code"
-msgstr "Code"
+msgstr "No."
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_create
@@ -294,7 +308,7 @@ msgstr "Accueil MLM"
 #. module: vit_mlm_website
 #: model:website.menu,name:vit_mlm_website.member_menu
 msgid "Member"
-msgstr "Membre"
+msgstr "Invité"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.add_member_thanks
@@ -304,7 +318,7 @@ msgstr "Member Added"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
 msgid "Member List"
-msgstr "Liste des membres"
+msgstr "Liste des invités"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
@@ -324,7 +338,7 @@ msgstr "Member d3 Tree"
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
 msgid "Member list."
-msgstr "Liste des membres."
+msgstr "Liste des invités."
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
@@ -373,7 +387,7 @@ msgstr "Partager"
 #: view:website:vit_mlm_website.member_form
 #: view:website:vit_mlm_website.member_view
 msgid "Phone"
-msgstr "Tél."
+msgstr "Téléphone"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_list
@@ -517,24 +531,30 @@ msgstr "Code postal"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "]\n"
-"			  	},"
-msgstr "]\n"
-"			  	},"
+msgid ""
+"]\n"
+"\t\t\t  \t},"
+msgstr ""
+"]\n"
+"\t\t\t  \t},"
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "{\n"
-"				 \"name\":\""
-msgstr "{\n"
-"				 \"name\":\""
+msgid ""
+"{\n"
+"\t\t\t\t \"name\":\""
+msgstr ""
+"{\n"
+"\t\t\t\t \"name\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.member_children
-msgid "{\n"
-"		 \"name\":\""
-msgstr "{\n"
-"		 \"name\":\""
+msgid ""
+"{\n"
+"\t\t \"name\":\""
+msgstr ""
+"{\n"
+"\t\t \"name\":\""
 
 #. module: vit_mlm_website
 #: view:website:vit_mlm_website.mlm_homepage
@@ -555,4 +575,3 @@ msgstr "ÉTAPE&nbsp; 3"
 #: view:website:vit_mlm_website.mlm_homepage
 msgid "ÉTAPE&nbsp; 4"
 msgstr "ÉTAPE&nbsp; 4"
-
