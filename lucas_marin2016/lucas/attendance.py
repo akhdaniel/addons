@@ -257,7 +257,7 @@ class hr_attendance(osv.osv):
 						'date':vals['name'],
 						'name':vals['fingerprint_code'],
 						'employee_id':emps.employee_id.id,
-						'message':'jam masuk - jam keluar diluar toleransi shift %s %s-%s' % (shf.schedule_id.name,hour_from,hour_to)})
+						'message':'jam masuk - jam keluar diluar toleransi shift %s-%s' % (hour_from,hour_to)})
 			else :
 				if hour_from-4 <= ddd and  hour_from+1 > ddd :
 					vals['binary_action'] = '1'
