@@ -222,6 +222,12 @@ class account_voucher(osv.osv):
 			if not invoice_id:
 				raise osv.except_osv(_('Error'),_("no invoice with number %s") % (temp['id_record_tagihan'] ) ) 
 
+			###########################################################################
+			# tambah logic jika invoice tsb di paid manual skip saja
+			###########################################################################
+			if invoice_id.state != 'open' :	
+				continue
+
 			partner_id = invoice_id.partner_id.id 
 			amount     = invoice_id.amount_total
 
