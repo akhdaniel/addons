@@ -105,15 +105,46 @@ class product_template(osv.osv):
 
         return results
 
-    # def get_detail_total_karantina(self, cr, uid, ids, field, arg, context=None):
-    #     cr.execute('SELECT product_id, SUM (qty) FROM stock_quant WHERE location_id = (SELECT id FROM stock_location WHERE complete_name LIKE '%GBA / Input') AND product_id = 7 group by product_id')
-    #     results[0] = cr.fetchone()
-    #     return results
+    def get_detail_total_karantina(self, cr, uid, ids, field, arg, context=None):
+        detail_karantina = 0
+        # import pdb;pdb.set_trace()
+        for dk in self.browse(cr,uid,ids):
+            tmpl_id = dk.id
+            product_id = self.pool.get("product.product").search(cr,uid,[("product_tmpl_id","=",tmpl_id)])[0]
+            cr.execute("""SELECT product_id, SUM (qty) FROM stock_quant WHERE location_id = (SELECT id FROM stock_location WHERE complete_name LIKE '%GBA / Input') AND product_id = """+ str(product_id)+""" group by product_id""")
+            results = cr.fetchone()
+            if results:
+                detail_karantina = results[0]
+            return detail_karantina
+
+    # def get_detail_total_spb(self, cr, uid, ids, field, arg, context=None):
+    #     cr.execute('SELECT product_id, sum (qty) FROM vit_product_request_line WHERE product_id = 7 AND state = 'onprogress' group by product_id')
+    #     results = cr.fetchone()
+
+    #     if results:
+    #         detail_spb_qty = results[0]
+    #     else:
+    #         detail_spb_qty = results
+    #     return results[0]
         
     _columns = {
-        'detail_available' : fields.function(get_detail_total_avail, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Available"),
-        'detail_qty_available' : fields.function(get_detail_total_qty, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Qty Available"),
-        'detail_incoming_qty' : fields.function(get_detail_total_incoming, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Incoming Qty"),
-        'detail_outgoing_qty' : fields.function(get_detail_total_outgoing, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Outgoing Qty"),
+        'detail_available'      : fields.function(get_detail_total_avail, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Available"),
+        'detail_qty_available'  : fields.function(get_detail_total_qty, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Qty On Hand"),
+        'detail_incoming_qty'   : fields.function(get_detail_total_incoming, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Incoming Qty"),
+        'detail_outgoing_qty'   : fields.function(get_detail_total_outgoing, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Outgoing Qty"),
+        # 'detail_spb_qty'   : fields.function(detail_spb_qty, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail SPB Qty"),
+        'detail_karantina'      : fields.function(get_detail_total_karantina, type='float', digits_compute=dp.get_precision('Product Price'), string="Detail Qty Karantina"),
+        # 'outgoing_qty': fields.function(_product_available, multi='qty_available',
+        #     type='float', digits_compute=dp.get_precision('Product Unit of Measure'),
+        #     string='Outgoing',
+        #     fnct_search=_search_product_quantity,
+        #     help="Quantity of products that are planned to leave.\n"
+        #          "In a context with a single Stock Location, this includes "
+        #          "goods leaving this Location, or any of its children.\n"
+        #          "In a context with a single Warehouse, this includes "
+        #          "goods leaving the Stock Location of this Warehouse, or "
+        #          "any of its children.\n"
+        #          "Otherwise, this includes goods leaving any Stock "
+        #          "Location with 'internal' type."),
     }
 
