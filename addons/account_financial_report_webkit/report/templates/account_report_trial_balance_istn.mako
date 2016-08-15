@@ -314,6 +314,36 @@
                     </div>
                 %endfor
             </div>    
+
+            ## Laba Rugi Berjalan
+            <div class="act_as_thead">
+                <div class="act_as_row labels" >
+
+                    ## code
+                    <div class="act_as_cell" style="width: 20px;"> </div>
+                    
+                    ## account name padding-left: ${level * 5}px;
+                    <div class="act_as_cell" style="width: 70px;">${_('Laba Rugi Berjalan ')}</div>
+
+                    ## initial balance
+                    <div class="act_as_cell amount" style="width: 35px;">${0.00 | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${0.00 | amount }</div>
+
+                    ## mutasi
+                    <div class="act_as_cell amount" style="width: 35px;">${0.00 | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${0.00 | amount }</div>
+
+                    ## balance laba rugi
+                    <div class="act_as_cell amount" style="width: 35px;">${0.00 | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(labarugi_debit-labarugi_credit) | amount }</div>
+
+                    ## balance neraca
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(neraca_credit-neraca_debit)  | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${0.0 | amount }</div>
+
+                </div>
+            </div> 
+
             <div class="act_as_thead">
                 <div class="act_as_row labels">
 
@@ -333,10 +363,10 @@
 
                     ## balance laba rugi
                     <div class="act_as_cell amount" style="width: 35px;">${formatLang(labarugi_debit) | amount }</div>
-                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(labarugi_credit) | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(labarugi_credit+(labarugi_debit-labarugi_credit)) | amount }</div>
 
                     ## balance neraca
-                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(neraca_debit) | amount }</div>
+                    <div class="act_as_cell amount" style="width: 35px;">${formatLang(neraca_debit+(neraca_credit-neraca_debit)) | amount }</div>
                     <div class="act_as_cell amount" style="width: 35px;">${formatLang(neraca_credit) | amount }</div>
 
                 </div>
