@@ -541,12 +541,25 @@
                 //reset file upload control
                 this.value = null;
                 }
+
+            var fileExtension = ['jpeg', 'jpg', 'png', 'gif', 'bmp'];
+
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Format foto yang bisa di upload : "+fileExtension.join(', '))
+
+                //reset file upload control
+                this.value = null;
+                }    
         });
+
+
+
 
         $(function(){
             $("#datepicker").datepicker({
                 changeYear:true,
-                yearRange: "1940:2040"
+                yearRange: "1940:2060",
+                dateFormat: "yy-mm-dd"
             });
         });
 
@@ -932,10 +945,11 @@
                 </div>
 
                 <div class="alert alert-info">
-                    <p>Catatan: </p>
+                    <p>Catatan (Terms and Conditions): </p>
                     <p>- Jika diterima di PTN uang yang telah disetor akan dikembalikan 75%</p>
                     <p>- Jika anda sudah melakukan pembayaran Uang Pendaftaran silahkan lengkapi data Registrasi Ulang diatas !</p>
                     <p>- Jika diterima di swasta/mengundurkan diri uang yang sudah disetor tidak bisa dikembalikan</p>
+                    <p>- Jika ada perubahan prodi atau type pembayaran (dari cicil ke tunai maupun sebaliknya) maka calon mahasiswa harus buat akun baru untuk mengulang pendaftaran dan uang yang sudah disetor tidak bisa dikembalikan</p>
                     <p>- Uang pendaftaran (Rp. 300.000) tidak bisa dikembalikan</p>
                     <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
                 </div>
