@@ -1,2 +1,0 @@
-#import create_attendee
-import create_attendee_many_sessions
