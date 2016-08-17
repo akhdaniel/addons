@@ -1,5 +1,0 @@
-<openerp>
-	<data>
-		<function model="mlm.util" name="_init_ltree"/>
-	</data>
-</openerp>

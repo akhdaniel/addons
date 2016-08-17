@@ -1,8 +1,0 @@
-<openerp>
-	<data>
-		<record id="member_categ" model="res.partner.category">
-			<field name="name">Members</field>
-		</record>
-
-	</data>
-</openerp>
